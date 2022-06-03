@@ -114,7 +114,8 @@ AUTHENTICATION_BACKENDS = [
 
 ]
 
-SITE_ID = 1
+# Change to site_id = 1 for deployment
+SITE_ID = 2
 
 # Allauth config
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'

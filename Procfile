@@ -1,0 +1,1 @@
+web: gunicorn druid.wsgi:application
