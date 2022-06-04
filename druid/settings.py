@@ -118,11 +118,19 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 2
 
 # Allauth config
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATIONS = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
-ACCOUNT_USERNAME_MIN_LENGTH = 4
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
+ACCOUNT_USERNAME_REQUIRED = False
+# disables username related functionality for custom user
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# adds the custom forms to allauth
+ACCOUNT_FORMS = {
+    'signup': 'home.forms.CustomSignupForm',
+}
+# ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 

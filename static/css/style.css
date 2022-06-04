@@ -100,6 +100,7 @@ button {
 /* Utility Style Rules */
 body {
     display: flex;
+    flex-direction: column;
     min-height: 100vh;
     width: 100%;
     
@@ -202,9 +203,18 @@ header {
     background: #fff;
 }
 
+/* spacer styling for fixed nav bar */
+.spacer {
+    height: 50px;
+}
+
 
 /* media query set at 992px as that is the bootstrap breakpoint to lg */
 @media (min-width: 992px) {
+    .spacer {
+        height: 150px;
+    }
+
     .search-form {
         top: 160px;
     }

@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>{% block head_title %}{% endblock %}</title>
-    {% block extra_head %}
-    {% endblock %}
-  </head>
-  <body>
-    {% block body %}
-
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
+{% extends "base.html" %}
+{% block body %}
     <div>
       <strong>Menu:</strong>
       <ul>
@@ -31,10 +12,10 @@
         {% endif %}
       </ul>
     </div>
+    <main class="px-4 my-2 w-100">
     {% block content %}
     {% endblock %}
+    </main>
     {% endblock %}
     {% block extra_body %}
     {% endblock %}
-  </body>
-</html>
