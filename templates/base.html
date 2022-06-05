@@ -52,17 +52,19 @@
     <body>
         
         {% include "snippets/navbar.html" %}
-        
+
         <div class="spacer"></div>
 
         {% block page_header %}
         {% endblock %}
         
+        <div class="main-container flex-grow-1">
+            {% block body %}
+            {% endblock %}
+        </div>
     
-        {% block body %}
-        {% endblock %}
-    
-    
+        {% include "snippets/footer.html" %}
+
         {% block postloadjs %}
         <script src="{% static 'js/script.js' %}"></script>
         {% endblock %}

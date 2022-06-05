@@ -1,0 +1,101 @@
+<footer class="d-flex flex-column flex-lg-row-reverse justify-content-evenly">
+    <div class="newsletter-container">
+        <h3>Newsletter Signup</h3>
+        <form action="" method="post" class="form-floating mb-3">
+            {% csrf_token %}
+            <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com">
+            <label for="floatingInputEmail">Email address</label>
+            <input type="submit" value="Subscribe" class="mt-2">
+          </form>
+        
+    </div>
+    <div class="sitemap-container">
+        <h3>Site Map</h3>
+        <nav>
+            <ul class="d-flex">
+                <li class="subtitle">Products
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cases</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Desks</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Distroplates</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Fixtures</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Merchandise</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="subtitle">Information
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Blog</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <ul class="d-flex justify-content-evenly">
+                            
+                {% if user.is_authenticated %}
+                
+                <li class="nav-item dropdown">
+                    
+                    <a class="nav-link dropdown-toggle" href="#" id="sitemap-navbar-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    
+                    <ul class="dropdown-menu" aria-labelledby="sitemap-navbar-dropdown">
+                        
+                        <li>
+                            <a class="dropdown-item" href="#">My Orders</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">My Profile</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                {% else %}
+
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'account_signup' %}">Sign Up</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'account_login' %}">Login</a>
+                </li>
+
+                {% endif %}
+                
+            </ul>
+
+        </nav>
+    </div>
+</footer>

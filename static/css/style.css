@@ -208,6 +208,11 @@ header {
     height: 50px;
 }
 
+/* footer styling */
+footer ul,
+footer li {
+    list-style: none;
+}
 
 /* media query set at 992px as that is the bootstrap breakpoint to lg */
 @media (min-width: 992px) {
