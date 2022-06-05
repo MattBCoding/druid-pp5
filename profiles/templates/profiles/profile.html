@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h2 class="mt-5 mt-lg-4">My Profile</h2>
+
+<main>
+    <nav>
+        <ul>
+            <li>
+                <a href="">My Orders</a>
+            </li>
+            <li>
+                <a href="">My Wishlist</a>
+            </li>
+            <li>
+                <a href="{% url 'account_email' %}">Change Email</a>
+            </li>
+            <li>
+                <a href="{% url 'account_change_password' %}">Change Password</a>
+            </li>
+        </ul>
+    </nav>
+
+    <section>
+        <h3>My Addresses</h3>
+        <div class="address-outer-container">
+            <div class="address-container"></div>
+            {% comment %} insert for loop to display address card for each address {% endcomment %}
+        </div>
+    </section>
+</main>
+my Orders
+my wishlist
+
+my addresses
+add address
+
+{% endblock %}
