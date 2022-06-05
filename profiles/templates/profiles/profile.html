@@ -29,10 +29,33 @@
         </div>
     </section>
 </main>
-my Orders
-my wishlist
+<section class="my-4">
+    <h3>Delete My Account</h3>
+    <p>At Druid, we take the management of your personal data very seriously. We do not sell your information to anyone, and only store the details that are needed in order to deliver your orders. We keep details of prior orders for our needs and for your records. If you would like to delete your account on the website, you can do so by following the link below. Once your account has been deleted it can not be undone. You are of course able to make a new account at any time.</p>
+    <!-- Add link to delete account modal -->
+    <button type="button" class="btn mt-1" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete Account</button>
+</section>
 
-my addresses
-add address
+<!-- delete modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="delete-modal-label">Delete Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- modal body -->
+        <div class="modal-body">
+        <div class="flex flex-row justify-content-center">
+            <p>Are you sure you want to delete your account? This can not be undone!</p>
+        </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+        <a class="btn mt-1" href="">Delete Account</a>
 
+        </div>
+    </div>
+    </div>
+</div>
 {% endblock %}
