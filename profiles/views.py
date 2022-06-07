@@ -56,3 +56,33 @@ def addAddress(request):
             return redirect('profile')
     
     return render(request, 'profiles/address-form.html', context)
+
+
+@login_required
+def editAddress(request, pk):
+    address = get_object_or_404(Address, pk=pk)
+    if request.user == address.user:
+        if request.method == 'POST':
+            form = AddressForm(request.POST, instance=address)
+            if form.is_valid():
+                print('form is valid')
+                if form.data.get('default', False):
+                    print('data equals true')
+                    currentDefaultAddress = get_object_or_404(Address, user=request.user, default=True)
+                    print('got previous default address')
+                    if address != currentDefaultAddress:
+                        print('there is another address that is default')
+                        currentDefaultAddress.default = False
+                        currentDefaultAddress.save(update_fields=['default'])
+                        print('other address removed as default')
+                form.save()
+                print('form saved')
+                return redirect('profile')
+        else:
+            form = AddressForm(instance=address)
+            context = {
+                'form': form,
+            }
+            return render(request, 'profiles/address-form.html', context)
+    else:
+        return redirect('home')

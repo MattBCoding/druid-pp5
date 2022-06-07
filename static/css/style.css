@@ -250,13 +250,17 @@ footer li {
 .default-address {
     background:rgb(0, 13, 94);
     color: #fff;
+    text-align: center;
 }
 
-.make-default-address {
+.make-default-address > button {
     background:rgb(201, 207, 254);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    width: 100%;
 }
+
+
 
 .edit-address {
     position: absolute;
