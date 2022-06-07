@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section>
+    <h2 class="my-2">Add an Address</h2>
+    <form action="" method="post" class="form-floating mb-3">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn sub-btn">Submit</button>
+    </form>
+</section>
+{% endblock %}

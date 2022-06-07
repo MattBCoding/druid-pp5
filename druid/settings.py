@@ -147,6 +147,20 @@ else:
     EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
     DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
+# django_countries config
+COUNTRIES_FIRST = [
+    'IE',
+    'GB',
+    'US',
+    'FR',
+    'DE',
+    'ES',
+    'IT',
+]
+COUNTRIES_FIRST_SORT = True
+COUNTRIES_FIRST_REPEAT = True
+COUNTRIES_FIRST_BREAK = '------------'
+
 
 WSGI_APPLICATION = 'druid.wsgi.application'
 

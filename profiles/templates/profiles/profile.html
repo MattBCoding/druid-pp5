@@ -24,8 +24,24 @@
     <section>
         <h3>My Addresses</h3>
         <div class="address-outer-container">
-            <div class="address-container"></div>
+            <div class="address-container">
+                <a href="{% url 'add_address' %}">Add Address</a>
+            </div>
             {% comment %} insert for loop to display address card for each address {% endcomment %}
+            {% for address in addresses %}
+            <div class="address-container">
+                
+                <p>{{ address.street_address_1 }}</p>
+                <p>{{ address.street_address_2 }}</p>
+                <p>{{ address.town_or_city }}</p>
+                <p>{{ address.county }}</p>
+                <p>{{ address.postcode }}</p>
+                <p>{{ address.country }}</p>
+                <p>{{ address.phone_number }}</p>
+                <p>{{ address.default }}</p>
+                
+            </div>
+            {% endfor %}
         </div>
     </section>
 </main>
