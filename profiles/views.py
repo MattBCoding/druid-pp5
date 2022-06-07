@@ -80,9 +80,19 @@ def editAddress(request, pk):
                 return redirect('profile')
         else:
             form = AddressForm(instance=address)
+            edit = True
             context = {
                 'form': form,
+                'address': address,
             }
             return render(request, 'profiles/address-form.html', context)
     else:
         return redirect('home')
+
+
+@login_required
+def deleteAddress(request, pk):
+    address = get_object_or_404(Address, pk=pk)
+    if address.user == request.user:
+        address.delete()
+        return redirect('profile')
