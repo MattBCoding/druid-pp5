@@ -5,6 +5,6 @@ from .models import Address
 def getAddresses(request):
     addresses = Address.objects.distinct().filter(
         Q(user__exact=request.user)
-    )
+    ).order_by('-default')
 
     return addresses

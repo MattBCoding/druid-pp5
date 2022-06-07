@@ -14,6 +14,15 @@ def profile(request):
         'profile': profile,
         'addresses': addresses,
         }
+    if request.method == 'POST':
+        address_id = request.POST.get('address')
+        if request.user.address.filter(default__exact=True).exists():
+            currentDefaultAddress = get_object_or_404(Address, user=request.user, default=True)
+            currentDefaultAddress.default = False
+            currentDefaultAddress.save(update_fields=['default'])
+        updateDefaultAddress = get_object_or_404(Address, user=request.user, id=address_id)
+        updateDefaultAddress.default = True
+        updateDefaultAddress.save(update_fields=['default'])
     return render(request, 'profiles/profile.html', context)
 
 @login_required

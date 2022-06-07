@@ -214,6 +214,66 @@ footer li {
     list-style: none;
 }
 
+/* Address section of profile page */
+.address-outer-container {
+    gap: 2rem;
+}
+
+.address-container {
+    width: 280px;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: relative;
+}
+
+.address-container > a {
+    text-decoration: none;
+    color: black;
+    
+}
+
+.add-address-icon {
+    height: 100%;
+    width: 100%;
+}
+
+.add-address-icon > svg {
+    fill: #292929;
+    height: 4rem;
+    width: 4rem;
+}
+
+.add-address-icon > svg:hover {
+    fill: #494949;
+}
+
+.default-address {
+    background:rgb(0, 13, 94);
+    color: #fff;
+}
+
+.make-default-address {
+    background:rgb(201, 207, 254);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.edit-address {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.edit-address > svg {
+    fill: #292929;
+    height: 2rem;
+    width: 2rem;
+}
+
+.edit-address > svg:hover {
+    fill: #494949;
+}
+
 /* media query set at 992px as that is the bootstrap breakpoint to lg */
 @media (min-width: 992px) {
     .spacer {
