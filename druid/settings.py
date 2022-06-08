@@ -118,6 +118,7 @@ AUTHENTICATION_BACKENDS = [
 # Change to site_id = 1 for deployment
 SITE_ID = 2
 
+AUTH_USER_MODEL = 'profiles.User'
 # Allauth config
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True

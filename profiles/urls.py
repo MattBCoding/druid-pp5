@@ -6,4 +6,5 @@ urlpatterns = [
     path('add_address/', views.addAddress, name='add_address'),
     path('edit_address/<str:pk>/', views.editAddress, name='edit_address'),
     path('delete_address/<str:pk>/', views.deleteAddress, name='delete_address'),
+    path('delete_account/<str:pk>/', views.deleteUserAccount, name='delete_user_account'),
 ]
