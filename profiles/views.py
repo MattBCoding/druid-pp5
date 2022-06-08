@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
-from .forms import AddressForm
+from django.contrib.auth import get_user_model, logout
+from django.contrib import messages
+from .forms import AddressForm, DeleteUserForm
 from .models import Address
 from .utils import getAddresses
 
@@ -11,9 +12,11 @@ User = get_user_model()
 def profile(request):
     profile = get_object_or_404(User, pk=request.user.id)
     addresses = getAddresses(request)
+    form = DeleteUserForm(request.POST or None)
     context = {
         'profile': profile,
         'addresses': addresses,
+        'form': form,
         }
     if request.method == 'POST':
         address_id = request.POST.get('address')
@@ -96,3 +99,21 @@ def deleteAddress(request, pk):
     if address.user == request.user:
         address.delete()
         return redirect('profile')
+
+@login_required
+def deleteUserAccount(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.user == user:
+        if request.method == 'POST':
+            form = DeleteUserForm(request.POST)
+            if form.is_valid():
+                if form.cleaned_data['email'] == user.email:
+                    user = request.user
+                    logout(request)
+                    user.delete()
+                    messages.success(request, 'Your account has been deleted')
+                    return redirect('home')
+                else:
+                    messages.error(request, 'Your email address is incorrect')
+            else:
+                messages.error(request, 'Please enter your email address')

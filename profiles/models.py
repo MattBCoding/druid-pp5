@@ -5,6 +5,11 @@ from django_countries.fields import CountryField
 from django.conf import settings
 
 
+'''
+custom user model and usermanager adapted from tutorial by Justin Mitchel
+available at
+www.codingforentrepreneurs.com/blog/how-to-create-a-custom-django-user-model/
+'''
 class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
         '''
@@ -58,13 +63,25 @@ class UserManager(BaseUserManager):
 
 User = settings.AUTH_USER_MODEL
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address')
-    street_address_1 = models.CharField(max_length=80, null=False, blank=False)
+    user = models.ForeignKey(
+                             User,
+                             on_delete=models.CASCADE,
+                             related_name='address')
+    street_address_1 = models.CharField(
+                                        max_length=80,
+                                        null=False,
+                                        blank=False
+                                        )
     street_address_2 = models.CharField(max_length=80, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=False, blank=False)
     county = models.CharField(max_length=80, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
-    country = CountryField(blank_label='Country', null=False, blank=False, default='IE')
+    country = CountryField(
+                           blank_label='Country',
+                           null=False,
+                           blank=False,
+                           default='IE'
+                           )
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     default = models.BooleanField(default=False)
 
@@ -77,7 +94,11 @@ class Address(models.Model):
 
 class User(AbstractBaseUser):
     objects = UserManager()
-    email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
+    email = models.EmailField(
+                              verbose_name='email address',
+                              max_length=255,
+                              unique=True
+                              )
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
     is_active = models.BooleanField(default=True)
