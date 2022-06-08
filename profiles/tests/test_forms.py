@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
-from profiles.forms import AddressForm
+from profiles.forms import AddressForm, DeleteUserForm
 from profiles.models import Address
 
 
@@ -32,3 +32,15 @@ class TestAddressForm(TestCase):
     def test_user_field_excluded(self):
         form = AddressForm()
         self.assertEqual(form.Meta.exclude, ('user',))
+
+
+class TestDeleteUserForm(TestCase):
+    '''
+    Unit tests for DeleteUserForm
+    '''
+
+    def test_email_field_is_required(self):
+        form = DeleteUserForm(({'email': ''}))
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors.keys())
+        self.assertEqual(form.errors['email'][0], 'This field is required.')

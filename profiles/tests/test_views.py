@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
-from profiles.forms import AddressForm
+from profiles.forms import AddressForm, DeleteUserForm
 from profiles.models import Address
 
 
@@ -215,4 +215,15 @@ class TestViews(TestCase):
         self.assertTrue(response.status_code, 200)
         self.assertEqual(Address.objects.count(), 0)
 
-
+    def test_delete_account_view(self):
+        '''
+        Test deleting an account
+        '''
+        user_model = get_user_model()
+        self.user = user_model.objects.get(email=self.user.email)
+        id = str(self.user.id)
+        form = DeleteUserForm(data={'email': self.user.email})
+        self.assertTrue(form.is_valid())
+        response = self.client.post(f'/profiles/delete_account/{id}/', data={'email': self.user.email})
+        self.assertTrue(response.status_code, 302)
+        
