@@ -80,7 +80,6 @@ def editAddress(request, pk):
                 return redirect('profile')
         else:
             form = AddressForm(instance=address)
-            edit = True
             context = {
                 'form': form,
                 'address': address,
