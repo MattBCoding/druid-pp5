@@ -15,18 +15,18 @@ class TestViews(TestCase):
         set up a user and log them in to test
         views that require the user to be logged in
         '''
-        username = 'testuser'
+        # username = 'testuser'
         email = 'test@test.com'
         password = 'testpassword1234!'
         first_name = 'test'
         last_name = 'surname'
         user_model = get_user_model()
-        self.user = user_model.objects.create_user(username=username,
+        self.user = user_model.objects.create_user(
                                                     first_name=first_name,
                                                     last_name=last_name,
                                                     email=email, 
                                                     password=password)
-        log_in = self.client.login(username=username,
+        log_in = self.client.login(
                                     email=email,
                                     password=password)
 

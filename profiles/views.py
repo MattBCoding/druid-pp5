@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .forms import AddressForm
 from .models import Address
 from .utils import getAddresses
 
+User = get_user_model()
 # Create your views here.
 @login_required
 def profile(request):
