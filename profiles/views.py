@@ -55,7 +55,7 @@ def addAddress(request):
             # insert confirmation message to user confirming address saved successfully
             return redirect('profile')
     
-    return render(request, 'profiles/address-form.html', context)
+    return render(request, 'profiles/address_form.html', context)
 
 
 @login_required
@@ -85,7 +85,7 @@ def editAddress(request, pk):
                 'form': form,
                 'address': address,
             }
-            return render(request, 'profiles/address-form.html', context)
+            return render(request, 'profiles/address_form.html', context)
     else:
         return redirect('home')
 

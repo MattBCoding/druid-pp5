@@ -7,10 +7,13 @@
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn sub-btn">Save</button>
+        {% if address %}
         <button type="button" class="btn sub-btn" data-bs-toggle="modal" data-bs-target="#delete-address-modal">Delete Address</button>
+        {% endif %}
     </form>
 </section>
 <!-- delete modal -->
+{%if address %}
 <div class="modal fade" id="delete-address-modal" tabindex="-1" aria-labelledby="delete-address-modal-label" aria-hidden="true">
     <div class="modal-dialog">
     <div class="modal-content">
@@ -32,4 +35,5 @@
     </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
