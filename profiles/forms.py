@@ -1,5 +1,5 @@
 from django import forms
-from .models import Address
+from .models import Address, User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, ButtonHolder, Submit
 from crispy_bootstrap5.bootstrap5 import FloatingField
@@ -56,3 +56,9 @@ class AddressForm(forms.ModelForm):
 
 class DeleteUserForm(forms.Form):
     email = forms.EmailField()
+
+
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']

@@ -229,12 +229,16 @@ footer li {
 .address-container > a {
     text-decoration: none;
     color: black;
-    
+}
+
+.address-container > p {
+    padding-inline: 1rem;
 }
 
 .add-address-icon {
     height: 100%;
     width: 100%;
+    padding: 1.7rem;
 }
 
 .add-address-icon > svg {

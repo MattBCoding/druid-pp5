@@ -13,10 +13,13 @@
                 <a href="">My Wishlist</a>
             </li>
             <li>
-                <a href="{% url 'account_email' %}">Change Email</a>
+                <a href="{% url 'edit_user_account' profile.id %}">Update Details</a>
             </li>
             <li>
-                <a href="{% url 'account_change_password' %}">Change Password</a>
+                <a href="{% url 'account_email' %}">Update Email</a>
+            </li>
+            <li>
+                <a href="{% url 'account_change_password' %}">Update Password</a>
             </li>
         </ul>
     </nav>

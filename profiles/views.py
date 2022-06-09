@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model, logout
 from django.contrib import messages
-from .forms import AddressForm, DeleteUserForm
+from .forms import AddressForm, DeleteUserForm, EditUserForm
 from .models import Address
 from .utils import getAddresses
 
@@ -61,7 +61,6 @@ def addAddress(request):
     
     return render(request, 'profiles/address_form.html', context)
 
-
 @login_required
 def editAddress(request, pk):
     address = get_object_or_404(Address, pk=pk)
@@ -92,7 +91,6 @@ def editAddress(request, pk):
     else:
         return redirect('home')
 
-
 @login_required
 def deleteAddress(request, pk):
     address = get_object_or_404(Address, pk=pk)
@@ -117,3 +115,21 @@ def deleteUserAccount(request, pk):
                     messages.error(request, 'Your email address is incorrect')
             else:
                 messages.error(request, 'Please enter your email address')
+
+@login_required
+def editUserAccount(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.user == user:
+        form = EditUserForm(instance=user)
+        context = {'form': form}
+        if request.method == 'POST':
+            form = EditUserForm(request.POST, instance=user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your details have been updated')
+                return redirect('profile')
+        
+        return render(request, 'profiles/edit_user_form.html', context)
+    else:
+        messages.error(request, 'Error - you can not access that users account')
+        return redirect('profile')
