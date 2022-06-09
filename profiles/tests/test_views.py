@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
-from profiles.forms import AddressForm, DeleteUserForm
+from profiles.forms import AddressForm, DeleteUserForm, EditUserForm
 from profiles.models import Address
 
 
@@ -227,3 +227,35 @@ class TestViews(TestCase):
         response = self.client.post(f'/profiles/delete_account/{id}/', data={'email': self.user.email})
         self.assertTrue(response.status_code, 302)
         
+    def test_edit_user_account_page(self):
+        '''
+        test access to edit user account page
+        for logged in user
+        '''
+        id = str(self.user.id)
+        response = self.client.get(f'/profiles/edit_account/{id}/')
+        self.assertEqual(response.status_code, 200)
+    
+    def test_edit_user_account_page_template(self):
+        '''
+        test the correct template is used
+        '''
+        id = str(self.user.id)
+        response = self.client.get(f'/profiles/edit_account/{id}/')
+        self.assertTemplateUsed(response, template_name='profiles/edit_user_form.html') 
+
+    def test_edit_user_account_form_submission(self):
+        '''
+        test submission of correct edit user form
+        changes user data
+        '''
+        id = str(self.user.id)
+        self.assertTrue(self.user.first_name == 'test')
+        self.assertTrue(self.user.last_name == 'surname')
+        data = {'first_name': 'obi-wan', 'last_name': 'kenobi'}
+        form = EditUserForm(data, instance=self.user)
+        self.assertTrue(form.is_valid())
+        response = self.client.post(f'/profiles/edit_account/{id}/', data, content_type='application/x-www-form-urlencoded')
+        self.assertTrue(response.status_code, 302)
+        self.assertTrue(self.user.first_name == 'obi-wan')
+        self.assertTrue(self.user.last_name == 'kenobi')

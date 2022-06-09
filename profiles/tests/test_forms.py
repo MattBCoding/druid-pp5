@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
-from profiles.forms import AddressForm, DeleteUserForm
+from profiles.forms import AddressForm, DeleteUserForm, EditUserForm
 from profiles.models import Address
 
 
@@ -44,3 +44,20 @@ class TestDeleteUserForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('email', form.errors.keys())
         self.assertEqual(form.errors['email'][0], 'This field is required.')
+
+
+class TestEditUserForm(TestCase):
+    '''
+    Unit tests for EditUserForm
+    '''
+    def test_first_name_field_required(self):
+        form = EditUserForm(({'first_name': ''}))
+        self.assertFalse(form.is_valid())
+        self.assertIn('first_name', form.errors.keys())
+        self.assertEqual(form.errors['first_name'][0], 'This field is required.')
+
+    def test_last_name_field_required(self):
+        form = EditUserForm(({'last_name': ''}))
+        self.assertFalse(form.is_valid())
+        self.assertIn('last_name', form.errors.keys())
+        self.assertEqual(form.errors['last_name'][0], 'This field is required.')
