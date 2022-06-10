@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<main>
+    <h2>Add Blog Post</h2>
+    <form action="{% url 'add_blog_post' profile.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.name != 'image' %}
+                {{ field | as_crispy_field}}
+            {% else %}
+                {{ field }}
+            {% endif %}
+        {% endfor %}
+        <button type="submit">Add Blog Post</button>
+    </form>
+</main>
+
+{% endblock %}
+{% block postloadjs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        let selector = document.getElementById('new-image');
+        selector.addEventListener('change', (event) => {
+            let file = selector.files[0];
+            let filename = document.getElementById('filename');
+            filename.textContent = `Blog post image will be set to: ${file.name}`;
+        });
+    </script>
+
+{% endblock %}

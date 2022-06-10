@@ -5,14 +5,26 @@
     <h2>Musings of the Druids</h2>
 </section>
 <main>
+    {% if user.is_staff %}
+    <nav class="blog-nav">
+        <ul>
+            <li>
+                <a href="{% url 'add_blog_post' user.id %}" class="btn">Add Post</a>
+            </li>
+            <li>
+                <a href="" class="btn">Add Category</a>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
     <h3>Latest Blog Entries</h3>
     {% for post in posts %}
-    <div class="blog-card-post-container">
-        <h5>{{ post.title }}</h5>
-        <div class="blog-card-content-container d-flex">
-            {% if post.image %}
-            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
-            {% endif %}
+    <div class="blog-card-post-container d-flex">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
+        {% endif %}
+        <div class="blog-card-content-container">
+            <h5>{{ post.title }}</h5>
             <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
             <p>{{ post.content|slice:150|safe }}</p>
         </div>

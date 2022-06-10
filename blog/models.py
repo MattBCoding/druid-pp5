@@ -22,8 +22,8 @@ class BlogPost(models.Model):
     '''
     title = models.CharField(max_length=128, null=False, blank=False)
     slug = models.SlugField(max_length=128, unique=True)
-    category = models.ForeignKey(BlogCategory, null=False, blank=False, on_delete=models.SET_DEFAULT, default='admin')
-    author = models.ForeignKey(User, null=False, blank=False, on_delete=models.SET_DEFAULT, default='admin')
+    category = models.ForeignKey(BlogCategory, null=False, blank=False, on_delete=models.SET_DEFAULT, default=1)
+    author = models.ForeignKey(User, null=False, blank=False, on_delete=models.SET_DEFAULT, default=1)
     created_on = models.DateField(auto_now_add=True)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
