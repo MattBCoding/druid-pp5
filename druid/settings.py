@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # My apps
     'home',
     'profiles',
+    'blog',
     # Other
     'crispy_forms',
     'crispy_bootstrap5',
@@ -162,6 +163,37 @@ COUNTRIES_FIRST_SORT = True
 COUNTRIES_FIRST_REPEAT = True
 COUNTRIES_FIRST_BREAK = '------------'
 
+# django_summernot config
+SUMMERNOTE_CONFIG = {
+    # Use this when you're already using Bootstrap/jQuery based themes.
+    'iframe': True,
+
+    # You can put custom Summernote settings
+    'summernote': {
+
+        # Change editor size
+        'width': '100%',
+        'height': '480',
+
+        # Use proper language setting automatically (default)
+        'lang': None,
+
+        # Toolbar customization
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
+        'toolbar': [
+            ['font', ['bold', 'underline']],
+            ['color', ['black']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['view', ['fullscreen', 'help']],
+        ],
+    },
+
+    # Lazy initialization
+    # If you want to initialize summernote at the bottom of page,
+    # set this as True and call `initSummernote()` on your page.
+    'lazy': False,
+}
 
 WSGI_APPLICATION = 'druid.wsgi.application'
 

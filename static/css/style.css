@@ -282,6 +282,11 @@ footer li {
     fill: #494949;
 }
 
+/* blog posts */
+.blog-card-image {
+    max-width: 25%;
+}
+
 /* media query set at 992px as that is the bootstrap breakpoint to lg */
 @media (min-width: 992px) {
     .spacer {
