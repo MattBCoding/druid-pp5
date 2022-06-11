@@ -7,9 +7,9 @@
 <main>
     {% if user.is_staff %}
     <nav class="blog-nav">
-        <ul>
+        <ul class="d-flex justify-content-center">
             <li>
-                <a href="{% url 'add_blog_post' user.id %}" class="btn">Add Post</a>
+                <a href="{% url 'add_blog_post' %}" class="btn">Add Post</a>
             </li>
             <li>
                 <a href="" class="btn">Add Category</a>
@@ -17,18 +17,20 @@
         </ul>
     </nav>
     {% endif %}
-    <h3>Latest Blog Entries</h3>
+    <h3 class="mb-4">Latest Blog Entries</h3>
     {% for post in posts %}
-    <div class="blog-card-post-container d-flex">
-        {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
-        {% endif %}
-        <div class="blog-card-content-container">
-            <h5>{{ post.title }}</h5>
-            <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
-            <p>{{ post.content|slice:150|safe }}</p>
+    <a href="{% url 'blog_post_detail' post.slug %}">
+        <div class="blog-card-post-container d-flex mt-4 flex-column flex-sm-row">
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
+            {% endif %}
+            <div class="blog-card-content-container">
+                <h5>{{ post.title }}</h5>
+                <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
+                <p>{{ post.content|slice:150|safe }}</p>
+            </div>
         </div>
-    </div>
+    </a>
     {% endfor %}
 </main>
 

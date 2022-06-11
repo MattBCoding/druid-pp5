@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<section class="blog-hero-container d-flex justify-content-center align-items-center">
+    <h2>Musings of the Druids</h2>
+</section>
+<main>
+    {% if user.is_staff %}
+    <nav class="blog-nav">
+        <ul class="d-flex justify-content-center">
+            <li>
+                <a href="{% url 'edit_blog_post' post.slug %}" class="btn">Edit Post</a>
+            </li>
+            <li>
+                <a href="" class="btn">Delete Post</a>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+    <article class="blog-post-container mt-4">
+        <div class="row d-flex flex-column">
+
+            {% if post.image %}
+            <div class="blog-image-container col-10 mx-auto">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+            </div>
+            {% endif %}
+            <div class="blog-content-container col-10 mx-auto">
+                <h3 class="mb-4">{{ post.title }}</h3>
+                <h5>{{ post.author.get_full_name }}</h5>
+                <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
+                <p>{{ post.content|safe }}</p>
+            </div>
+
+        </div>
+    </article>
+</main>
+
+{% endblock %}

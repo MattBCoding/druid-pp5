@@ -284,7 +284,26 @@ footer li {
 
 /* blog posts */
 .blog-card-image {
-    max-width: 25%;
+    max-width: 100%;
+}
+
+.blog-nav > ul {
+    gap: 1rem;
+}
+
+.blog-nav li {
+    list-style: none;
+}
+
+.blog-card-post-container {
+    gap: 1rem;
+}
+
+/* media query set at 576px for the bootstrap breakpoint to sm */
+@media (min-width: 576px) {
+    .blog-card-image {
+        max-width: 25%;
+    }
 }
 
 /* media query set at 992px as that is the bootstrap breakpoint to lg */

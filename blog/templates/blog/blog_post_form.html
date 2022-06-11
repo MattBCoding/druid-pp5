@@ -2,8 +2,14 @@
 {% block body %}
 
 <main>
+    {% if post %}
+    <h2>Edit Blog Post</h2>
+    {% else %}
     <h2>Add Blog Post</h2>
-    <form action="{% url 'add_blog_post' profile.id %}" method="post" enctype="multipart/form-data">
+    {% endif %}
+    <form action="{% if post %}{% url 'edit_blog_post' post.slug %}{% else %}{% url 'add_blog_post' %}{% endif %}"
+          method="post"
+          enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
             {% if field.name != 'image' %}
@@ -12,7 +18,7 @@
                 {{ field }}
             {% endif %}
         {% endfor %}
-        <button type="submit">Add Blog Post</button>
+        <button type="submit">{% if post %}Save Changes{% else %}Add Blog Post{% endif %}</button>
     </form>
 </main>
 
