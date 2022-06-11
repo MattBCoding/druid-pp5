@@ -12,7 +12,9 @@
                 <a href="{% url 'edit_blog_post' post.slug %}" class="btn">Edit Post</a>
             </li>
             <li>
-                <a href="" class="btn">Delete Post</a>
+                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete Post
+                </button>
             </li>
         </ul>
     </nav>
@@ -35,5 +37,26 @@
         </div>
     </article>
 </main>
+{% if user.is_staff %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="delete-post-modal-heading" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-post-modal-heading">Delete Blog Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the blog post titled:</p>
+                <p>"<strong>{{ post.title }}</strong>"</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <a class="btn" href="{% url 'delete_blog_post' post.id %}">Delete Blog Post</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}

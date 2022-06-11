@@ -63,3 +63,14 @@ def editBlogPost(request, slug):
     }
 
     return render(request, 'blog/blog_post_form.html', context)
+
+@staff_member_required
+def deleteBlogPost(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    if request.user.is_staff:
+        post.delete()
+        messages.success(request, 'The post has been deleted.')
+        return redirect('blog')
+    else:
+        messages.error(request, 'Only employees can delete blog posts.')
+
