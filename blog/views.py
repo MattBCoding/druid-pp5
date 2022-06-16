@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from .forms import BlogPostForm, BlogCategoryForm
-from .models import BlogPost
+from .models import BlogPost, BlogCategory
 
 # Create your views here.
 User = get_user_model()
@@ -73,4 +73,13 @@ def deleteBlogPost(request, pk):
         return redirect('blog')
     else:
         messages.error(request, 'Only employees can delete blog posts.')
+
+@staff_member_required
+def getCategories(request):
+    categories = BlogCategory.objects.all()
+    context = {
+        'categories': categories,
+    }
+
+    return render(request, 'blog/snippets/categories.html', context)
 

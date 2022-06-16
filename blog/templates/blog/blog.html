@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
-{% block body %}
+{% load static %}
+{% if user.is_staff %}
+    {% block extra_js %}
+        <!-- htmx link -->
+        <script src="{% static 'js/htmx.min.js' %}" defer></script>
+        <!-- django-htmx debug code -->
+        {% load django_htmx %}
+        {% django_htmx_script %}
+    {% endblock %}
+{% endif %}
 
+{% block body %}
 <section class="blog-hero-container d-flex justify-content-center align-items-center">
     <h2>Musings of the Druids</h2>
 </section>
@@ -12,10 +22,13 @@
                 <a href="{% url 'add_blog_post' %}" class="btn">Add Post</a>
             </li>
             <li>
-                <a href="" class="btn">Add Category</a>
+                <button class="btn" hx-get="{% url 'get_categories' %}" hx-swap="innerHTML" hx-target="#categories-container" hx-trigger="click">Category Management</button>
             </li>
         </ul>
     </nav>
+    <div id="categories-container">
+
+    </div>
     {% endif %}
     <h3 class="mb-4">Latest Blog Entries</h3>
     {% for post in posts %}
