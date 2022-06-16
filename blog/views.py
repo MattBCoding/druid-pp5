@@ -107,3 +107,32 @@ def addBlogCategory(request):
 @staff_member_required
 def getAddBlogCategoryContainer(request):
     return render(request, 'blog/snippets/add_blog_category_container.html')
+
+
+@staff_member_required
+def editBlogCategory(request, pk):
+    category = BlogCategory.objects.get(pk=pk)
+    form = BlogCategoryForm(instance=category)
+    context = {
+        'category_form': form,
+        'category': category,
+    }
+    if request.htmx:
+        form = BlogCategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            category.refresh_from_db()
+            context = {
+                'category': category,
+            }
+            return render(request, 'blog/snippets/category_detail.html', context)
+
+    return render(request, 'blog/snippets/category_form.html', context)
+
+@staff_member_required
+def getBlogCategoryDetail(request, pk):
+    category = BlogCategory.objects.get(pk=pk)
+    context = {
+        'category': category,
+    }
+    return render(request, 'blog/snippets/category_detail.html', context)

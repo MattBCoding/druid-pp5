@@ -9,5 +9,7 @@ urlpatterns = [
     path('<slug:slug>/', views.blogPostDetail, name='blog_post_detail'),
     path('htmx/get-categories/', views.getCategories, name='get_categories'),
     path('htmx/add-category/', views.addBlogCategory, name='add_blog_category'),
-    path('htmx/add-blog-category-container/', views.getAddBlogCategoryContainer, name='get_add_blog_category_container')
+    path('htmx/add-blog-category-container/', views.getAddBlogCategoryContainer, name='get_add_blog_category_container'),
+    path('htmx/edit-category/<str:pk>/', views.editBlogCategory, name='edit_blog_category'),
+    path('htmx/get-blog-category-detail/<str:pk>/', views.getBlogCategoryDetail, name='get_blog_category_detail'),
 ]
