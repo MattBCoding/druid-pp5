@@ -299,6 +299,19 @@ footer li {
     gap: 1rem;
 }
 
+/* Mailchimp styling */
+
+#mc_embed_signup {
+    background: #fff;
+    clear: left;
+    font: 14px;
+}
+
+
+
+
+
+
 /* media query set at 576px for the bootstrap breakpoint to sm */
 @media (min-width: 576px) {
     .blog-card-image {
