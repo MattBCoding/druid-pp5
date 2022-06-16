@@ -83,3 +83,27 @@ def getCategories(request):
 
     return render(request, 'blog/snippets/categories.html', context)
 
+@staff_member_required
+def addBlogCategory(request):
+    form = BlogCategoryForm()
+    context = {
+        'category_form': form,
+    }
+    
+    if request.htmx:
+        form = BlogCategoryForm(request.POST)
+        if form.is_valid():
+            form.save(commit=False)
+            name = form.cleaned_data['name']
+            form.save()
+            category = BlogCategory.objects.get(name=name)
+            context = {
+                'category': category,
+            }
+            return render(request, 'blog/snippets/add_blog_category_container.html', context)
+    
+    return render(request, 'blog/snippets/add_category_form.html', context)
+
+@staff_member_required
+def getAddBlogCategoryContainer(request):
+    return render(request, 'blog/snippets/add_blog_category_container.html')
