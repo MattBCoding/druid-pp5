@@ -136,3 +136,30 @@ def getBlogCategoryDetail(request, pk):
         'category': category,
     }
     return render(request, 'blog/snippets/category_detail.html', context)
+
+@staff_member_required
+def getDeleteBlogCategory(request, pk):
+    category = BlogCategory.objects.get(pk=pk)
+    context = {
+        'category': category,
+    }
+    return render(request, 'blog/snippets/category_delete.html', context)
+
+@staff_member_required
+def deleteBlogCategory(request, pk):
+    if pk != '1':
+        category = BlogCategory.objects.get(pk=pk)
+        name = category.name
+        category.delete()
+        context = {
+            'name': name,
+        }
+        return render(request, 'blog/snippets/category_delete_response.html', context)
+
+    else:
+        messages.error(request, "Error - Administrator needed to delete the default category.")
+        posts = BlogPost.objects.all()
+        context = {
+            'posts': posts,
+        }
+        return render(request, 'blog/blog.html', context)
