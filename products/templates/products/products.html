@@ -4,6 +4,78 @@
 {% block body %}
 <main>
     <h2>All products page</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-9">
+                {% for product in products  %}
+                <div class="product-card card">
+
+                    {% if product.primary_image %}
+                    <a href="">
+                        <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid">
+                    </a>
+                    {% else %}
+                    <a href="">
+                        <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="card-img-top img-fluid">
+                    </a>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <h5 class="card-title">{{ product.price }}</h5>
+                        <div>
+                            {% comment %} add if statement to query stock level {% endcomment %}
+                            
+                            <span class="tag small my-1">In Stock</span>
+                            
+                            {% comment %} end of if statement querying stock level {% endcomment %}
+                            
+                            {% comment %} <a href=""> link to search {% endcomment %}
+                                <span class="tag small my-1">
+                                    <i class="fa-solid fa-tag"></i>{{ product.category.friendly_name }}
+                                </span>
+                            {% comment %} </a> {% endcomment %}
+                            
+                        </div>
+                        <div class="product-card-form mt-1">
+                            <form action="" method="POST" class="form">
+                                {% csrf_token %}
+                                <div class="form-row d-flex">
+                                    
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <button class="decrement-qty btn btn-black rounded-0" data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
+                                                    <span class="icon">
+                                                        <i class="fas fa-minus"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <input type="number" class="form-control qty_input" name="quantity" value="1" min="1" max="99" data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
+                                            <div class="input-group-append">
+                                                <button class="increment-qty btn btn-black rounded-0" data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
+                                                    <span class="icon">
+                                                        <i class="fas fa-plus"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <input type="submit" value="Add to Bag" class="btn btn-black rounded-0 text-uppercase">
+                                    </div>
+                                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </main>
 {% endblock %}
 {% block postloadjs %}

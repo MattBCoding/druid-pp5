@@ -307,8 +307,16 @@ footer li {
     font: 14px;
 }
 
+/* Product Card Styling */
+.product-card {
+    max-width: 300px;
+}
 
-
+.tag {
+    background: grey;
+    border-radius: 5px;
+    padding: 0.25rem 0.5rem;
+}
 
 
 
