@@ -4,7 +4,7 @@ from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
 class ProductAdmin(SummernoteModelAdmin):
-    summernote_fields = ('description',)
+    summernote_fields = ('description', 'highlights', 'technical_details',)
     list_display = (
         'sku',
         'name',
@@ -12,6 +12,7 @@ class ProductAdmin(SummernoteModelAdmin):
         'price',
         'rating',
         'primary_image',
+        'is_active',
     )
 
     ordering = ('sku',)
