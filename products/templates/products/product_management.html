@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<main>
+    <h2>Product Management Page</h2>
+    {% if user.is_staff %}
+    <nav class="product-management-nav">
+        <ul class="d-flex justify-content-center">
+            <li>
+                <a href="" class="btn">Add Product</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                {% for product in product_list %}
+                <div class="d-flex w-100 mt-2 p-2 justify-content-evenly align-items-center">
+                    <p>
+                        {{ product.name }}
+                    </p>
+                    <p>
+                        {{ product.price }}
+                    </p>
+                    <p>
+                        {{ product.sku }}
+                    </p>
+                    <a href="" class="btn">Edit</a>
+                    {% if product.is_active %}
+                    <a href="" class="btn">Deactivate</a>
+                    {% else %}
+                    <a href="" class="btn">Activate</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <p>This page is only accessible by authorised employees.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}
+{% block postloadjs %}
+{% endblock %}

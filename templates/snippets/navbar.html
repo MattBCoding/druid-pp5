@@ -112,7 +112,11 @@
                                 </a>
                                 
                                 <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-                                    
+                                    {% if user.is_staff %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'product_management' %}">Product Management</a>
+                                    </li>
+                                    {% endif %}
                                     <li>
                                         <a class="dropdown-item" href="#">My Orders</a>
                                     </li>
