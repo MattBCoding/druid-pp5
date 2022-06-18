@@ -43,7 +43,11 @@ class Product(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if self.slug:
+            if slugify(self.name) != self.slug:
+                self.slug = slugify(self.name)
+        else:
+            self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
 
 

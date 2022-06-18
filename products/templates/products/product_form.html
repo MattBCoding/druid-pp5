@@ -3,17 +3,21 @@
 
 {% block body %}
 <main>
+    {% if product %}
+    <h2>Edit Product</h2>
+    {% else %}
     <h2>Add Product</h2>
+    {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <form action="." method="post">
+                <form action="{% if product %}{% url 'edit_product' product.slug %}{% else %}.{% endif %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form  %}
                         {% if field.name != 'primary_image' %}
                             {{ field | as_crispy_field }}
                         {% else %}
-                            {{ field}}
+                            {{ field }}
                         {% endif %}
                     {% endfor %}
                     <button type="submit" class="btn">Save Product</button>
