@@ -1,6 +1,4 @@
 from django import forms
-
-from blog.widgets import CustomClearableFileInput
 from .models import BlogCategory, BlogPost
 from django_summernote.widgets import SummernoteWidget
 from .widgets import CustomClearableFileInput

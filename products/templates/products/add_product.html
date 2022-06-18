@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<main>
+    <h2>Add Product</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {% for field in form  %}
+                        {% if field.name != 'primary_image' %}
+                            {{ field | as_crispy_field }}
+                        {% else %}
+                            {{ field}}
+                        {% endif %}
+                    {% endfor %}
+                    <button type="submit" class="btn">Save Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block postloadjs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        let selector = document.getElementById('new-image');
+        selector.addEventListener('change', (event) => {
+            let file = selector.files[0];
+            let filename = document.getElementById('filename');
+            filename.textContent = `Primary product image will be set to: ${file.name}`;
+        });
+    </script>
+{% endblock %}

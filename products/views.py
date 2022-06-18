@@ -1,7 +1,8 @@
-from operator import is_
-from django.shortcuts import render
-from .models import Product, Category
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect
+from .forms import ProductForm
+from .models import Product, Category
 
 # Create your views here.
 
@@ -29,3 +30,23 @@ def product_management(request):
     }
     return render(request, 'products/product_management.html', context)
 
+@staff_member_required
+def add_product(request):
+    '''
+    view to add a product for employee access only
+    '''
+    form = ProductForm(request.POST or None, request.FILES or None)
+    context = {
+        'form': form,
+    }
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Product added successfully')
+            return redirect('product_management')
+        else:
+            messages.error(request, 'There is an error in the form.')
+
+    return render(request, 'products/add_product.html', context)
