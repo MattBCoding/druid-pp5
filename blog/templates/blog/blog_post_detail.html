@@ -12,7 +12,7 @@
                 <a href="{% url 'edit_blog_post' post.slug %}" class="btn">Edit Post</a>
             </li>
             <li>
-                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete-post-modal">
                     Delete Post
                 </button>
             </li>
@@ -39,7 +39,7 @@
 </main>
 {% if user.is_staff %}
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="delete-post-modal-heading" aria-hidden="true">
+<div class="modal fade" id="delete-post-modal" tabindex="-1" aria-labelledby="delete-post-modal-heading" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

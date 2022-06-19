@@ -1,0 +1,29 @@
+<div class="modal fade show" id="deactivate-product-modal" tabindex="-1" aria-labelledby="deactivate-product-modal-heading" aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                {% if product.is_active %}
+                <h5 class="modal-title" id="deactivate-product-modal-heading">Deactivate Product</h5>
+                {% else %}
+                <h5 class="modal-title" id="deactivate-product-modal-heading">Activate Product</h5>
+                {% endif %}
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if product.is_active %}
+                <p>Are you sure you want to deactivate <strong>{{ product.name }}</strong>? This will prevent it from being visible on the store.</p>
+                {% else %}
+                <p>Are you sure you want to Activate <strong>{{ product.name }}</strong>? This will enable customers to purchase it from the store.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                {% if product.is_active %}
+                <a class="btn" href="{% url 'deactivate_product' product.slug %}">Deactivate Product</a>
+                {% else %}
+                <a class="btn" href="{% url 'deactivate_product' product.slug %}">Activate Product</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

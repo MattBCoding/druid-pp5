@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
+{% if user.is_staff %}
+    {% block extra_js %}
+        <!-- htmx link -->
+        <script src="{% static 'js/htmx.min.js' %}" defer></script>
+        <!-- django-htmx debug code -->
+        {% load django_htmx %}
+        {% django_htmx_script %}
+    {% endblock %}
+{% endif %}
 
 {% block body %}
 <main>
@@ -28,9 +37,9 @@
                     </p>
                     <a href="{% url 'edit_product' product.slug %}" class="btn">Edit</a>
                     {% if product.is_active %}
-                    <a href="" class="btn">Deactivate</a>
+                    <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn">Deactivate</button>
                     {% else %}
-                    <a href="" class="btn">Activate</a>
+                    <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn">Activate</button>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -47,6 +56,11 @@
     </div>
     {% endif %}
 </main>
+{% if user.is_staff %}
+<!-- Modal -->
+<div id="modals-here"></div>
+
+{% endif %}
 {% endblock %}
 {% block postloadjs %}
 {% endblock %}

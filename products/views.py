@@ -70,3 +70,38 @@ def edit_product(request, slug):
         'product': product,
     }
     return render(request, 'products/product_form.html', context)
+
+@staff_member_required
+def deactivate_product_modal(request, slug):
+    '''
+    view to return the product information for the 
+    deactivate/activate product modal
+    '''
+    product = get_object_or_404(Product, slug=slug)
+    if request.htmx:
+        context = {
+            'product': product,
+        }
+        return render(request, 'products/snippets/product_deactivate_modal.html', context)
+
+@staff_member_required
+def deactivate_product(request, slug):
+    '''
+    view to handle activate or deactivate product requests
+    '''
+    product = get_object_or_404(Product, slug=slug)
+    if request.user.is_staff:
+        if product.is_active:
+            product.is_active = False
+            product.save()
+            messages.success(request, 'The product has been deactivated')
+            return redirect('product_management')
+        else:
+            product.is_active = True
+            product.save()
+            messages.success(request, 'The product has been activated')
+            return redirect('product_management')
+    else:
+        messages.error(request, 'Only employees can change a products activation status')
+
+
