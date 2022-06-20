@@ -40,7 +40,9 @@
         {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> {% endcomment %}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+        {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script> {% endcomment %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
         <!-- Stripe  -->
         <script src="https://js.stripe.com/v3/"></script>
         {% endblock %}
@@ -57,12 +59,19 @@
 
         <div class="spacer"></div>
         {% if messages %}
-        <div class="message-container mt-4">
+        <div class="message-container">
             {% for message in messages %}
-                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-                    <p class="m-2">{{message}}</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="closeAlert"></button>
-                </div>
+                {% with message.level as level %}
+                    {% if level == 40 %}
+                        {% include 'snippets/toasts/toast_error.html' %}
+                    {% elif level == 30 %}
+                        {% include 'snippets/toasts/toast_warning.html' %}
+                    {% elif level == 25 %}
+                        {% include 'snippets/toasts/toast_success.html' %}
+                    {% else %}
+                        {% include 'snippets/toasts/toast_info.html' %}
+                    {% endif %}
+                {% endwith %}
             {% endfor %}
         </div>
         {% endif %}
@@ -78,6 +87,19 @@
 
         <script src="{% static 'js/script.js' %}"></script>
         {% block postloadjs %}
+        <script type="text/javascript">
+            {% comment %} $('.toast').toast('show'); {% endcomment %}
+            const toastElList = document.querySelectorAll('.toast')
+            const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl))
+            toastList.forEach(toast => {
+                toast.show()
+            });
+            {% comment %} let closeBtns = document.querySelectorAll('.close')
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => toast.hide())
+            }); {% endcomment %}
+            
+        </script>
         {% endblock %}
         {% block mailchimpjs %}
         {% endblock %}

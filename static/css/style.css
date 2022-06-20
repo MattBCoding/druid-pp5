@@ -430,6 +430,28 @@ paste text in from other documents. Needs important tag.
     cursor: pointer;
 }
 
+/* Toast styling */
+.message-container {
+    position: fixed;
+    top: 150px;
+    right: 20px;
+    z-index: 99999;
+    max-width: max(25%, 280px);
+}
+
+.custom-toast {
+    overflow: visible;
+}
+
+.toast-capper {
+    height: 5px;
+}
+
+.toast {
+    /* width: 100%; */
+    max-width: 100%
+}
+
 
 /* media query set at 576px for the bootstrap breakpoint to sm */
 @media (min-width: 576px) {
