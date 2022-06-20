@@ -318,7 +318,94 @@ footer li {
     padding: 0.25rem 0.5rem;
 }
 
+/* Product Detail Page */
+#image-container {
+    border: 1px solid red;
+    max-height: 750px;
+}
 
+/* .carousel-item.active {
+    max-height: calc(100% - 100px) !important;
+} */
+
+.carousel-item.active > img {
+    max-height: 650px !important;
+    object-fit: cover;
+    margin: auto;
+}
+
+
+.carousel-image {
+    object-fit: cover;
+    max-height: 100% !important;
+    width: 100%;
+}
+
+.carousel {
+    height: 100%;
+}
+
+.carousel-indicators {
+    height: 100px;
+    position: relative;
+    margin: 0;
+}
+
+.carousel-inner {
+    max-height: calc(100% - 100px);
+}
+
+.list-inline-item {
+    height: 100px;
+}
+
+.carousel-indicators [data-bs-target] {
+    margin: 0;
+    border: 0;
+}
+
+.grayscale {
+    filter: grayscale(100%);
+}
+
+.highlights-image-container,
+.tech-details-image-container {
+    position: relative;
+    min-width: 40%;
+}
+
+.highlights-image-container > div,
+.tech-details-image-container > div {
+    position: absolute;
+    top: 20%;
+    height: 60%;
+    width: 100%;
+    background-color: red;
+    opacity: 0.5;
+    z-index: 10;
+}
+
+.highlights-image-container > img,
+.tech-details-image-container > img {
+    margin: auto;
+}
+
+.tech-details-image-container > div {
+    background-color: orange;
+}
+
+
+
+
+/* Summernote text field styling */
+/* 
+overrides font styling that might be included when users
+paste text in from other documents. Needs important tag.
+*/
+
+.note-editable {
+    font-family: 'Montserrat', sans-serif !important;
+}
 
 /* media query set at 576px for the bootstrap breakpoint to sm */
 @media (min-width: 576px) {

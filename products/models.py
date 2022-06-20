@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -55,3 +56,7 @@ class Image(models.Model):
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE, related_name='images')
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
+    name = models.CharField(max_length=254, null=True, blank=True)
+
+    def __str__(self):
+        return self.name

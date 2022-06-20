@@ -12,13 +12,13 @@
                 <div class="product-card card">
 
                     {% if product.primary_image %}
-                    <a href="">
+                    <a href="{% url 'product_detail' product.slug %}">
                         <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid">
                     </a>
-                    {% else %}
-                    <a href="">
+                    {% comment %} {% else %}
+                    <a href="{% url 'product_detail' product.slug %}">
                         <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="card-img-top img-fluid">
-                    </a>
+                    </a> {% endcomment %}
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
@@ -79,4 +79,6 @@
 </main>
 {% endblock %}
 {% block postloadjs %}
+{{ block.super }}
+{% include 'products/snippets/quantity_input_script.html' %}
 {% endblock %}

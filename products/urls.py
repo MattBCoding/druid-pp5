@@ -8,4 +8,5 @@ urlpatterns = [
     path('management/edit_product/<slug:slug>/', views.edit_product, name='edit_product'),
     path('management/deactivate_product/<slug:slug>/', views.deactivate_product, name='deactivate_product'),
     path('management/htmx/deactivate_product_modal/<slug:slug>/', views.deactivate_product_modal, name='deactivate_product_modal'),
+    path('<slug:slug>/', views.product_detail, name='product_detail'),
 ]

@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProductForm
 from .models import Product, Category
 
+
 # Create your views here.
 
 def all_products(request):
@@ -18,6 +19,16 @@ def all_products(request):
         'products': products,
     }
     return render(request, 'products/products.html', context)
+
+def product_detail(request, slug):
+    '''
+    product detail view for individual products
+    '''
+    product = get_object_or_404(Product, slug=slug)
+    context = {
+        'product': product,
+    }
+    return render(request, 'products/product_detail.html', context)
 
 @staff_member_required
 def product_management(request):
