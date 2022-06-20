@@ -414,9 +414,6 @@ footer li {
     background-color: orange;
 }
 
-
-
-
 /* Summernote text field styling */
 /* 
 overrides font styling that might be included when users
@@ -426,6 +423,13 @@ paste text in from other documents. Needs important tag.
 .note-editable {
     font-family: 'Montserrat', sans-serif !important;
 }
+
+/* shopping bag styling */
+.update-link,
+.remove-item {
+    cursor: pointer;
+}
+
 
 /* media query set at 576px for the bootstrap breakpoint to sm */
 @media (min-width: 576px) {
