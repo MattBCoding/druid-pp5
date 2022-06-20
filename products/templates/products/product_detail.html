@@ -52,6 +52,7 @@
                             </div>
                             {% endfor %}
                         </div>
+                        {% if product.images.all %}
                         <ol class="carousel-indicators list-inline" id="button-container">
                           {% comment %} <button type="button" data-bs-target="#product-image-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                           <button type="button" data-bs-target="#product-image-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -86,9 +87,10 @@
                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Next</span>
                         </button>
+                        {% endif %}
                       </div>
                 </div>
-                <div class="d-flex col-12 col-lg-6">
+                <div class="d-flex col-12 col-lg-6 mt-4 mt-lg-0">
                     <div class="">
                         <h5 class="">{{ product.name }}</h5>
                         <h5 class="">{{ product.price }}</h5>
@@ -155,27 +157,31 @@
             {{product.description|safe}}
         </div>
         <div class="my-4">
-            <div class="d-flex flex-column-reverse flex-xl-row-reverse align-items-center justify-content-between">
+            <div class="d-flex flex-column-reverse flex-xl-row-reverse align-items-center justify-content-between gap">
                 <div class="p-2">
                     <h6>Highlights</h6>
                     {{product.highlights|safe}}
                 </div>
+                {% if product.images.all %}
                 <div class="highlights-image-container">
                     <div></div>
                     <img src="{{ product.images.all.0.image.url }}" alt="{{ product.images.all.0.name }}" class="grayscale">
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="my-4">
-            <div class="d-flex flex-column-reverse flex-xl-row align-items-center justify-content-between">
+            <div class="d-flex flex-column-reverse flex-xl-row align-items-center justify-content-between gap">
                 <div class="p-2">
                     <h6>Technical Details</h6>
                     {{product.technical_details|safe}}
                 </div>
+                {% if product.images.all %}
                 <div class="tech-details-image-container">
                     <div></div>
                     <img src="{{ product.images.all.1.image.url }}" alt="{{ product.images.all.1.name }}" class="grayscale">
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

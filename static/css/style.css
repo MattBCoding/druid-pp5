@@ -129,6 +129,10 @@ body {
     }
 }
 
+.gap {
+    gap: 1rem;
+}
+
 /* nav bar styling  */
 
 .navbar {
@@ -371,14 +375,14 @@ footer li {
 .highlights-image-container,
 .tech-details-image-container {
     position: relative;
-    min-width: 40%;
+    min-width: 50%;
 }
 
 .highlights-image-container > div,
 .tech-details-image-container > div {
     position: absolute;
-    top: 20%;
-    height: 60%;
+    top: 25%;
+    height: 50%;
     width: 100%;
     background-color: red;
     opacity: 0.5;

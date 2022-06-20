@@ -62,23 +62,23 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cases</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=cases">Cases</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Desks</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=desks">Desks</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Distroplates</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=distroplates">Distroplates</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Fixtures</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=fixtures">Fixtures</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Merchandise</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=merchandise">Merchandise</a>
                         </li>
                         
                         <li class="nav-item">
@@ -180,8 +180,8 @@
 </nav>
 
 <div id="search-form-container">
-    <form class="search-form" role="search" id='search-form'>
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="search-form" role="search" id='search-form' method="get" action="{% url 'products' %}">
+        <input class="form-control me-2" type="text" placeholder="Search Our Products" aria-label="Search our products" name="q" value="{% if search_query %}{{ search_query }}{% endif %}">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
