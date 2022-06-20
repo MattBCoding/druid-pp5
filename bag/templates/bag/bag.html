@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h2>Shopping Bag Page</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if bag_items %}
+                    <div class="table-responsive rounded"></div>
+                {% else %}
+                <p class="lead my-5">Your shopping bag is currently empty.</p>
+                <a href="{% url 'products' %}" class="btn">
+                    <span>
+                        <i class="fa fa-chevron-left"></i>
+                    </span>
+                    <span>Keep Shopping</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+</main>
+{% endblock %}
+{% block postloadjs %}
+{{ block.super }}
+{% include 'products/snippets/quantity_input_script.html' %}
+{% endblock %}

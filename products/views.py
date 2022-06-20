@@ -16,7 +16,6 @@ def all_products(request):
     # only return active products
     products = Product.objects.all().filter(is_active=True)
     query = None
-    category = None
 
     if request.GET:
         if 'category' in request.GET:
