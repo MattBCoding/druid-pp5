@@ -163,14 +163,17 @@
                 <div id="cart-container">
                     <a href="{% url 'view_bag' %}">
                         <div>
-                            <div>
+                            <div class="cart-icon">
                                 <i class="fas fa-shopping-cart">
                                     <span class="sr-only">Shopping Cart</span>
                                 </i>
+                                <div class="product-count-container">
+                                    {% if product_count %}
+                                    <span class="product-count">{{ product_count}}</span>
+                                    {% endif %}
+                                    <!-- Cart total details go in here -->
+                                </div>
                             </div>
-                            <p>
-                                <!-- Cart total details go in here -->
-                            </p>
                         </div>
                     </a>
                 </div>

@@ -38,7 +38,8 @@
                             
                         </div>
                         <div class="product-card-form mt-1">
-                            <form action="" method="POST" class="form">
+                            <!-- Add product to bag form -->
+                            <form action="{% url 'add_to_bag' product.id %}" method="POST" class="form">
                                 {% csrf_token %}
                                 <div class="form-row d-flex">
                                     

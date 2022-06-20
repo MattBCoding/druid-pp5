@@ -7,36 +7,6 @@
     <div class="container-fluid">
         <div class="row">
                 <div id="image-container" class="col-12 col-lg-6">
-                    {% comment %} <div id="featured-image-container" class="m-auto m-xxl-0">
-                        {% if product.primary_image %}
-                        <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="featured-image" />
-                        {% else %}
-                        <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="featured-image" />
-                        {% endif %}
-                    </div>
-                    {% if product.images.all %}
-                    <div id="slide-container" class="d-flex flex-row flex-xl-column"> {% endcomment %}
-                        {% comment %} <i class="fa-solid fa-chevron-up"></i> {% endcomment %}
-                        {% comment %} <span class="arrow" id="slide-left">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </span>
-                        
-                        <div id="slider" class="d-flex flex-row flex-xl-column">
-                            {% if product.primary_image %}
-                            <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="thumbnail active" />
-                            {% else %}
-                            <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="thumbnail active" />
-                            {% endif %}
-                            {% for object in product.images.all  %}
-                            <img src="{{ object.image.url }}" alt="{{ object.name }}" class="thumbnail" />
-                            {% endfor %}
-                        </div>
-                        <span class="arrow" id="slide-right">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </span> {% endcomment %}
-                        {% comment %} <i class="fa-solid fa-chevron-down"></i> {% endcomment %}
-                    {% comment %} </div>
-                    {% endif %} {% endcomment %}
                     <div id="product-image-carousel" class="carousel slide" data-bs-ride="true">
                         <div class="carousel-inner">
                           <div class="carousel-item active">
@@ -54,11 +24,6 @@
                         </div>
                         {% if product.images.all %}
                         <ol class="carousel-indicators list-inline" id="button-container">
-                          {% comment %} <button type="button" data-bs-target="#product-image-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                          <button type="button" data-bs-target="#product-image-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                          <button type="button" data-bs-target="#product-image-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                          
-                          <button type="button" data-bs-target="#product-image-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> {% endcomment %}
                           <li class="list-inline-item active">
                               <a class="selected" id="carousel-selector-0" data-bs-slide-to="0" data-bs-target="#product-image-carousel">
                                 {% if product.primary_image %}
@@ -112,7 +77,8 @@
                             <p>{{ product.description|safe }}</p>
                         </div>
                         <div class="mt-1">
-                            <form action="" method="POST" class="form">
+                            <!-- Add to bag form -->
+                            <form action="{% url 'add_to_bag' product.id %}" method="POST" class="form">
                                 {% csrf_token %}
                                 <div class="form-row d-flex flex-direction-column">
                                     <div class="form-group">
@@ -135,7 +101,7 @@
                                         </div>
                                     </div>
 
-                                    <div>
+                                    <div class="">
                                         <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 mt-5">
                                             <span class="icon">
                                                 <i class="fas fa-chevron-left"></i>
