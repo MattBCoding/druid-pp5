@@ -180,6 +180,35 @@ body {
     position: relative;
 }
 
+.cart-icon > i {
+    position: relative;
+    z-index: 50;
+}
+
+.product-count-one,
+.product-count-two,
+.product-count-three {
+    height: 8px;
+    width: 4px;
+    background: rgb(91, 91, 91);
+    position: absolute;
+}
+
+.product-count-one {
+    top: 2px;
+    left: 8px;
+}
+
+.product-count-two {
+    top: 0;
+    left: 12px;
+}
+
+.product-count-three {
+    top: 2px;
+    left: 16px;
+}
+
 .product-count-container {
     position: absolute;
     top: -10px;
@@ -190,6 +219,7 @@ body {
     padding: .2rem;
     border-radius: 50%;
     border: 1px solid black;
+    z-index: 100;
 }
 
 /* Search Section styling  */
@@ -428,6 +458,14 @@ paste text in from other documents. Needs important tag.
 .update-link,
 .remove-item {
     cursor: pointer;
+}
+
+.table-image > img {
+    max-height: 100px;
+}
+
+.table-qty-form {
+    width: 125px;
 }
 
 /* Toast styling */

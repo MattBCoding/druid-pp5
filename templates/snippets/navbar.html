@@ -164,15 +164,25 @@
                     <a href="{% url 'view_bag' %}">
                         <div>
                             <div class="cart-icon">
+                                {% if product_count == 1 %}
+                                <span class="product-count-one"></span>
+                                {% elif product_count == 2 %}
+                                <span class="product-count-one"></span>
+                                <span class="product-count-two"></span>
+                                {% elif product_count >= 3 %}
+                                <span class="product-count-one"></span>
+                                <span class="product-count-two"></span>
+                                <span class="product-count-three"></span>
+                                {% endif %}
                                 <i class="fas fa-shopping-cart">
                                     <span class="sr-only">Shopping Cart</span>
                                 </i>
+                                {% if product_count %}
                                 <div class="product-count-container">
-                                    {% if product_count %}
-                                    <span class="product-count">{{ product_count}}</span>
-                                    {% endif %}
+                                    <span class="product-count">{{ product_count }}</span>
                                     <!-- Cart total details go in here -->
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </a>
