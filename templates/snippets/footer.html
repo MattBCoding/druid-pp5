@@ -1,18 +1,5 @@
-{% block mailchimpcss %}
-
-<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7_dtp.css" rel="stylesheet" type="text/css" />
-
-{% endblock %}
-
 <footer class="d-flex flex-column flex-lg-row-reverse justify-content-evenly">
     <div class="newsletter-container">
-        {% comment %} <h3>Newsletter Signup</h3>
-        <form action="" method="post" class="form-floating mb-3">
-            {% csrf_token %}
-            <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" />
-            <label for="floatingInputEmail">Email address</label>
-            <input type="submit" value="Subscribe" class="mt-2" />
-        </form> {% endcomment %}
         <!-- Begin Mailchimp Signup Form -->
         <div id="mc_embed_signup">
             <form
@@ -58,23 +45,27 @@
                     Products
                     <ul>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cases</a>
+                            <a class="nav-link" href="{% url 'products' %}">All Products</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Desks</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=cases">Cases</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'products' %}?category=desks">Desks</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Distroplates</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=distroplates">Distroplates</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Fixtures</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=fixtures">Fixtures</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Merchandise</a>
+                            <a class="nav-link" href="{% url 'products' %}?category=merchandise">Merchandise</a>
                         </li>
                     </ul>
                 </li>
@@ -82,7 +73,7 @@
                     Information
                     <ul>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Blog</a>
+                            <a class="nav-link" href="{% url 'blog' %}">Blog</a>
                         </li>
                         
                         <li class="nav-item">
@@ -107,7 +98,7 @@
                             <a class="dropdown-item" href="#">My Orders</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">My Profile</a>
+                            <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />
@@ -133,27 +124,3 @@
         </nav>
     </div>
 </footer>
-{% block mailchimpjs %}
-
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-<script type="text/javascript">
-    (function ($) {
-        window.fnames = new Array();
-        window.ftypes = new Array();
-        fnames[0] = "EMAIL";
-        ftypes[0] = "email";
-        fnames[1] = "FNAME";
-        ftypes[1] = "text";
-        fnames[2] = "LNAME";
-        ftypes[2] = "text";
-        fnames[3] = "ADDRESS";
-        ftypes[3] = "address";
-        fnames[4] = "PHONE";
-        ftypes[4] = "phone";
-        fnames[5] = "BIRTHDAY";
-        ftypes[5] = "birthday";
-    })(jQuery);
-    var $mcj = jQuery.noConflict(true);
-</script>
-
-{% endblock %}
