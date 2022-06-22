@@ -14,7 +14,7 @@ def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
-    if request.method == "POST":
+    if request.method == 'POST':
         print('If the CSRF Token is in the post data')
         print('-------------------------------------')
         print(request.POST.get('csrfmiddlewaretoken'))
@@ -25,8 +25,8 @@ def checkout(request):
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
             'phone_number': request.POST['phone_number'],
-            'street_address1': request.POST['street_address_1'],
-            'street_address2': request.POST['street_address_2'],
+            'street_address_1': request.POST['street_address_1'],
+            'street_address_2': request.POST['street_address_2'],
             'town_or_city': request.POST['town_or_city'],
             'county': request.POST['county'],             
             'postcode': request.POST['postcode'],
@@ -34,6 +34,7 @@ def checkout(request):
         }
         order_form = OrderForm(form_data)
         if order_form.is_valid():
+            print('checkout function order_form is valid')
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
