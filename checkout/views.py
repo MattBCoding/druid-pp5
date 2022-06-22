@@ -1,13 +1,19 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.conf import settings
 from .forms import OrderForm
 from checkout.models import Order, OrderLineItem
 from products.models import Product
 from bag.contexts import bag_contents
+from profiles.utils import getAddresses
+from profiles.models import Address
+from profiles.forms import AddressForm
 import stripe
 import json
+
+User = get_user_model()
 
 # Create your views here.
 def checkout(request):
@@ -20,7 +26,6 @@ def checkout(request):
         print(request.POST.get('csrfmiddlewaretoken'))
         print('-------------------------------------')
         bag = request.session.get('bag', {})
-
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -35,6 +40,8 @@ def checkout(request):
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             print('checkout function order_form is valid')
+            print('CHECK OF REQUEST.POST SAVE INFO VALUE')
+            print(request.POST.get('save_info'))
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
@@ -58,6 +65,8 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
             request.session['save_info'] = 'save_info' in request.POST
+            print('Testing the save info line')
+            print(request.session['save_info'])
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, 'There was an error with your form. \
@@ -77,12 +86,56 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
-        order_form = OrderForm()
+        if request.user.is_authenticated:
+            print('user is logged in')
+            try:
+                print('start of try block')
+                profile = get_object_or_404(User, pk=request.user.id)
+                print('found user profile')
+                if profile.address.filter(default__exact=True).exists():
+                    print('Found default Address')
+                    default = get_object_or_404(Address, user=profile, default=True)
+                    print(profile.get_full_name())
+                    print(profile.email)
+                    print(default.phone_number)
+                    print(default.street_address_1)
+                    print(default.street_address_2)
+                    print(default.town_or_city)
+                    print(default.county)
+                    print(default.postcode)
+                    print(default.country)
+                    order_form = OrderForm(initial={
+                        'full_name': profile.get_full_name(),
+                        'email': profile.email,
+                        'phone_number': default.phone_number,
+                        'street_address_1': default.street_address_1,
+                        'street_address_2': default.street_address_2,
+                        'town_or_city': default.town_or_city,
+                        'county': default.county,
+                        'postcode': default.postcode,
+                        'country': default.country,
+                    })
+                else:
+                    order_form = OrderForm()
+            except profile.address.DoesNotExist:
+                print(' profile.address does not exist ------------------')
+                order_form = OrderForm()
+            if getAddresses(request):
+                print('getAddresses found addresses')
+                addresses = getAddresses(request)
+            else:
+                print('getAddresses did not find addresses')
+                addresses = False
+        else:
+            order_form = OrderForm()
+            addresses = False
+        
         template = 'checkout/checkout.html'
         context = {
             'order_form': order_form,
             'stripe_public_key': stripe_public_key,
             'client_secret': intent.client_secret,
+            'addresses': addresses,
         }
 
         return render(request, template, context)
@@ -91,8 +144,36 @@ def checkout_success(request, order_number):
     '''
     Handles successful checkouts
     '''
+    print('START OF CHECKOUT SUCCESS')
     save_info = request.session.get('save_info')
+    print(save_info)
     order = get_object_or_404(Order, order_number=order_number)
+
+    if request.user.is_authenticated:
+        profile = get_object_or_404(User, pk=request.user.id)
+        order.user_profile = profile
+        order.save()
+
+        # save the new user address
+        if save_info:
+            address_data = {
+                'street_address_1': order.street_address_1,
+                'street_address_2': order.street_address_2,
+                'town_or_city': order.town_or_city,
+                'county': order.county,
+                'postcode': order.postcode,
+                'country': order.country,
+                'phone_number': order.phone_number,
+            }
+            address_form = AddressForm(address_data)
+            print('checking address form is valid')
+            if address_form.is_valid():
+                print('it is valid')
+                address_form.save(commit=False)
+                print('saved but false')
+                address_form.user = profile
+                print('added user profile to address form')
+                address_form.save()
 
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
@@ -109,6 +190,8 @@ def checkout_success(request, order_number):
 
 @require_POST
 def cache_checkout_data(request):
+    print('Start of cache checkout data')
+    print(request.POST.get('save_info'))
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
