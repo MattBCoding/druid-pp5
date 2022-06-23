@@ -13,6 +13,18 @@ class Order(models.Model):
     Users orders are recorded in this model.
     Full details are recorded for company reference
     '''
+    CONFIRMED = 'CON'
+    PENDING = 'PEN'
+    SHIPPED = 'SHIP'
+    CLOSED = 'DEL'
+    CANCELLED = 'CAN'
+    STATUS_CHOICES = [
+        (CONFIRMED, 'Confirmed'),
+        (PENDING, 'Awaiting Shipment'),
+        (SHIPPED, 'Shipped'),
+        (CLOSED, 'Closed'),
+        (CANCELLED, 'Cancelled'),
+    ]
     order_number = models.CharField(max_length=32, null=False, editable=False)
     user_profile = models.ForeignKey(
                                      User,
@@ -65,6 +77,13 @@ class Order(models.Model):
                                   blank=False,
                                   default=''
                                   )
+    order_status = models.CharField(
+                                    max_length=10,
+                                    null=False,
+                                    blank=False,
+                                    choices=STATUS_CHOICES,
+                                    default=CONFIRMED
+                                    )
 
     def _generate_order_number(self):
         """
