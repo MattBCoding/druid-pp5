@@ -1,3 +1,4 @@
+from pyexpat import model
 from django import forms
 from .models import Order
 
@@ -44,3 +45,12 @@ class OrderForm(forms.ModelForm):
                 self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False
+
+
+class OrderStatusForm(forms.ModelForm):
+    '''
+    Form for employees to update the status of a customers order
+    '''
+    class Meta:
+        model = Order
+        fields = ('order_status',)

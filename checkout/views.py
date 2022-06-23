@@ -1,9 +1,11 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.views.decorators.http import require_POST
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.conf import settings
-from .forms import OrderForm
+from .forms import OrderForm, OrderStatusForm
 from checkout.models import Order, OrderLineItem
 from products.models import Product
 from bag.contexts import bag_contents
@@ -222,3 +224,28 @@ def cache_checkout_data(request):
         messages.error(request, 'Sorry your payment cannot be \
             processed right now. Please try again later.')
         return HttpResponse(content=e, status=400)
+
+@staff_member_required
+def update_order_status(request, order_number):
+    '''
+    A view to handle updates to the order status of a given order
+    '''
+    order = get_object_or_404(Order, order_number=order_number)
+    form = OrderStatusForm(instance=order)
+
+    if request.method == 'POST':
+        form = OrderStatusForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Order updated successfully.')
+            # change this in future to correct place
+            return redirect('home')
+        else:
+            messages.error(request, 'Failed to update order, double check the form')
+    
+    context = {
+        'form': form,
+        'order': order,
+    }
+    template = 'checkout/update_order_status.html'
+    return render(request, template, context)
