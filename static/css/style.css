@@ -133,6 +133,11 @@ body {
     gap: 1rem;
 }
 
+a {
+    color: #000;
+    text-decoration: none;
+}
+
 /* nav bar styling  */
 
 .navbar {

@@ -92,7 +92,21 @@ def checkout(request):
                 print('start of try block')
                 profile = get_object_or_404(User, pk=request.user.id)
                 print('found user profile')
-                if profile.address.filter(default__exact=True).exists():
+                if 'address_id' in request.GET:
+                    print('ADDRESS ID PASSED INTO VIEW')
+                    address = Address.objects.get(pk=request.GET['address_id'])
+                    order_form = OrderForm(initial={
+                        'full_name': profile.get_full_name(),
+                        'email': profile.email,
+                        'phone_number': address.phone_number,
+                        'street_address_1': address.street_address_1,
+                        'street_address_2': address.street_address_2,
+                        'town_or_city': address.town_or_city,
+                        'county': address.county,
+                        'postcode': address.postcode,
+                        'country': address.country,
+                    })
+                elif profile.address.filter(default__exact=True).exists():
                     print('Found default Address')
                     default = get_object_or_404(Address, user=profile, default=True)
                     print(profile.get_full_name())
@@ -116,8 +130,11 @@ def checkout(request):
                         'country': default.country,
                     })
                 else:
-                    order_form = OrderForm()
-            except profile.address.DoesNotExist:
+                    order_form = OrderForm(initial={
+                        'full_name': profile.get_full_name(),
+                        'email': profile.email,                        
+                    })
+            except Exception:
                 print(' profile.address does not exist ------------------')
                 order_form = OrderForm()
             if getAddresses(request):
