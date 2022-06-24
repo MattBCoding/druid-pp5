@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% if user.is_authenticated %}
+    {% block extra_js %}
+        <!-- htmx link -->
+        <script src="{% static 'js/htmx.min.js' %}" defer></script>
+        <!-- django-htmx debug code -->
+        {% load django_htmx %}
+        {% django_htmx_script %}
+    {% endblock %}
+{% endif %}
 {% block body %}
 <main>
     <h2 class="sr-only">{{product.name}} product page</h2>
@@ -45,20 +53,29 @@
 
                         </ol>
                         <button class="carousel-control-prev" type="button" data-bs-target="#product-image-carousel" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
                         </button>
                         <button class="carousel-control-next" type="button" data-bs-target="#product-image-carousel" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
                         </button>
                         {% endif %}
-                      </div>
+                    </div>
                 </div>
                 <div class="d-flex col-12 col-lg-6 mt-4 mt-lg-0">
                     <div class="">
+
                         <h5 class="">{{ product.name }}</h5>
-                        <h5 class="">{{ product.price }}</h5>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="">€ {{ product.price }}</h5>
+                            {% if user.is_authenticated %}
+                            <div id="favourite-container">
+                                {% include 'products/snippets/favourite.html' %}
+                            </div>
+                            {% endif %}
+                        </div>
+
                         <div>
                             {% comment %} add if statement to query stock level {% endcomment %}
                             <span class="tag small my-1">In Stock</span>
@@ -98,9 +115,9 @@
                                                     </span>
                                                 </button>
                                             </div>
+                                            <input type="hidden" name="redirect_url" value="{{ request.path }}" />
                                         </div>
                                     </div>
-
                                     <div class="">
                                         <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 mt-5">
                                             <span class="icon">
@@ -110,7 +127,6 @@
                                         </a>
                                         <input type="submit" value="Add to Bag" class="btn btn-black rounded-0 text-uppercase" />
                                     </div>
-                                    <input type="hidden" name="redirect_url" value="{{ request.path }}" />
                                 </div>
                             </form>
                         </div>
@@ -156,5 +172,8 @@
 {% block postloadjs %}
 {{ block.super }}
 {% include 'products/snippets/quantity_input_script.html' %}
-
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
 {% endblock %}

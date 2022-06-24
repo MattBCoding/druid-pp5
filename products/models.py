@@ -2,7 +2,10 @@ from unicodedata import name
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
+
+User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Category(models.Model):
@@ -39,6 +42,7 @@ class Product(models.Model):
             "Unselect this instead of deleting products."
         ),
     )
+    favourites = models.ManyToManyField(User, blank=True, default=None, related_name='product_favourites')
 
     def __str__(self):
         return self.name
@@ -50,6 +54,9 @@ class Product(models.Model):
         else:
             self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
+
+    def get_favourites(self):
+        return self.favourites_set.all()
 
 
 class Image(models.Model):

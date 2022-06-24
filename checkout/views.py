@@ -1,4 +1,3 @@
-from multiprocessing import context
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse, Http404
@@ -14,7 +13,7 @@ from bag.contexts import bag_contents
 from profiles.utils import getAddresses
 from profiles.models import Address
 from profiles.forms import AddressForm
-from .filters import OrderFilter
+from .filters import OrderFilter, UserOrderFilter
 import stripe
 import json
 
@@ -313,7 +312,7 @@ def my_orders(request):
     '''
     if request.user.is_authenticated:
         orders = Order.objects.all().filter(user_profile=request.user)
-        my_filter = OrderFilter(request.GET, queryset=orders)
+        my_filter = UserOrderFilter(request.GET, queryset=orders)
         orders = my_filter.qs
         title = 'My Order History'
 

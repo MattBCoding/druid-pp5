@@ -45,8 +45,13 @@ def product_detail(request, slug):
     product detail view for individual products
     '''
     product = get_object_or_404(Product, slug=slug)
+    favourite = False
+    if product.favourites.filter(id=request.user.id).exists():
+        favourite = True
+
     context = {
         'product': product,
+        'favourite': favourite,
     }
     return render(request, 'products/product_detail.html', context)
 

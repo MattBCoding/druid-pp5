@@ -2,9 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model, logout
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .forms import AddressForm, DeleteUserForm, EditUserForm
 from .models import Address
 from .utils import getAddresses
+from products.models import Product
 
 User = get_user_model()
 # Create your views here.
@@ -133,3 +136,33 @@ def editUserAccount(request, pk):
     else:
         messages.error(request, 'Error - you can not access that users account')
         return redirect('profile')
+
+@login_required
+def favourite(request, pk):
+    '''
+    View to add or remove user to product favourite list
+    '''
+    product = get_object_or_404(Product, pk=pk)
+    slug = product.slug
+    favourite = False
+    if product.favourites.filter(id=request.user.id).exists():
+        product.favourites.remove(request.user)
+        favourite = False
+    else:
+        product.favourites.add(request.user)
+        favourite = True
+    if request.htmx:
+        context = {
+            'product': product,
+            'favourite': favourite
+        }
+        return render(request, 'products/snippets/favourite.html', context)
+    # backup for htmx failure
+    if request.method == 'POST':
+        context = {
+            'product': product,
+            'favourite': favourite
+        }
+        return render(request, 'products/snippets/favourite.html', context)
+
+    return HttpResponseRedirect(reverse('product_detail', args=[slug]))
