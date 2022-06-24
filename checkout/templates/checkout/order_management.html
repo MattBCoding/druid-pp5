@@ -1,18 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% if user.is_staff %}
-    {% block extra_js %}
-        <!-- htmx link -->
-        <script src="{% static 'js/htmx.min.js' %}" defer></script>
-        <!-- django-htmx debug code -->
-        {% load django_htmx %}
-        {% django_htmx_script %}
-    {% endblock %}
-{% endif %}
 
 {% block body %}
 <main>
-    <h2 class="mb-4">Order Management</h2>
+    <h2 class="mb-4">{{title}}</h2>
     <div class="my-4">
         <form action="" method="get">
             {{ my_filter.form|crispy}}
@@ -37,49 +28,22 @@
                             </div>
                             <div>{{ order.grand_total }}</div>
                             <div class="d-flex flex-column align-items-center">
+                                {% if user.is_staff %}
                                 <div>{{ order.full_name }}</div>
                                 <div>{{ order.phone_number }}</div>
+                                {% endif %}
                                 <div>{{ order.date }}</div>
                                 <div>{{ order.get_order_status_display }}</div>
                             </div>
+                            {% if title == 'Order Management' %}
+                            {% if user.is_staff %}
                             <a href="{% url 'update_order_status' order.order_number %}" class="btn mt-4">Update Status</a>
+                            {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-                {% comment %} <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Order #</th>
-                            <th scope="col">Order Date</th>
-                            <th scope="col">Order Items</th>
-                            <th scope="col">Order Total</th>
-                            <th scope="col">Customer</th>
-                            <th scope="col">Contact #</th>
-                            <th scope="col">Order Status</th>
-                            <th scope="col">Select</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        {% for order in orders %}
-                        <tr>
-                            <td>{{ order.order_number }}</td>
-                            <td>{{ order.date }}</td>
-                            <td>{% for item in order.lineitems.all %}
-                                <span>{{ item.product.name }}</span>
-                                <span>x {{ item.quantity }}</span>
-                                {% endfor %}
-                            </td>
-
-                            <td>€{{ order.grand_total }}</td>
-                            <td>{{ order.full_name }}</td>
-                            <td>{{ order.phone_number }}</td>
-                            <td>{{ order.get_order_status_display }}</td>
-                            <td> Update Button </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table> {% endcomment %}
             </div>
             {% else %}
                 <p>No orders found!</p>
@@ -90,9 +54,7 @@
 
 {% endblock %}
 
-
 {% block postloadjs %}
-{{ block.super }}
 <script>
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

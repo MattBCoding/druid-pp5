@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse, Http404
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.conf import settings
@@ -239,11 +240,13 @@ def order_management(request):
     orders = Order.objects.all()
     my_filter = OrderFilter(request.GET, queryset=orders)
     orders = my_filter.qs
+    title = 'Order Management'
 
     template = 'checkout/order_management.html'
     context = {
         'orders': orders,
-        'my_filter': my_filter, 
+        'my_filter': my_filter,
+        'title': title,
     }
     return render(request, template, context)
 
@@ -261,7 +264,7 @@ def update_order_status(request, order_number):
             form.save()
             messages.success(request, 'Order updated successfully.')
             # change this in future to correct place
-            return redirect('orer_management')
+            return redirect('order_management')
         else:
             messages.error(request, 'Failed to update order, double check the form')
     
@@ -301,4 +304,23 @@ def order_status_hx(request):
         'order_date': order_date,
     }
     template = 'checkout/snippets/order_status.html'
+    return render(request, template, context)
+
+@login_required
+def my_orders(request):
+    '''
+    View for logged in users to access their order history
+    '''
+    if request.user.is_authenticated:
+        orders = Order.objects.all().filter(user_profile=request.user)
+        my_filter = OrderFilter(request.GET, queryset=orders)
+        orders = my_filter.qs
+        title = 'My Order History'
+
+    template = 'checkout/order_management.html'
+    context = {
+        'orders': orders,
+        'my_filter': my_filter,
+        'title': title,
+    }
     return render(request, template, context)
