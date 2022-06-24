@@ -144,25 +144,37 @@ def favourite(request, pk):
     '''
     product = get_object_or_404(Product, pk=pk)
     slug = product.slug
-    favourite = False
+    # favourite = False
     if product.favourites.filter(id=request.user.id).exists():
         product.favourites.remove(request.user)
-        favourite = False
+        # favourite = False
     else:
         product.favourites.add(request.user)
-        favourite = True
+        # favourite = True
     if request.htmx:
         context = {
             'product': product,
-            'favourite': favourite
+            # 'favourite': favourite
         }
         return render(request, 'products/snippets/favourite.html', context)
-    # backup for htmx failure
+    # handle update from my wishlist page
     if request.method == 'POST':
+        products = Product.objects.filter(favourites=request.user)
         context = {
-            'product': product,
-            'favourite': favourite
+            'products': products,
+            # 'favourite': favourite
         }
-        return render(request, 'products/snippets/favourite.html', context)
+        return render(request, 'profiles/my_favourites.html', context)
 
     return HttpResponseRedirect(reverse('product_detail', args=[slug]))
+
+@login_required
+def my_favourites(request):
+    '''
+    View to handle user requests to view their product wishlist
+    '''
+    products = Product.objects.all().filter(favourites=request.user)
+    context = {
+        'products': products,
+    }
+    return render(request, 'profiles/my_favourites.html', context)

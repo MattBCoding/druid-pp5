@@ -1,17 +1,13 @@
-{% if favourite %}
-    <form action="{% url 'favourite' product.id %}" method="post" data-hx-post="{% url 'favourite' product.id %}" data-hx-swap="outerHTML" data-hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        {% csrf_token %}
-        <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove this product from your wishlist">
-            <i class="fa-solid fa-heart"></i>
-            {% comment %} <span class="ml-1">Remove from Wishlist</span> {% endcomment %}
-        </button>
-    </form>
+<form action="{% url 'favourite' product.id %}" method="post" data-hx-post="{% url 'favourite' product.id %}" data-hx-swap="outerHTML" data-hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {% csrf_token %}
+    
+    {% if product in request.user.product_favourites.all %}
+    <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" title="Remove this product from your wishlist" id="wishlist-btn">
+        <i class="fa-solid fa-heart"></i>
+    </button>
     {% else %}
-    <form action="{% url 'favourite' product.id %}" method="post" data-hx-post="{% url 'favourite' product.id %}" data-hx-swap="outerHTML" data-hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        {% csrf_token %}
-        <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add to your wishlist">
-            <i class="fa-regular fa-heart"></i>
-            {% comment %} <span class="ml-1">Add to Wishlist</span> {% endcomment %}
-        </button>
-    </form>
-{% endif %}
+    <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" title="Add to your wishlist"  id="wishlist-btn">
+        <i class="fa-regular fa-heart"></i>
+    </button>
+    {% endif %}
+</form>

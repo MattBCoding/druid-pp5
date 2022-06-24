@@ -486,6 +486,19 @@ paste text in from other documents. Needs important tag.
     min-width: 2rem;
 }
 
+/* My Favourites Page */
+.product-favourites-image {
+    max-height: 100px;
+}
+
+.product-favourites-name {
+    max-width: 240px;
+}
+
+.favourite-row-input {
+    max-width: 78px;
+}
+
 /* Toast styling */
 .message-container {
     position: fixed;
