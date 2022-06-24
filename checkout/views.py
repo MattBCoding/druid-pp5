@@ -12,6 +12,7 @@ from bag.contexts import bag_contents
 from profiles.utils import getAddresses
 from profiles.models import Address
 from profiles.forms import AddressForm
+from .filters import OrderFilter
 import stripe
 import json
 
@@ -224,6 +225,26 @@ def cache_checkout_data(request):
         messages.error(request, 'Sorry your payment cannot be \
             processed right now. Please try again later.')
         return HttpResponse(content=e, status=400)
+
+@staff_member_required
+def order_management(request):
+    '''
+    Employee view to access order details
+    '''
+    # filter form uses range filter for date as per filters.py
+    # at 00:40 filter for orders placed yesterday does not work
+    # suspect its due to being first hour of the day - so won't work
+    # need to test after 1am and first digit of time has changed.
+    orders = Order.objects.all()
+    my_filter = OrderFilter(request.GET, queryset=orders)
+    orders = my_filter.qs
+
+    template = 'checkout/order_management.html'
+    context = {
+        'orders': orders,
+        'my_filter': my_filter, 
+    }
+    return render(request, template, context)
 
 @staff_member_required
 def update_order_status(request, order_number):

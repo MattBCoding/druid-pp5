@@ -473,6 +473,19 @@ paste text in from other documents. Needs important tag.
     width: 125px;
 }
 
+/* Order Management Page */
+.order-number-truc {
+    cursor: pointer;
+}
+
+.order-card {
+    width: 250px;
+}
+
+.order-card span {
+    min-width: 2rem;
+}
+
 /* Toast styling */
 .message-container {
     position: fixed;
