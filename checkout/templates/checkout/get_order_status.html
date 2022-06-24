@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% if user.is_staff %}
+    {% block extra_js %}
+        <!-- htmx link -->
+        <script src="{% static 'js/htmx.min.js' %}" defer></script>
+        <!-- django-htmx debug code -->
+        {% load django_htmx %}
+        {% django_htmx_script %}
+    {% endblock %}
+{% endif %}
+
+{% block body %}
+<main>
+    <h2 class="mb-4">Order Status</h2>
+    <div class="my-4">
+        <form action="" method="GET" data-hx-get="{% url 'order_status_hx' %}" data-hx-swap="innerHTML" data-hx-target="#order-status-target" class="d-flex flex-column flex-md-row gap order-status-form">
+            {% csrf_token %}
+            <label for="order_number" class="form-label mb-1">Order Number</label>
+            <input type="text" name="order_number" id="order_number" class="form-control">
+            <button type="submit" class="btn">Search</button>
+        </form>
+    </div>
+
+    <div class="row" id="order-status-target">
+        <div class="col-12">
+            <p>Enter your order number to get the latest order status.</p>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
+
+{% block postloadjs %}
+
+{% endblock postloadjs %}

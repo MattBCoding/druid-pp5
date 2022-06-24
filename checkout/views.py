@@ -1,6 +1,7 @@
 from multiprocessing import context
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.decorators.http import require_POST
+from django.http import HttpResponse, Http404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -260,7 +261,7 @@ def update_order_status(request, order_number):
             form.save()
             messages.success(request, 'Order updated successfully.')
             # change this in future to correct place
-            return redirect('home')
+            return redirect('orer_management')
         else:
             messages.error(request, 'Failed to update order, double check the form')
     
@@ -269,4 +270,35 @@ def update_order_status(request, order_number):
         'order': order,
     }
     template = 'checkout/update_order_status.html'
+    return render(request, template, context)
+
+def order_status(request):
+    '''
+    View to handle requests to view the status of a given order
+    '''
+    context = {}
+    template = 'checkout/get_order_status.html'
+    return render(request, template, context)
+
+def order_status_hx(request):
+    '''
+    View to handle the HX request to retrieve the order status
+    '''
+    if not request.htmx:
+        raise Http404
+    try:
+        order_number = request.GET.get('order_number').upper()
+        order = get_object_or_404(Order, order_number=order_number)
+        order_status = order.get_order_status_display
+        order_date = order.date
+    except:
+        order = None
+    if order is None:
+        return HttpResponse('No order found')
+    context = {
+        'order_number': order_number,
+        'order_status': order_status,
+        'order_date': order_date,
+    }
+    template = 'checkout/snippets/order_status.html'
     return render(request, template, context)
