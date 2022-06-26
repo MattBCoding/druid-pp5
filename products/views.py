@@ -1,9 +1,11 @@
 import email
+from itertools import product
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from checkout.models import OrderLineItem, Order
 from .forms import ProductForm, ReviewForm, ResponseForm
@@ -84,6 +86,47 @@ def product_detail(request, slug):
         'response_form': response_form,
     }
     return render(request, 'products/product_detail.html', context)
+
+@login_required
+def product_review_receiver(request, pk):
+    '''
+    View to handle a form submission to add or edit a product review
+    from a user. User must be logged in and must have purchased the product to
+    submit a review. Product detail view should prevent users accessing the form
+    without having purchased the product in most instances.
+    '''
+    form = ReviewForm(request.POST)
+    print(form)
+    author = request.user
+    print(author)
+    product = get_object_or_404(Product, pk=pk)
+    print(product)
+    if Order.objects.filter(
+                            user_profile=author,
+                            lineitems__product__pk=pk
+                            ):
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.author = author
+            print(review.author)
+            review.product = product
+            print(review.product)
+            review.save()
+            messages.success(
+                            request,
+                            'Product review has been added successfully.\n'
+                            'Thank you for your feedback.'
+                            )
+            return redirect(reverse('product_detail', args=[product.slug]))
+        else:
+            messages.error(
+                           request,
+                           'Something went wrong. \n'
+                           'Please double check your form.')
+    else:
+        messages.error(
+                       request,
+                       'You need to have purchased the product to provide a review')
 
 @staff_member_required
 def product_management(request):

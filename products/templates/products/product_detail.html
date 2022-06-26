@@ -217,7 +217,7 @@
                 <div class="col-12 col-md-10 col-lg-8 mx-auto">
                     <h6>Add a Review</h6>
                     <p>As you have purchased this product, you can leave a review below to help the rest of our community if you wish.</p>
-                    <form action="" method="POST">
+                    <form action="{% url 'product_review_receiver' product.id %}" method="POST">
                         {% csrf_token %}
                         {{ review_form|crispy }}
                         <button type="submit" class="btn">Submit</button>
