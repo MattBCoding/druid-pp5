@@ -1,6 +1,5 @@
-from re import S
 from django import forms
-from .models import Category, Product 
+from .models import Category, Product, Review, Response 
 from django_summernote.widgets import SummernoteWidget
 from blog.widgets import CustomClearableFileInput
 
@@ -10,7 +9,7 @@ class ProductForm(forms.ModelForm):
     '''
     class Meta:
         model = Product
-        exclude = ('slug',)
+        exclude = ('slug', 'favourites',)
         widgets = {
             'description': SummernoteWidget(),
             'highlights': SummernoteWidget(),
@@ -24,3 +23,26 @@ class ProductForm(forms.ModelForm):
         categories = Category.objects.all()
         names = [(c.id, c.friendly_name) for c in categories]
         self.fields['category'].choices = names
+
+
+class ReviewForm(forms.ModelForm):
+    '''
+    Form for customers to add a review of a product they have purchased
+    '''
+    class Meta:
+        model = Review
+        exclude = ('product', 'author',)
+
+
+class ResponseForm(forms.ModelForm):
+    '''
+    Form for employees to add a response to a customer review
+    '''
+    class Meta:
+        model = Response
+        fields = {
+            'response',
+        }
+        widgets = {
+            'response': SummernoteWidget(),
+        }

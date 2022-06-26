@@ -1,4 +1,3 @@
-from unicodedata import name
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -67,3 +66,20 @@ class Image(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE, related_name='review')
+    author = models.ForeignKey(User, null=True, blank=False, on_delete=models.SET_NULL, related_name='product_review')
+    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    review = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=128, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Response(models.Model):
+    review = models.ForeignKey(Review, null=False, blank=False, on_delete=models.CASCADE, related_name='response')
+    author = models.ForeignKey(User, null=False, blank=False, on_delete=models.SET_DEFAULT, related_name='response_author', default=1)
+    response = models.TextField(blank=False, null=False)
