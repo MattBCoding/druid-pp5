@@ -1,5 +1,6 @@
 import email
 from itertools import product
+from webbrowser import get
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.admin.views.decorators import staff_member_required
@@ -96,11 +97,8 @@ def product_review_receiver(request, pk):
     without having purchased the product in most instances.
     '''
     form = ReviewForm(request.POST)
-    print(form)
     author = request.user
-    print(author)
     product = get_object_or_404(Product, pk=pk)
-    print(product)
     if Order.objects.filter(
                             user_profile=author,
                             lineitems__product__pk=pk
@@ -127,6 +125,42 @@ def product_review_receiver(request, pk):
         messages.error(
                        request,
                        'You need to have purchased the product to provide a review')
+
+@login_required
+def hx_get_edit_review_form(request, pk):
+    '''
+    View to return the edit review form
+    '''
+    review = get_object_or_404(Review, pk=pk)
+    form = ReviewForm(request.POST or None, instance=review)
+    context = {'form': form, 'review': review}
+    return render(request, 'products/snippets/edit_product_review.html', context)
+
+@login_required
+def update_review_receiver(request, pk):
+    '''
+    View to receive update review form
+    '''
+    review = get_object_or_404(Review, pk=pk)
+    product = get_object_or_404(Product, pk=review.product.id)
+    author = request.user
+    if request.method == 'POST':
+        if review.author == author:
+            form = ReviewForm(request.POST, instance=review)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Review successfully updated')
+                return redirect(reverse('product_detail', args=[product.slug]))
+            else:
+                messages.error(request, 'There is a problem with your review submission. Please check the form and try again.')
+        else:
+            messages.error(request, 'Only the original author of the review can edit it')
+            return redirect(reverse('product_detail', args=[product.slug]))
+    else:
+        messages.error(request, 'Something went wrong, please try again')
+        return redirect(reverse('product_detail', args=[product.slug]))
+
+
 
 @staff_member_required
 def product_management(request):

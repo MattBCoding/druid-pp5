@@ -172,43 +172,55 @@
                     <h6>Reviews</h6>
                     <div class="review-container flex-column d-flex">
                         {% if reviews %}
-                        {% for review in reviews %}
-                        {% if review.title %}
-                        <div class="d-flex gap">
-                            <div class="subtitle">
-                                <span>
-                                    {{ review.author.first_name }} {{ review.author.last_name|slice:':1' }}
-                                </span>
-                            </div>
-                            <div>
-                                <h6 class="subtitle">
-                                    {{ review.title }}
-                                </h6>
-                            </div>
-                        </div>
+                            {% for review in reviews %}
+                                <div id="review-container-{{review.id}}">
+                                    {% if review.title %}
+                                    <div class="d-flex gap">
+                                        <div class="subtitle">
+                                            <span>
+                                                {{ review.author.first_name }} {{ review.author.last_name|slice:':1' }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h6 class="subtitle">
+                                                {{ review.title }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if review.review %}
+                                    <div class="review-body-container d-flex flex-column gap">
+                                        <div id="review-body-{{review.id}}">
+                                            {{ review.review }}
+                                        </div>
+                                        {% for co_response in review.response.all  %}
+                                        <div class="d-flex gap flex-column align-items-end">
+                                            <p> 
+                                                {{ co_response.response }}
+                                            </p>
+                                            <p>
+                                                {{ co_response.author.first_name }} at Druid Computers
+                                            </p>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    {% if request.user.is_authenticated %}
+                                        <div class="d-flex gap button-container">
+                                            {% if review.author == request.user %}
+                                                <a href="{% url 'get_update_review_form' review.id %}" class="btn" data-hx-get="{% url 'get_update_review_form' review.id %}" data-hx-target="#review-container-{{review.id}}" data-hx-trigger="click" data-hx-swap="innerHTML">Edit Post</a>
+                                            {% endif %}
+                                            {% if request.user.is_staff %}
+                                                <a href="" class="btn">Respond to Post</a>
+                                                <a href="" class="btn">Delete Review</a>
+                                            {% endif %}
+                                        </div>
+                                        <div id="response-form"></div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            {% else %}
                         {% endif %}
-                        {% if review.review %}
-                        <div class="review-body-container d-flex flex-column gap">
-                            <div id="review-body-{{review.id}}">
-                                {{ review.review }}
-                            </div>
-                            {% for co_response in review.response.all  %}
-                            <div class="d-flex gap flex-column align-items-end">
-                                <p> 
-                                    {{ co_response.response }}
-                                </p>
-                                <p>
-                                    {{ co_response.author.first_name }} at Druid Computers
-                                </p>
-                            </div>
-                            
-                        </div>{% endfor %}
-                        {% endif %}
-                        
-                        {% endfor %}
-                        {% else %}
-                        {% endif %}
-        
                     </div>
                 </div>
             </div>

@@ -1,0 +1,5 @@
+<form action="{% url 'update_review_receiver' review.id %}" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn">Submit</button>
+</form>
