@@ -18,7 +18,11 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-md-10 col-lg-8 mx-auto d-flex flex-column gap justify-content-evenly">    
+                <div class="col-12 col-md-10 col-lg-8 mx-auto d-flex flex-column gap justify-content-evenly">
+                    {% if products|length_is:"0" %}
+                    <p class="mt-2">You have no products in your wishlist.</p>
+                    <p>How about taking a look at some of the products we have available by visiting our <a href="{% url 'products' %}">products page</a>.</p>
+                    {% endif %}    
                     {% for product in products %}
                     <div class="product-favourites-row d-flex gap flex-column flex-lg-row justify-content-evenly">
                         

@@ -1,12 +1,17 @@
+import email
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.db.models import Q
-from .forms import ProductForm
-from .models import Product, Category
+
+from checkout.models import OrderLineItem, Order
+from .forms import ProductForm, ReviewForm, ResponseForm
+from .models import Product, Category, Review, Response
 
 
 # Create your views here.
+User = get_user_model()
 
 def all_products(request):
     '''
@@ -48,10 +53,35 @@ def product_detail(request, slug):
     favourite = False
     if product.favourites.filter(id=request.user.id).exists():
         favourite = True
+    reviews = Review.objects.all().filter(product=product)
+    can_review = False
+    # check if user has previously purchased the product
+    if request.user.is_authenticated:
+        print('user is authenticated')
+        user = User.objects.get(email=request.user.email)
+        user_orders = [order.id for order in Order.objects.filter(user_profile=user)]
+        line_items = OrderLineItem.objects.filter(order__pk__in=user_orders, product__pk=product.id).exists()
+        #check if the user has previously written a review
+        if line_items:
+            print('user has purchased the product')
+            can_review = True
+            if reviews.filter(author=user).exists():
+                print('user has reviewed before')
+                can_review = False
+        else:
+            print('user has not purchased the product')
+    else:
+        print(request.user)
 
+    review_form = ReviewForm()
+    response_form = ResponseForm()
     context = {
         'product': product,
         'favourite': favourite,
+        'reviews': reviews,
+        'can_review': can_review,
+        'review_form': review_form,
+        'response_form': response_form,
     }
     return render(request, 'products/product_detail.html', context)
 

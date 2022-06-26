@@ -1,3 +1,4 @@
+from dataclasses import fields
 from django import forms
 from .models import Category, Product, Review, Response 
 from django_summernote.widgets import SummernoteWidget
@@ -31,7 +32,16 @@ class ReviewForm(forms.ModelForm):
     '''
     class Meta:
         model = Review
-        exclude = ('product', 'author',)
+        fields = {
+            'title',
+            'review',
+            'rating',
+        }
+        field_order = {
+            'title',
+            'review',
+            'rating'
+        }
 
 
 class ResponseForm(forms.ModelForm):

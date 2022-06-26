@@ -69,9 +69,21 @@ class Image(models.Model):
 
 
 class Review(models.Model):
+    ONE = 1.0
+    TWO = 2.0
+    THREE = 3.0
+    FOUR = 4.0
+    FIVE = 5.0
+    RATING_CHOICES = [
+        (ONE, '1'),
+        (TWO, '2'),
+        (THREE, '3'),
+        (FOUR, '4'),
+        (FIVE, '5'),
+    ]
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE, related_name='review')
     author = models.ForeignKey(User, null=True, blank=False, on_delete=models.SET_NULL, related_name='product_review')
-    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    rating = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, choices=RATING_CHOICES, default=FIVE)
     review = models.TextField(blank=True, null=True)
     title = models.CharField(max_length=128, null=True, blank=True)
 

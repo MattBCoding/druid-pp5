@@ -166,6 +166,67 @@
                 {% endif %}
             </div>
         </div>
+        <div class="my-4">
+            <div class="row">
+                <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                    <h6>Reviews</h6>
+                    <div class="review-container flex-column d-flex">
+                        {% if reviews %}
+                        {% for review in reviews %}
+                        {% if review.title %}
+                        <div class="d-flex gap">
+                            <div class="subtitle">
+                                <span>
+                                    {{ review.author.first_name }} {{ review.author.last_name|slice:':1' }}
+                                </span>
+                            </div>
+                            <div>
+                                <h6 class="subtitle">
+                                    {{ review.title }}
+                                </h6>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if review.review %}
+                        <div class="review-body-container d-flex flex-column gap">
+                            <div id="review-body-{{review.id}}">
+                                {{ review.review }}
+                            </div>
+                            {% for co_response in review.response.all  %}
+                            <div class="d-flex gap flex-column align-items-end">
+                                <p> 
+                                    {{ co_response.response }}
+                                </p>
+                                <p>
+                                    {{ co_response.author.first_name }} at Druid Computers
+                                </p>
+                            </div>
+                            
+                        </div>{% endfor %}
+                        {% endif %}
+                        
+                        {% endfor %}
+                        {% else %}
+                        {% endif %}
+        
+                    </div>
+                </div>
+            </div>
+            {% if can_review %}
+            <div class="row">
+                <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                    <h6>Add a Review</h6>
+                    <p>As you have purchased this product, you can leave a review below to help the rest of our community if you wish.</p>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ review_form|crispy }}
+                        <button type="submit" class="btn">Submit</button>
+                    </form>
+                    
+                </div>
+            </div>
+            {% endif %}
+        </div>
     </div>
 </main>
 {% endblock %}
