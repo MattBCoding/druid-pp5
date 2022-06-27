@@ -212,7 +212,13 @@
                                                 <span id="delete-button-container"><a href="" class="btn" data-hx-get="" data-hx-target="#delete-button-container" data-hx-trigger="click" data-hx-swap="innerHTML">Delete Review</a></span>
                                             {% endif %}
                                             {% if request.user.is_staff %}
-                                                <a href="{% url 'get_response_form' review.id %}" class="btn" data-hx-get="{% url 'get_response_form' review.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Respond to Post</a>
+                                                {% if review.response.all %}
+                                                    {% for co_response in review.response.all %}
+                                                        <a href="{% url 'get_edit_response_form' co_response.id %}" class="btn" data-hx-get="{% url 'get_edit_response_form' co_response.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Edit Response</a>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <a href="{% url 'get_response_form' review.id %}" class="btn" data-hx-get="{% url 'get_response_form' review.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Respond to Post</a>
+                                                {% endif %}
                                                 <a href="" class="btn">Delete Review</a>
                                             {% endif %}
                                         </div>
@@ -227,7 +233,7 @@
             </div>
             {% if can_review %}
             <div class="row">
-                <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                <div class="col-12 col-md-10 col-lg-8 mx-auto mt-2">
                     <h6>Add a Review</h6>
                     <p>As you have purchased this product, you can leave a review below to help the rest of our community if you wish.</p>
                     <form action="{% url 'product_review_receiver' product.id %}" method="POST">

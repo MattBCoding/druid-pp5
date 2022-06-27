@@ -1,6 +1,7 @@
 import email
 from itertools import product
 from multiprocessing import context
+import re
 from webbrowser import get
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -137,6 +138,21 @@ def hx_get_edit_review_form(request, pk):
     context = {'form': form, 'review': review}
     return render(request, 'products/snippets/edit_product_review.html', context)
 
+@staff_member_required
+def hx_get_edit_response_form(request, pk):
+    '''
+    View to return the edit response form
+    '''
+    response = get_object_or_404(Response, pk=pk)
+    review = get_object_or_404(Review, pk=response.review.id)
+    form = ResponseForm(request.POST or None, instance=response)
+    context = {
+        'form': form,
+        'response': response,
+        'review_response': review
+        }
+    return render(request, 'products/snippets/review_response_form.html', context)
+
 @login_required
 def update_review_receiver(request, pk):
     '''
@@ -185,6 +201,31 @@ def review_response_receiver(request, pk):
     else:
         messages.error(request, 'Something went wrong, please try again')
         return redirect(reverse('product_detail', args=[product.slug]))
+
+@staff_member_required
+def edit_response_receiver(request, pk):
+    '''
+    View to handle response edit submissions
+    '''
+    response = get_object_or_404(Response, pk=pk)
+    review = get_object_or_404(Review, pk=response.review.id)
+    product = get_object_or_404(Product, pk=review.product.id)
+    if request.method == 'POST':
+        form = ResponseForm(request.POST, instance=response)
+        if form.is_valid():
+            edit_response = form.save(commit=False)
+            edit_response.author = request.user
+            edit_response.save()
+            messages.success(request, 'Response successfully edited')
+            return redirect(reverse('product_detail', args=[product.slug]))
+        else:
+            messages.error(request, 'There is something wrong with the form')
+            return redirect(reverse('product_detail', args=[product.slug]))
+    else:
+        messages.error(request, 'Something went wrong, please try again')
+        return redirect(reverse('product_detail', args=[product.slug]))
+
+
 
 @login_required
 def hx_get_delete_modal(request, pk):
