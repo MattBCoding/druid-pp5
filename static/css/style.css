@@ -529,6 +529,10 @@ paste text in from other documents. Needs important tag.
     overflow-y: auto;
 }
 
+/* All Auth Templates */
+.password_change {
+    max-width: 500px;
+}
 
 /* media query set at 576px for the bootstrap breakpoint to sm */
 @media (min-width: 576px) {
