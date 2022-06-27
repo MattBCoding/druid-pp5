@@ -196,7 +196,7 @@
                                         {% for co_response in review.response.all  %}
                                         <div class="d-flex gap flex-column align-items-end">
                                             <p> 
-                                                {{ co_response.response }}
+                                                {{ co_response.response|safe }}
                                             </p>
                                             <p>
                                                 {{ co_response.author.first_name }} at Druid Computers
@@ -212,16 +212,16 @@
                                                 <span id="delete-button-container"><a href="" class="btn" data-hx-get="" data-hx-target="#delete-button-container" data-hx-trigger="click" data-hx-swap="innerHTML">Delete Review</a></span>
                                             {% endif %}
                                             {% if request.user.is_staff %}
-                                                <a href="" class="btn">Respond to Post</a>
+                                                <a href="{% url 'get_response_form' review.id %}" class="btn" data-hx-get="{% url 'get_response_form' review.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Respond to Post</a>
                                                 <a href="" class="btn">Delete Review</a>
                                             {% endif %}
                                         </div>
-                                        <div id="response-form"></div>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
                                     {% endif %}
-                                </div>
-                            {% endfor %}
-                            {% else %}
-                        {% endif %}
+                                    <div id="response-form"></div>
                     </div>
                 </div>
             </div>

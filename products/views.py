@@ -1,5 +1,6 @@
 import email
 from itertools import product
+from multiprocessing import context
 from webbrowser import get
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -160,6 +161,31 @@ def update_review_receiver(request, pk):
         messages.error(request, 'Something went wrong, please try again')
         return redirect(reverse('product_detail', args=[product.slug]))
 
+@staff_member_required
+def review_response_receiver(request, pk):
+    '''
+    View to receive employee responses to user reviews
+    '''
+    review = get_object_or_404(Review, pk=pk)
+    product = get_object_or_404(Product, pk=review.product.id)
+    employee = request.user
+    if request.method == 'POST':
+        form = ResponseForm(request.POST)
+        if form.is_valid():
+            response = form.save(commit=False)
+            response.author = employee
+            response.review = review
+            response.save()
+            print(response)
+            messages.success(request, 'Response recorded successfully')
+            return redirect(reverse('product_detail', args=[product.slug]))
+        else:
+            messages.error(request, 'There is something wrong with the form')
+            return redirect(reverse('product_detail', args=[product.slug]))
+    else:
+        messages.error(request, 'Something went wrong, please try again')
+        return redirect(reverse('product_detail', args=[product.slug]))
+
 @login_required
 def hx_get_delete_modal(request, pk):
     '''
@@ -173,6 +199,19 @@ def hx_get_delete_modal(request, pk):
             'delete_review': review,
         }
         return render(request, 'products/snippets/delete_review_button.html', context)
+
+@staff_member_required
+def hx_get_response_form(request, pk):
+    '''
+    View to return the form for employees to respond to customer reviews
+    '''
+    review = get_object_or_404(Review, pk=pk)
+    form = ResponseForm()
+    context = {
+        'form': form,
+        'review_response': review
+        }
+    return render(request, 'products/snippets/review_response_form.html', context)
 
 @staff_member_required
 def product_management(request):
