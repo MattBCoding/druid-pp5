@@ -5,14 +5,17 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from .forms import BlogPostForm, BlogCategoryForm
 from .models import BlogPost, BlogCategory
+from products.utils import paginateProducts
 
 # Create your views here.
 User = get_user_model()
 
 def blog(request):
     posts = BlogPost.objects.all()
+    custom_range, posts = paginateProducts(request, posts, 4)
     context = {
         'posts': posts,
+        'custom_range': custom_range,
     }
     return render(request, 'blog/blog.html', context)
 

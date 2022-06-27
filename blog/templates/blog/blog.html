@@ -45,6 +45,8 @@
         </div>
     </a>
     {% endfor %}
+    {% include 'snippets/pagination.html' with query_set=posts custom_range=custom_range %}
+
 </main>
 
 {% endblock %}
