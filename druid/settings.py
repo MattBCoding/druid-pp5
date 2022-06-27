@@ -85,7 +85,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-SUMMERNOTE_THEME = 'bs5' # Show summernote with Bootstrap5
+SUMMERNOTE_THEME = 'bs4' # Show summernote with Bootstrap5
 
 TEMPLATES = [
     {
@@ -187,17 +187,31 @@ SUMMERNOTE_CONFIG = {
         # Use proper language setting automatically (default)
         'lang': None,
 
+        'fontNames': ['Montserrat'],
+        'fontNamesIgnoreCheck': ['Montserrat'],
+        'fontSizes': ['16',],
+        'fontSizeUnits': ['px'],
         # Toolbar customization
         # https://summernote.org/deep-dive/#custom-toolbar-popover
         'toolbar': [
             ['font', ['bold', 'underline']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['fontSizes', ['16']],
             ['color', ['black']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['table', ['table']],
             ['view', ['fullscreen', 'help']],
         ],
     },
-
+    # pointing summernote at css file for custom rule implementation
+    # kept seperate as other rules already loading into page
+    'css': (
+        '/static/css/summernote.css',
+    ),
+    'js': (
+        '/static/js/summernote.js',
+    ),
     # Lazy initialization
     # If you want to initialize summernote at the bottom of page,
     # set this as True and call `initSummernote()` on your page.

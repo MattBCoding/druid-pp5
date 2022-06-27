@@ -464,8 +464,10 @@ overrides font styling that might be included when users
 paste text in from other documents. Needs important tag.
 */
 
-.note-editable {
+.summernote-div .note-editable {
     font-family: 'Montserrat', sans-serif !important;
+    font-size: 1rem !important;
+    text-align: left !important;
 }
 
 /* shopping bag styling */
