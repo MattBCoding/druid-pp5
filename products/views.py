@@ -1,8 +1,5 @@
-import email
 from itertools import product
-from multiprocessing import context
-import re
-from webbrowser import get
+from django.http import Http404
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.admin.views.decorators import staff_member_required
@@ -192,7 +189,6 @@ def review_response_receiver(request, pk):
             response.author = employee
             response.review = review
             response.save()
-            print(response)
             messages.success(request, 'Response recorded successfully')
             return redirect(reverse('product_detail', args=[product.slug]))
         else:
@@ -225,8 +221,6 @@ def edit_response_receiver(request, pk):
         messages.error(request, 'Something went wrong, please try again')
         return redirect(reverse('product_detail', args=[product.slug]))
 
-
-
 @login_required
 def hx_get_delete_modal(request, pk):
     '''
@@ -235,11 +229,35 @@ def hx_get_delete_modal(request, pk):
     review = get_object_or_404(Review, pk=pk)
     author = request.user
     staff = request.user.is_staff
+    if request.htmx:
+        if review.author == author or staff:
+            context = {
+                'delete_review': review,
+            }
+            return render(request, 'products/snippets/delete_review_modal.html', context)
+        else:
+            raise Http404
+    else:
+        raise Http404
+
+@login_required
+def delete_review(request, pk):
+    '''
+    View to handle delete review requests
+    '''
+    review = get_object_or_404(Review, pk=pk)
+    product = get_object_or_404(Product, pk=review.product.id)
+    author = request.user
+    staff = request.user.is_staff
     if review.author == author or staff:
-        context = {
-            'delete_review': review,
-        }
-        return render(request, 'products/snippets/delete_review_button.html', context)
+        review.delete()
+        messages.success(request, 'Review successfully deleted')
+        return redirect(reverse('product_detail', args=[product.slug]))
+
+    else:
+        messages.error(request, 'Only the review author or employees can delete this review.')
+        return redirect(reverse('product_detail', args=[product.slug]))
+
 
 @staff_member_required
 def hx_get_response_form(request, pk):

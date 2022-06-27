@@ -1,0 +1,24 @@
+{% comment %} <div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div> {% endcomment %}
+<div id="modal" class="modal fade show" tabindex="-1" aria-labelledby="modal-title" aria-hidden="false" style="display:block; z-index: 5000;" onclick="closeModal()">
+	<div class="modal-dialog" style="z-index: 10000;" onclick="stopPropagation(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Delete Review</h5>
+                <button type="button" class="btn-close" aria-label="Close" onclick="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete {{ delete_review.title }}</p>
+                <a href="{% url 'delete_review' delete_review.id %}" class="btn">Delete the Review</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+	</div>
+  </div>
+  <script>
+    window.onload = function() {
+        document.getElementById("modal").classList.add('show');
+        //document.getElementById("modal-backdrop").classList.add('show');
+    }
+  </script>
