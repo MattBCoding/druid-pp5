@@ -3,26 +3,28 @@
 
 {% block body %}
 <main>
-    <h2>All products page</h2>
+    <h2>All Products</h2>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col-9">
+            <div class="col-12 mt-4 d-flex flex-wrap justify-content-evenly">
                 {% for product in products  %}
                 <div class="product-card card">
-
                     {% if product.primary_image %}
                     <a href="{% url 'product_detail' product.slug %}">
-                        <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid">
+                        <div class="card-img-top-container d-flex justify-content-center">
+                            <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid my-auto">
+                        </div>
                     </a>
-                    {% comment %} {% else %}
+                    {% else %}
                     <a href="{% url 'product_detail' product.slug %}">
-                        <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="card-img-top img-fluid">
-                    </a> {% endcomment %}
+                        <div class="card-img-top-container d-flex justify-content-center">
+                            <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="card-img-top img-fluid">
+                        </div>
+                    </a>
                     {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <h5 class="card-title">{{ product.price }}</h5>
+                    <div class="card-body d-flex flex-column justify-content-end">
+                        <h5 class="card-title product-card-title">{{ product.name|slice:':32' }}{% if product.name|length >= 32 %}...{%endif%}</h5>
+                        <h5 class="card-title">€{{ product.price }}</h5>
                         <div>
                             {% comment %} add if statement to query stock level {% endcomment %}
                             
@@ -37,7 +39,7 @@
                             {% comment %} </a> {% endcomment %}
                             
                         </div>
-                        <div class="product-card-form mt-1">
+                        <div class="product-card-form mt-3">
                             <!-- Add product to bag form -->
                             <form action="{% url 'add_to_bag' product.id %}" method="POST" class="form">
                                 {% csrf_token %}
@@ -75,6 +77,7 @@
                 </div>
                 {% endfor %}
             </div>
+            {% include 'snippets/pagination.html' with query_set=products custom_range=custom_range cat=cat query=search_query %}
         </div>
     </div>
 </main>

@@ -365,6 +365,15 @@ footer li {
 /* Product Card Styling */
 .product-card {
     max-width: 300px;
+    height: 500px;
+}
+
+.card-img-top-container {
+    height: 298px;
+}
+
+.product-card-title {
+    min-height: 45px;
 }
 
 .tag {

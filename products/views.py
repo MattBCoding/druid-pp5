@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from checkout.models import OrderLineItem, Order
+from products.utils import paginateProducts
 from .forms import ProductForm, ReviewForm, ResponseForm
 from .models import Product, Category, Review, Response
 
@@ -21,15 +22,18 @@ def all_products(request):
     contains all available products
     '''
     # only return active products
-    products = Product.objects.all().filter(is_active=True)
+    products = Product.objects.all().filter(is_active=True).order_by('id')
     query = None
+    cat = None
 
     if request.GET:
         if 'category' in request.GET:
+            cat = 'category'
             query = request.GET['category']
-            products = products.filter(category__name__icontains=query)
+            products = products.filter(category__name__icontains=query).order_by('id')
 
         if 'q' in request.GET:
+            cat = 'q'
             query = request.GET['q']
             if not query:
                 messages.error(request, "You didn't enter any search criteria!")
@@ -38,11 +42,15 @@ def all_products(request):
                        Q(description__icontains=query) |
                        Q(highlights__icontains=query) |
                        Q(technical_details__icontains=query))
-            products = products.distinct().filter(queries)
+            products = products.distinct().filter(queries).order_by('id')
 
+    custom_range, products = paginateProducts(request, products, 6)
+    print(query)
     context = {
         'products': products,
         'search_query': query,
+        'custom_range': custom_range,
+        'cat': cat,
     }
 
     return render(request, 'products/products.html', context)
