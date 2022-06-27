@@ -208,7 +208,8 @@
                                     {% if request.user.is_authenticated %}
                                         <div class="d-flex gap button-container">
                                             {% if review.author == request.user %}
-                                                <a href="{% url 'get_update_review_form' review.id %}" class="btn" data-hx-get="{% url 'get_update_review_form' review.id %}" data-hx-target="#review-container-{{review.id}}" data-hx-trigger="click" data-hx-swap="innerHTML">Edit Post</a>
+                                                <a href="{% url 'get_update_review_form' review.id %}" class="btn" data-hx-get="{% url 'get_update_review_form' review.id %}" data-hx-target="#review-container-{{review.id}}" data-hx-trigger="click" data-hx-swap="innerHTML">Edit Review</a>
+                                                <span id="delete-button-container"><a href="" class="btn" data-hx-get="" data-hx-target="#delete-button-container" data-hx-trigger="click" data-hx-swap="innerHTML">Delete Review</a></span>
                                             {% endif %}
                                             {% if request.user.is_staff %}
                                                 <a href="" class="btn">Respond to Post</a>
@@ -241,6 +242,7 @@
         </div>
     </div>
 </main>
+
 {% endblock %}
 {% block postloadjs %}
 {{ block.super }}

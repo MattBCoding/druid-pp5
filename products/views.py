@@ -160,7 +160,19 @@ def update_review_receiver(request, pk):
         messages.error(request, 'Something went wrong, please try again')
         return redirect(reverse('product_detail', args=[product.slug]))
 
-
+@login_required
+def hx_get_delete_modal(request, pk):
+    '''
+    View to return the contents for the delete review modal
+    '''
+    review = get_object_or_404(Review, pk=pk)
+    author = request.user
+    staff = request.user.is_staff
+    if review.author == author or staff:
+        context = {
+            'delete_review': review,
+        }
+        return render(request, 'products/snippets/delete_review_button.html', context)
 
 @staff_member_required
 def product_management(request):

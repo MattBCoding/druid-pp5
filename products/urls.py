@@ -12,4 +12,5 @@ urlpatterns = [
     path('reviews/<str:pk>/', views.product_review_receiver, name='product_review_receiver'),
     path('hx/get_update_review_form/<str:pk>/', views.hx_get_edit_review_form, name='get_update_review_form'),
     path('update_review/<str:pk>/', views.update_review_receiver, name='update_review_receiver'),
+    path('hx/get_delete_review_modal/<str:pk>/', views.hx_get_delete_modal, name='get_delete_modal'),
 ]
