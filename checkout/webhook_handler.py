@@ -68,60 +68,48 @@ class StripeWH_Handler:
         # Update profile information if save_info was checked
         profile = None
         username = intent.metadata.username
-        # if username != 'AnonymousUser':
-        #     profile = UserProfile.objects.get(user__username=username)
-        #     if save_info:
-        #         profile.default_phone_number = shipping_details.phone
-        #         profile.default_country = shipping_details.address.country
-        #         profile.default_postcode = shipping_details.address.postal_code
-        #         profile.default_town_or_city = shipping_details.address.city
-        #         profile.default_street_address1 = shipping_details.address.line1
-        #         profile.default_street_address2 = shipping_details.address.line2
-        #         profile.default_county = shipping_details.address.state
-        #         profile.save()
         if username != 'AnonymousUser':
             print(' WH --- its not an anonymous user')
             profile = get_object_or_404(User, pk=self.request.user.id)
             print('Found the users profile')
             print(profile)
             # save the new user address
-            if save_info:
-                print('save info was ticked')
-                address_data = {
-                    'street_address_1': shipping_details.address.line1,
-                    'street_address_2': shipping_details.address.line2,
-                    'town_or_city': shipping_details.address.city,
-                    'county': shipping_details.address.state,
-                    'postcode': shipping_details.address.postal_code,
-                    'country': shipping_details.address.country,
-                    'phone_number': shipping_details.phone,
-                }
-                print('address data is as follows')
-                print(shipping_details.address.line1)
-                print(shipping_details.address.line2)
-                print(shipping_details.address.city)
-                print(shipping_details.address.state)
-                print(shipping_details.address.postal_code)
-                print(shipping_details.address.country)
-                print(shipping_details.phone)
-                address_form = AddressForm(address_data)
-                print('Address Form is as follows:')
-                print(address_form)
-                print('checking address form is valid in webhook')
-                if address_form.is_valid():
-                    print('it is valid in webhook')
-                    address = address_form.save(commit=False)
-                    print('saved but false in webhook')
-                    address.user = profile
-                    print('added user profile to address form in webhook')
-                    if profile.address.filter(default__exact=True).exists():
-                        print('Found a default address for the user')
-                        address.save()
-                    else:
-                        print('no default address found, creating one now')
-                        address.default = True
-                        address.save()
-
+            # if save_info:
+            #     print('save info was ticked')
+            #     address_data = {
+            #         'street_address_1': shipping_details.address.line1,
+            #         'street_address_2': shipping_details.address.line2,
+            #         'town_or_city': shipping_details.address.city,
+            #         'county': shipping_details.address.state,
+            #         'postcode': shipping_details.address.postal_code,
+            #         'country': shipping_details.address.country,
+            #         'phone_number': shipping_details.phone,
+            #     }
+            #     print('address data is as follows')
+            #     print(shipping_details.address.line1)
+            #     print(shipping_details.address.line2)
+            #     print(shipping_details.address.city)
+            #     print(shipping_details.address.state)
+            #     print(shipping_details.address.postal_code)
+            #     print(shipping_details.address.country)
+            #     print(shipping_details.phone)
+            #     address_form = AddressForm(address_data)
+            #     print('Address Form is as follows:')
+            #     print(address_form)
+            #     print('checking address form is valid in webhook')
+            #     if address_form.is_valid():
+            #         print('it is valid in webhook')
+            #         address = address_form.save(commit=False)
+            #         print('saved but false in webhook')
+            #         address.user = profile
+            #         print('added user profile to address form in webhook')
+            #         if profile.address.filter(default__exact=True).exists():
+            #             print('Found a default address for the user')
+            #             address.save()
+            #         else:
+            #             print('no default address found, creating one now')
+            #             address.default = True
+            #             address.save()
         order_exists = False
         attempt = 1
         while attempt <= 5:
