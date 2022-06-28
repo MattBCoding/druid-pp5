@@ -1,18 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-    <div>
-      <strong>Menu:</strong>
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-        {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
-        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-        {% endif %}
-      </ul>
-    </div>
-    <main class="px-4 my-2 w-100">
+    <main class="px-4 pb-4 my-2 w-100 bg-one">
     {% block content %}
     {% endblock %}
     </main>

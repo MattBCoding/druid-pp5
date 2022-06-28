@@ -18,7 +18,10 @@ if os.path.isfile('env.py'):
     import env
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if 'USE_AWS' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 if DEBUG == 'False':

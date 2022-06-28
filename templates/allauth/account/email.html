@@ -9,7 +9,7 @@
 {% if user.emailaddress_set.all %}
 <p class="mt-2">{% trans 'The following e-mail addresses are associated with your account:' %}</p>
 
-<form action="{% url 'account_email' %}" class="email_list" method="post">
+<form action="{% url 'account_email' %}" class="email_list mt-2" method="post">
 {% csrf_token %}
 <fieldset class="blockLabels">
 
@@ -30,10 +30,10 @@
 </div>
   {% endfor %}
 
-<div class="buttonHolder">
-      <button class="btn secondaryAction" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
-      <button class="btn secondaryAction" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
-      <button class="btn primaryAction" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+<div class="buttonHolder mt-2">
+      <button class="btn btn-primary" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="btn btn-primary" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="btn btn-primary" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
 </div>
 
 </fieldset>
@@ -45,12 +45,12 @@
 {% endif %}
 
   {% if can_add_email %}
-    <h2>{% trans "Add E-mail Address" %}</h2>
+    <h2 class="mt-4">{% trans "Add E-mail Address" %}</h2>
 
-    <form method="post" action="{% url 'account_email' %}" class="add_email">
+    <form method="post" action="{% url 'account_email' %}" class="add_email mt-2">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name="action_add" type="submit" class="btn">{% trans "Add E-mail" %}</button>
+        {{ form|crispy }}
+        <button name="action_add" type="submit" class="btn btn-primary">{% trans "Add E-mail" %}</button>
     </form>
   {% endif %}
 

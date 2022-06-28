@@ -5,7 +5,7 @@
 {% block content %}
 <h2>{% trans "Sign Up" %}</h2>
 
-<p class="mt-2">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">login</a>.{% endblocktrans %}</p>
+<p class="mt-4">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}" class="btn btn-secondary">login</a>.{% endblocktrans %}</p>
 
 <form class="signup mt-2" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
@@ -13,7 +13,7 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button type="submit" class="btn">{% trans "Sign Up" %} &raquo;</button>
+  <button type="submit" class="btn btn-primary">{% trans "Sign Up" %} &raquo;</button>
 </form>
 
 {% endblock %}
