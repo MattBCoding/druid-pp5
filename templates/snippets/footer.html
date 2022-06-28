@@ -1,4 +1,4 @@
-<footer class="d-flex flex-column flex-lg-row-reverse justify-content-evenly">
+<footer class="d-flex flex-column flex-lg-row-reverse justify-content-evenly bg-footer">
     <div class="newsletter-container">
         <!-- Begin Mailchimp Signup Form -->
         <div id="mc_embed_signup">
@@ -26,10 +26,7 @@
                     <div style="position: absolute; left: -5000px" aria-hidden="true"><input type="text" name="b_145d4bdc0ae9ee38145742e12_2cf0096e1e" tabindex="-1" value="" /></div>
                     <div class="optionalParent">
                         <div class="clear foot">
-                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" />
-                            {% comment %} <p class="brandingLogo">
-                                <a href="http://eepurl.com/h4y7uL" title="Mailchimp - email marketing made easy and fun"><img src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg" /></a>
-                            </p> {% endcomment %}
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button btn btn-primary" />
                         </div>
                     </div>
                 </div>
@@ -63,10 +60,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'products' %}?category=fixtures">Fixtures</a>
                         </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'products' %}?category=merchandise">Merchandise</a>
-                        </li>
+
                     </ul>
                 </li>
                 <li class="subtitle">
@@ -89,36 +83,32 @@
             
             <ul class="d-flex justify-content-evenly">
                 {% if user.is_authenticated %}
-                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="sitemap-navbar-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> My Account </a>
-                    
-                    <ul class="dropdown-menu" aria-labelledby="sitemap-navbar-dropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">My Orders</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
-                        </li>
-                    </ul>
-                </li>
-                
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="sitemap-navbar-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> My Account </a>
+                        
+                        <ul class="dropdown-menu" aria-labelledby="sitemap-navbar-dropdown">
+                            <li>
+                                <a class="dropdown-item" href="#">My Orders</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
                 {% else %}
-                
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'account_signup' %}">Sign Up</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'account_login' %}">Login</a>
-                </li>
-                
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'account_signup' %}">Sign Up</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'account_login' %}">Login</a>
+                    </li>
                 {% endif %}
             </ul>
         </nav>
