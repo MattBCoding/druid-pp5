@@ -46,11 +46,19 @@ def checkout(request):
             print('checkout function order_form is valid')
             print('CHECK OF REQUEST.POST SAVE INFO VALUE')
             print(request.POST.get('save_info'))
+            print('trying to save commit = false order_form')
             order = order_form.save(commit=False)
+            print('after trying to save')
+            print('getting pid')
             pid = request.POST.get('client_secret').split('_secret')[0]
+            print('after pid')
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
+            print('about to save order')
             order.save()
+            print('saved order?')
+            print(order)
+            print('about to start for loop')
             for item_id, item_data in bag.items():
                 try:
                     product = Product.objects.get(id=item_id)
@@ -68,7 +76,8 @@ def checkout(request):
                     ))
                     order.delete()
                     return redirect(reverse('view_bag'))
-            request.session['save_info'] = 'save_info' in request.POST
+
+            request.session['save_info'] = 'save-info' in request.POST
             print('Testing the save info line')
             print(request.session['save_info'])
             return redirect(reverse('checkout_success', args=[order.order_number]))
@@ -171,7 +180,8 @@ def checkout_success(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
-        profile = get_object_or_404(User, pk=request.user.id)
+        # profile = get_object_or_404(User, pk=request.user.id)
+        profile = User.objects.get(pk=request.user.id)
         order.user_profile = profile
         order.save()
 
@@ -190,11 +200,11 @@ def checkout_success(request, order_number):
             print('checking address form is valid')
             if address_form.is_valid():
                 print('it is valid')
-                address_form.save(commit=False)
+                new_address = address_form.save(commit=False)
                 print('saved but false')
-                address_form.user = profile
+                new_address.user = profile
                 print('added user profile to address form')
-                address_form.save()
+                new_address.save()
 
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
