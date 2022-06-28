@@ -18,7 +18,7 @@ if os.path.isfile('env.py'):
     import env
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 if DEBUG == 'False':
@@ -26,16 +26,13 @@ if DEBUG == 'False':
 else:
     BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-
 ALLOWED_HOSTS = ['druid-computers.herokuapp.com', '127.0.0.1:8000', '127.0.0.1']
-
 
 # Application definition
 
@@ -85,7 +82,7 @@ ROOT_URLCONF = 'druid.urls'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
+# had to change this to bs4 due to summernote bug
 SUMMERNOTE_THEME = 'bs4' # Show summernote with Bootstrap5
 
 TEMPLATES = [
@@ -127,7 +124,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Change to site_id = 1 for deployment
-SITE_ID = 2
+SITE_ID = 1
 
 AUTH_USER_MODEL = 'profiles.User'
 # Allauth config
@@ -221,7 +218,6 @@ SUMMERNOTE_CONFIG = {
 
 WSGI_APPLICATION = 'druid.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -236,8 +232,6 @@ else:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -256,7 +250,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -293,8 +286,6 @@ if 'USE_AWS' in os.environ:
     # Override static and media URLS in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
-
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
