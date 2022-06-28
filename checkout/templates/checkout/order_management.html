@@ -2,25 +2,25 @@
 {% load static %}
 
 {% block body %}
-<main>
+<main class="bg-base">
     <h2 class="mb-4">{{title}}</h2>
-    <div class="my-4">
-        <form action="" method="get">
+    <div class="my-4 bg-one pb-4">
+        <form action="" method="get" class="order-management-filter">
             {{ my_filter.form|crispy}}
-            <button type="submit" class="btn">Search</button>
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
 
     <div class="row">
         <div class="col-12">
             {% if orders %}
-            <div class="order-confirmation-wrapper p-4 border d-flex flex-wrap justify-content-center gap">
+            <div class="order-confirmation-wrapper p-1 p-sm-2 p-md-3 p-lg-4 bg-one d-flex flex-wrap justify-content-center gap">
                 {% for order in orders %}
-                <div class="card order-card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted d- order-number-truc text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="{{order.order_number}}">...{{ order.order_number|slice:'22:' }}</h6>
-                        <div class="card-text d-flex flex-column align-items-center">
-                            <div class="d-flex">
+                <div class="card order-card bg-three">
+                    <div class="pt-4 pb-2 px-2">
+                        <h6 class="card-subtitle mb-2 text-muted order-number-truc text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="{{order.order_number}}">...{{ order.order_number|slice:'22:' }}</h6>
+                        <div class="card-text d-flex flex-column align-items-center w-100 px-2">
+                            <div class="d-flex flex-column order-card-item-container w-100">
                                 {% for item in order.lineitems.all %}
                                     {{ item.product.name|slice:':20' }}...
                                     <span class="align-self-end">x{{ item.quantity }}</span>

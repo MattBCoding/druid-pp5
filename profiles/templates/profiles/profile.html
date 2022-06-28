@@ -1,32 +1,32 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h2 class="mt-5 mt-lg-4">My Profile</h2>
 
-<main>
-    <nav>
-        <ul>
-            <li>
-                <a href="{% url 'my_orders' %}">My Orders</a>
+<main class="bg-base">
+    <h2 class="mb-4">My Profile</h2>
+    <nav class="profile-nav pb-4 bg-one">
+        <ul class="d-flex flex-column flex-sm-row navbar-nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'my_orders' %}">My Orders</a>
             </li>
-            <li>
-                <a href="{% url 'my_favourites' %}">My Wishlist</a>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'my_favourites' %}">My Wishlist</a>
             </li>
-            <li>
-                <a href="{% url 'edit_user_account' profile.id %}">Update Details</a>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'edit_user_account' profile.id %}">Update Details</a>
             </li>
-            <li>
-                <a href="{% url 'account_email' %}">Update Email</a>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_email' %}">Update Email</a>
             </li>
-            <li>
-                <a href="{% url 'account_change_password' %}">Update Password</a>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_change_password' %}">Update Password</a>
             </li>
         </ul>
     </nav>
 
-    <section>
-        <h3>My Addresses</h3>
-        <div class="address-outer-container d-flex justify-content-center">
+    <section class="bg-one">
+        <h4 class="mt-4">My Addresses</h4>
+        <div class="address-outer-container d-flex justify-content-center flex-wrap mt-4 pb-4">
             <div class="address-container">
                 <a href="{% url 'add_address' %}">
                     <span class="add-address-icon d-flex flex-column justify-content-center align-items-center">
@@ -37,10 +37,8 @@
                     </span>
                 </a>
             </div>
-            {% comment %} insert for loop to display address card for each address {% endcomment %}
             {% for address in addresses %}
-            <div class="address-container">
-                
+            <div class="address-container bg-three">
                 <p>{% if address.street_address_1 %}{{ address.street_address_1 }}{% else %}<br>{% endif %}</p>
                 <p>{% if address.street_address_2 %}{{ address.street_address_2 }}{% else %}<br>{% endif %}</p>
                 <p>{% if address.town_or_city %}{{ address.town_or_city }}{% else %}<br>{% endif %}</p>
@@ -50,18 +48,12 @@
                 {% if address.default %}
                 <p class="default-address">Default Address</p>
                 {% else %}
-                {% comment %} <a href="" class="make-default-address">
-                  
-                        Make Default
-                    
-                </a> {% endcomment %}
                 <form action="" method="post" class="make-default-address">
                     {% csrf_token %}
                     <input type="hidden" name="address" value="{{ address.id }}">
                     <button type="submit">Make Default</button>
                 </form>
                 {% endif %}
-                {% comment %} edit address link {% endcomment %}
                 <a href="{% url 'edit_address' address.id %}" class="edit-address d-flex flex-column justify-content-center align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -69,20 +61,18 @@
                     </svg>
                     <span class="sr-only">Edit Address</span>
                 </a>
-                
             </div>
             {% endfor %}
         </div>
     </section>
 </main>
-<section class="my-4">
-    <h3>Delete My Account</h3>
-    <p>At Druid, we take the management of your personal data very seriously. We do not sell your information to anyone, and only store the details that are needed in order to deliver your orders. We keep details of prior orders for our needs and for your records. If you would like to delete your account on the website, you can do so by following the link below. Once your account has been deleted it can not be undone. You are of course able to make a new account at any time.</p>
-    <!-- Add link to delete account modal -->
-    <button type="button" class="btn mt-1" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete Account</button>
+<section class="my-4 bg-one pb-4">
+    <h4>Delete My Account</h4>
+    <p class="mt-2">At Druid, we take the management of your personal data very seriously. We do not sell your information to anyone, and only store the details that are needed in order to deliver your orders. We keep details of prior orders for our needs and for your records. If you would like to delete your account on the website, you can do so by following the link below. Once your account has been deleted it can not be undone. You are of course able to make a new account at any time.</p>
+    <button type="button" class="btn mt-2 btn-secondary" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete Account</button>
 </section>
 
-<!-- delete modal -->
+<!-- modal -->
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="modal-label" aria-hidden="true">
     <div class="modal-dialog">
     <div class="modal-content">
@@ -94,15 +84,15 @@
         <div class="modal-body">
         <div class="flex flex-row justify-content-center">
             <p>Are you sure you want to delete your account? This can not be undone!</p>
-            <form action="{% url 'delete_user_account' profile.id %}" method="post">
+            <form action="{% url 'delete_user_account' profile.id %}" method="post" autocomplete="off">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <button type="submit">Delete</button>
+                <button type="submit" class="btn btn-secondary">Delete</button>
             </form>
         </div>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
         </div>
     </div>
     </div>

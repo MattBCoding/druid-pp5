@@ -15,7 +15,7 @@ User = get_user_model()
 def profile(request):
     profile = get_object_or_404(User, pk=request.user.id)
     addresses = getAddresses(request)
-    form = DeleteUserForm(request.POST or None)
+    form = DeleteUserForm()
     context = {
         'profile': profile,
         'addresses': addresses,
