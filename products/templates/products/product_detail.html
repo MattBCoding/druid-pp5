@@ -5,16 +5,21 @@
         {{ block.super }}
         <!-- htmx link -->
         <script src="{% static 'js/htmx.min.js' %}" defer></script>
-        <!-- Hyperscript link -->
-        {% comment %} <script src="https://unpkg.com/hyperscript.org@0.8.0"></script> {% endcomment %}
-        <!-- django-htmx debug code -->
         {% load django_htmx %}
         {% django_htmx_script %}
     {% endblock %}
 {% endif %}
 {% block body %}
-<main>
+<main class="bg-base">
     <h2 class="sr-only">{{product.name}} product page</h2>
+    <div class="d-flex justify-content-end">
+        <a href="{% url 'products' %}" class="btn btn-sm btn-secondary mb-4">
+            <span class="icon">
+                <i class="fas fa-chevron-left"></i>
+            </span>
+            <span>All Products</span>
+        </a>
+    </div>
     <div class="container-fluid">
         <div class="row">
                 <div id="image-container" class="col-12 col-lg-6">
@@ -66,9 +71,8 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="d-flex col-12 col-lg-6 mt-4 mt-lg-0">
+                <div class="d-flex col-12 col-lg-6 mt-4 mt-lg-0 justify-content-center">
                     <div class="">
-
                         <h5 class="">{{ product.name }}</h5>
                         <div class="d-flex justify-content-between">
                             <h5 class="">€ {{ product.price }}</h5>
@@ -78,19 +82,10 @@
                             </div>
                             {% endif %}
                         </div>
-
                         <div>
-                            {% comment %} add if statement to query stock level {% endcomment %}
-                            <span class="tag small my-1">In Stock</span>
-                            {% comment %} end of if statement querying stock level {% endcomment %}
-                            
-                            {% comment %}
-                            <a href="">
-                                link to search {% endcomment %}
-                                <span class="tag small my-1"> <i class="fa-solid fa-tag"></i>{{ product.category.friendly_name }} </span>
-                                {% comment %}
-                            </a>
-                            {% endcomment %}
+                            <!-- Prep for stock system -->
+                            <span class="tag small my-1">In Stock <span class="stock"></span></span>
+                            <span class="tag small my-1"> <i class="fa-solid fa-tag"></i> {{ product.category.friendly_name }} </span>
                         </div>
                         <div class="d-none d-lg-block my-2">
                             <h6>Description:</h6>
@@ -98,9 +93,9 @@
                         </div>
                         <div class="mt-1">
                             <!-- Add to bag form -->
-                            <form action="{% url 'add_to_bag' product.id %}" method="POST" class="form">
+                            <form action="{% url 'add_to_bag' product.id %}" method="POST" class="form add-to-bag-form">
                                 {% csrf_token %}
-                                <div class="form-row d-flex flex-direction-column">
+                                <div class="form-row d-flex flex-column flex-sm-row justify-content-center align-items-center gap mt-3">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -121,28 +116,20 @@
                                             <input type="hidden" name="redirect_url" value="{{ request.path }}" />
                                         </div>
                                     </div>
-                                    <div class="">
-                                        <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 mt-5">
-                                            <span class="icon">
-                                                <i class="fas fa-chevron-left"></i>
-                                            </span>
-                                            <span class="text-uppercase">Keep Shopping</span>
-                                        </a>
-                                        <input type="submit" value="Add to Bag" class="btn btn-black rounded-0 text-uppercase" />
-                                    </div>
+                                    <input type="submit" value="Add to Bag" class="btn btn-primary text-uppercase" />
                                 </div>
+                                
                             </form>
                         </div>
                     </div>
                 </div>
-            
         </div>
-        <div class="d-lg-none my-4">
+        <div class="d-lg-none my-4 bg-one pb-4">
             <h6>Description:</h6>
             {{product.description|safe}}
         </div>
-        <div class="my-4">
-            <div class="d-flex flex-column-reverse flex-xl-row-reverse align-items-center justify-content-between gap">
+        <div class="my-4 bg-one pb-4">
+            <div class="d-flex flex-column-reverse flex-xl-row align-items-center justify-content-between gap">
                 <div class="p-2">
                     <h6>Highlights</h6>
                     {{product.highlights|safe}}
@@ -155,8 +142,8 @@
                 {% endif %}
             </div>
         </div>
-        <div class="my-4">
-            <div class="d-flex flex-column-reverse flex-xl-row align-items-center justify-content-between gap">
+        <div class="my-4 bg-one pb-4">
+            <div class="d-flex flex-column-reverse flex-xl-row-reverse align-items-center justify-content-between gap">
                 <div class="p-2">
                     <h6>Technical Details</h6>
                     {{product.technical_details|safe}}
@@ -212,27 +199,24 @@
                                         <div class="d-flex gap button-container">
                                             {% if review.author == request.user %}
                                                 <a href="{% url 'get_update_review_form' review.id %}" class="btn" data-hx-get="{% url 'get_update_review_form' review.id %}" data-hx-target="#review-container-{{review.id}}" data-hx-trigger="click" data-hx-swap="innerHTML">Edit Review</a>
-                                                {% comment %} <a href="" class="btn" data-hx-get="" data-hx-target="#delete-button-container" data-hx-trigger="click" data-hx-swap="innerHTML">Delete Review</a> {% endcomment %}
                                                 <button data-hx-get="{% url 'get_delete_modal' review.id %}" data-hx-target="#modals-here" data-hx-trigger="click" class="btn">Delete Review</button>
-                                                {% endif %}
-                                                {% if request.user.is_staff %}
+                                            {% endif %}
+                                            {% if request.user.is_staff %}
                                                 {% if review.response.all %}
-                                                {% for co_response in review.response.all %}
-                                                <a href="{% url 'get_edit_response_form' co_response.id %}" class="btn" data-hx-get="{% url 'get_edit_response_form' co_response.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Edit Response</a>
-                                                {% endfor %}
+                                                    {% for co_response in review.response.all %}
+                                                        <a href="{% url 'get_edit_response_form' co_response.id %}" class="btn" data-hx-get="{% url 'get_edit_response_form' co_response.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Edit Response</a>
+                                                    {% endfor %}
                                                 {% else %}
-                                                <a href="{% url 'get_response_form' review.id %}" class="btn" data-hx-get="{% url 'get_response_form' review.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Respond to Post</a>
+                                                    <a href="{% url 'get_response_form' review.id %}" class="btn" data-hx-get="{% url 'get_response_form' review.id %}" data-hx-trigger="click" data-hx-target="#response-form" data-hx-swap="innerHTML">Respond to Post</a>
                                                 {% endif %}
                                                 <button data-hx-get="{% url 'get_delete_modal' review.id %}" data-hx-target="#modals-here" data-hx-trigger="click" class="btn">Delete Review</button>
-                                                {% comment %} <a href="" class="btn">Delete Review</a> {% endcomment %}
                                             {% endif %}
                                         </div>
-                                        {% endif %}
-                                    </div>
-                                    {% endfor %}
-                                    {% else %}
                                     {% endif %}
-                                    <div id="response-form"></div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div id="response-form"></div>
                     </div>
                 </div>
             </div>
@@ -244,9 +228,8 @@
                     <form action="{% url 'product_review_receiver' product.id %}" method="POST">
                         {% csrf_token %}
                         {{ review_form|crispy }}
-                        <button type="submit" class="btn">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-                    
                 </div>
             </div>
             {% endif %}

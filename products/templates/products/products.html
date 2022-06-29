@@ -2,79 +2,71 @@
 {% load static %}
 
 {% block body %}
-<main>
+<main class="bg-base">
     <h2>All Products</h2>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 mt-4 d-flex flex-wrap justify-content-evenly">
+            <div class="col-12 mt-4 d-flex flex-wrap justify-content-evenly gap">
                 {% for product in products  %}
-                <div class="product-card card">
-                    {% if product.primary_image %}
-                    <a href="{% url 'product_detail' product.slug %}">
-                        <div class="card-img-top-container d-flex justify-content-center">
-                            <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid my-auto">
-                        </div>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'product_detail' product.slug %}">
-                        <div class="card-img-top-container d-flex justify-content-center">
-                            <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="card-img-top img-fluid">
-                        </div>
-                    </a>
-                    {% endif %}
-                    <div class="card-body d-flex flex-column justify-content-end">
-                        <h5 class="card-title product-card-title">{{ product.name|slice:':32' }}{% if product.name|length >= 32 %}...{%endif%}</h5>
-                        <h5 class="card-title">€{{ product.price }}</h5>
-                        <div>
-                            {% comment %} add if statement to query stock level {% endcomment %}
-                            
-                            <span class="tag small my-1">In Stock</span>
-                            
-                            {% comment %} end of if statement querying stock level {% endcomment %}
-                            
-                            {% comment %} <a href=""> link to search {% endcomment %}
+                    <div class="product-card card bg-one flex-lg-fill">
+                        {% if product.primary_image %}
+                            <a href="{% url 'product_detail' product.slug %}">
+                                <div class="card-img-top-container d-flex justify-content-center">
+                                    <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid my-auto">
+                                </div>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'product_detail' product.slug %}">
+                                <div class="card-img-top-container d-flex justify-content-center">
+                                    <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="card-img-top img-fluid">
+                                </div>
+                            </a>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column justify-content-end">
+                            <h5 class="card-title product-card-title">{{ product.name|slice:':32' }}{% if product.name|length >= 32 %}...{%endif%}</h5>
+                            <h5 class="card-title">€{{ product.price }}</h5>
+                            <div>
+                                <!-- Prep for future stock system -->
+                                <span class="tag small my-1">In Stock <span class="stock"></span></span>
                                 <span class="tag small my-1">
-                                    <i class="fa-solid fa-tag"></i>{{ product.category.friendly_name }}
+                                    <i class="fa-solid fa-tag"></i> {{ product.category.friendly_name }}
                                 </span>
-                            {% comment %} </a> {% endcomment %}
-                            
-                        </div>
-                        <div class="product-card-form mt-3">
-                            <!-- Add product to bag form -->
-                            <form action="{% url 'add_to_bag' product.id %}" method="POST" class="form">
-                                {% csrf_token %}
-                                <div class="form-row d-flex">
-                                    
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <button class="decrement-qty btn btn-black rounded-0" data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
-                                                    <span class="icon">
-                                                        <i class="fas fa-minus"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <input type="number" class="form-control qty_input" name="quantity" value="1" min="1" max="99" data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
-                                            <div class="input-group-append">
-                                                <button class="increment-qty btn btn-black rounded-0" data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
-                                                    <span class="icon">
-                                                        <i class="fas fa-plus"></i>
-                                                    </span>
-                                                </button>
+                            </div>
+                            <div class="product-card-form mt-3">
+                                <!-- Add product to bag form -->
+                                <form action="{% url 'add_to_bag' product.id %}" method="POST" class="form">
+                                    {% csrf_token %}
+                                    <div class="form-row d-flex flex-column flex-sm-row align-items-center justify-content-sm-between">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <button class="decrement-qty btn btn-black rounded-0" data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
+                                                        <span class="icon">
+                                                            <i class="fas fa-minus"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <input type="number" class="form-control qty_input" name="quantity" value="1" min="1" max="99" data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
+                                                <div class="input-group-append">
+                                                    <button class="increment-qty btn btn-black rounded-0" data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
+                                                        <span class="icon">
+                                                            <i class="fas fa-plus"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
+                                        
+                                        <div>
+                                            <input type="submit" value="Add to Bag" class="btn btn-primary text-uppercase">
+                                        </div>
+                                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
                                     </div>
-                                    
-                                    <div>
-                                        <input type="submit" value="Add to Bag" class="btn btn-black rounded-0 text-uppercase">
-                                    </div>
-                                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
             {% include 'snippets/pagination.html' with query_set=products custom_range=custom_range cat=cat query=search_query %}

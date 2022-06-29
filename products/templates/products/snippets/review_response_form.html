@@ -1,5 +1,5 @@
 <form action="{% if response %}{% url 'edit_response_receiver' response.id %}{% else %}{% url 'response_receiver' review_response.id %}{% endif %}" method="POST" class="mt-2">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit" class="btn">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

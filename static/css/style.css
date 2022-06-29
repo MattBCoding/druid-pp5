@@ -409,6 +409,14 @@ footer {
     color: var(--primary-text);
 }
 
+/* Mailchimp styling */
+
+#mc_embed_signup {
+    clear: left;
+    font-size: 16px;
+}
+
+
 #mc_embed_signup form {
     background: var(--primary);
     color: var(--primary-text);
@@ -536,18 +544,11 @@ footer li {
     gap: 1rem;
 }
 
-/* Mailchimp styling */
-
-#mc_embed_signup {
-    background: #fff;
-    clear: left;
-    font: 14px;
-}
 
 /* Product Card Styling */
 .product-card {
     max-width: 300px;
-    height: 500px;
+    /* height: 500px; */
 }
 
 .card-img-top-container {
@@ -559,9 +560,17 @@ footer li {
 }
 
 .tag {
-    background: grey;
+    background: var(--secondary);
     border-radius: 5px;
     padding: 0.25rem 0.5rem;
+}
+
+.tag > .stock {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--success);
 }
 
 .increment-qty,
@@ -572,9 +581,16 @@ footer li {
     border-color: transparent;
 }
 
+.product-card-form .form-row {
+    gap: 1rem;
+}
+
+.product-card-form input[type='number'] {
+    width: 50px;
+}
+
 /* Product Detail Page */
 #image-container {
-    border: 1px solid red;
     max-height: 750px;
 }
 
@@ -587,7 +603,6 @@ footer li {
     object-fit: cover;
     margin: auto;
 }
-
 
 .carousel-image {
     object-fit: cover;
@@ -618,6 +633,10 @@ footer li {
     border: 0;
 }
 
+.add-to-bag-form input[type='number'] {
+    max-width: 50px;
+}
+
 .grayscale {
     filter: grayscale(100%);
 }
@@ -634,7 +653,7 @@ footer li {
     top: 25%;
     height: 50%;
     width: 100%;
-    background-color: red;
+    background-color: var(--error);
     opacity: 0.5;
     z-index: 10;
 }
@@ -645,7 +664,23 @@ footer li {
 }
 
 .tech-details-image-container > div {
-    background-color: orange;
+    background-color: var(--warning);
+}
+
+/* Product Management Page */
+.product-management-nav li {
+    list-style: none;
+}
+
+.product-list > :first-child {
+    width: min(280px, 100%);
+}
+
+/* Add/Edit product page */
+.product-form > .btn-file {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
 }
 
 /* Summernote text field styling */
@@ -805,6 +840,14 @@ paste text in from other documents. Needs important tag.
 @media (min-width: 576px) {
     .blog-card-image {
         max-width: 25%;
+    }
+    .product-card-form .form-row {
+        gap: 0;
+
+    }
+
+    .product-form > .btn-file {
+        align-items: flex-start;
     }
 }
 

@@ -14,19 +14,19 @@
 <main>
     <h2>Product Management Page</h2>
     {% if user.is_staff %}
-    <nav class="product-management-nav">
+    <nav class="product-management-nav mt-4">
         <ul class="d-flex justify-content-center">
             <li>
-                <a href="{% url 'add_product' %}" class="btn">Add Product</a>
+                <a href="{% url 'add_product' %}" class="btn btn-primary">Add Product</a>
             </li>
         </ul>
     </nav>
     <div class="container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="col d-flex flex-column">
                 {% for product in product_list %}
-                <div class="d-flex w-100 mt-2 p-2 justify-content-evenly align-items-center">
-                    <p>
+                <div class="d-flex flex-column flex-md-row w-100 mt-2 p-2 bg-one justify-content-evenly align-items-center product-list">
+                    <p class="text-center text-md-start">
                         {{ product.name }}
                     </p>
                     <p>
@@ -35,12 +35,14 @@
                     <p>
                         {{ product.sku }}
                     </p>
-                    <a href="{% url 'edit_product' product.slug %}" class="btn">Edit</a>
-                    {% if product.is_active %}
-                    <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn">Deactivate</button>
-                    {% else %}
-                    <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn">Activate</button>
-                    {% endif %}
+                    <div class="d-flex gap justify-content-center mt-2 mt-md-0">
+                        <a href="{% url 'edit_product' product.slug %}" class="btn btn-primary">Edit</a>
+                        {% if product.is_active %}
+                        <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn btn-secondary">Deactivate</button>
+                        {% else %}
+                        <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn btn-primary">Activate</button>
+                        {% endif %}
+                    </div>
                 </div>
                 {% endfor %}
             </div>

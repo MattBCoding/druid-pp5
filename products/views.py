@@ -44,7 +44,7 @@ def all_products(request):
                        Q(technical_details__icontains=query))
             products = products.distinct().filter(queries).order_by('id')
 
-    custom_range, products = paginateProducts(request, products, 6)
+    custom_range, products = paginateProducts(request, products, 5)
     print(query)
     context = {
         'products': products,

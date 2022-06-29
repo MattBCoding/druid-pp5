@@ -17,11 +17,11 @@
                 {% endif %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 {% if product.is_active %}
-                <a class="btn" href="{% url 'deactivate_product' product.slug %}">Deactivate Product</a>
+                <a class="btn btn-secondary" href="{% url 'deactivate_product' product.slug %}">Deactivate Product</a>
                 {% else %}
-                <a class="btn" href="{% url 'deactivate_product' product.slug %}">Activate Product</a>
+                <a class="btn btn-secondary" href="{% url 'deactivate_product' product.slug %}">Activate Product</a>
                 {% endif %}
             </div>
         </div>
