@@ -92,7 +92,7 @@ class StripeWH_Handler:
                     country = shipping_details.address.country
                     pn = shipping_details.phone
                     print('creating new address from WH')
-                    new = (Address.objects.create('user', profile,
+                    new = (Address.objects.create({'user': profile,
                                                   'street_address_1': sa1,
                                                   'street_address_2': sa2,
                                                   'town_or_city': toc,
@@ -100,7 +100,7 @@ class StripeWH_Handler:
                                                   'postcode': postcode,
                                                   'country': country,
                                                   'phone_number': pn,
-                                                  ))
+                                                  }))
                     print(new)
                     print('New address created')
             # save the new user address
