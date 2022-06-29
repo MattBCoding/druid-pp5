@@ -1,18 +1,20 @@
-<div class="category-container d-flex mt-2" id="category-{{ category.id }}">
-    <p>
+<div class="category-container d-flex mt-2 gap flex-wrap" id="category-{{ category.id }}">
+    <p class="flex-grow-1">
         {{ category.name }}
     </p>
     {% if category.id != 1 %}
-    <button class="btn btn-sm btn-secondary" hx-get="{% url 'edit_blog_category' category.id %}" hx-swap="outerHTML" hx-target="#category-{{ category.id }}" hx-trigger="click">
-        <i class="fa-solid fa-pen-to-square">
-        </i>
-        <span>Edit</span>
-    </button>
-    <button class="btn btn-sm btn-secondary" hx-get="{% url 'get_delete_blog_category' category.id %}" hx-swap="outerHTML" hx-target="#category-{{ category.id }}" hx-trigger="click">
-        <i class="fa-solid fa-trash-can">
-        </i>
-        <span>Delete</span>
-    </button>
+    <div class="flex-shrink-0">
+        <button class="btn btn-sm btn-secondary" hx-get="{% url 'edit_blog_category' category.id %}" hx-swap="outerHTML" hx-target="#category-{{ category.id }}" hx-trigger="click">
+            <i class="fa-solid fa-pen-to-square">
+            </i>
+            <span>Edit</span>
+        </button>
+        <button class="btn btn-sm btn-secondary" hx-get="{% url 'get_delete_blog_category' category.id %}" hx-swap="outerHTML" hx-target="#category-{{ category.id }}" hx-trigger="click">
+            <i class="fa-solid fa-trash-can">
+            </i>
+            <span>Delete</span>
+        </button>
+    </div>
     {% endif %}
 
 </div>

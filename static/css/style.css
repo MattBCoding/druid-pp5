@@ -588,8 +588,12 @@ footer li {
 }
 
 /* blog posts */
+.blog-post-container > a:hover {
+    color: black;
+}
+
 .blog-card-image {
-    max-width: 100%;
+    max-width: min(100%, 485px);
 }
 
 .blog-nav > ul {
@@ -909,11 +913,13 @@ paste text in from other documents. Needs important tag.
 /* media query set at 576px for the bootstrap breakpoint to sm */
 @media (min-width: 576px) {
     .blog-card-image {
-        max-width: 25%;
+        max-width: max(190px, 25%);
+        height: auto;
+        object-fit: cover;
     }
+
     .product-card-form .form-row {
         gap: 0;
-
     }
 
     .product-form > .btn-file {
