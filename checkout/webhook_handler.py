@@ -4,10 +4,11 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from requests import post
 
 from .models import Order, OrderLineItem
 from products.models import Product
-from profiles.forms import AddressForm
+from profiles.models import Address
 # from profiles.models import UserProfile
 
 import json
@@ -76,6 +77,33 @@ class StripeWH_Handler:
             print('Found the users profile')
             print(profile)
             # save the new user address
+            if save_info:
+                # check to see if the user has addresses saved already
+                current = Address.objects.filter(user=profile.id)
+                if current:
+                    print('CURRENT ADDRESS EXISTS')
+                else:
+                    print('Getting new address data')
+                    sa1 = shipping_details.address.line1
+                    sa2 = shipping_details.address.line2
+                    toc = shipping_details.address.city
+                    county = shipping_details.address.state
+                    postcode = shipping_details.address.postal_code
+                    country = shipping_details.address.country
+                    pn = shipping_details.phone
+                    print('creating new address from WH')
+                    new = (Address.objects.create('user', profile,
+                                                  'street_address_1': sa1,
+                                                  'street_address_2': sa2,
+                                                  'town_or_city': toc,
+                                                  'county': county,
+                                                  'postcode': postcode,
+                                                  'country': country,
+                                                  'phone_number': pn,
+                                                  ))
+                    print(new)
+                    print('New address created')
+            # save the new user address
             # if save_info:
             #     print('save info was ticked')
             #     address_data = {
@@ -138,7 +166,8 @@ class StripeWH_Handler:
         if order_exists:
             self._send_confirmation_email(order)
             return HttpResponse(
-                content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
+                content=f'Webhook received: {event["type"]} |\
+                         SUCCESS: Verified order already in database',
                 status=200)
         else:
             print('WH -- ORDER DID NOT EXIST - CREATING ONE FROM WH')
@@ -175,7 +204,8 @@ class StripeWH_Handler:
                     status=500)
         self._send_confirmation_email(order)
         return HttpResponse(
-            content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
+            content=f'Webhook received: {event["type"]} |\
+                      SUCCESS: Created order in webhook',
             status=200)
 
     def handle_payment_intent_payment_failed(self, event):
