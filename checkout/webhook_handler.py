@@ -71,7 +71,7 @@ class StripeWH_Handler:
         print('Username:  ', username)
         if username != 'AnonymousUser':
             print(' WH --- its not an anonymous user')
-            profile = User.objects.get(username=username)
+            profile = User.objects.get(email=username)
             # profile = get_object_or_404(User, pk=self.request.user.id)
             print('Found the users profile')
             print(profile)
