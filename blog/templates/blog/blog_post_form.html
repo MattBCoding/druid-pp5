@@ -9,16 +9,20 @@
     {% endif %}
     <form action="{% if post %}{% url 'edit_blog_post' post.slug %}{% else %}{% url 'add_blog_post' %}{% endif %}"
           method="post"
-          enctype="multipart/form-data">
+          enctype="multipart/form-data"
+          class="mt-2">
         {% csrf_token %}
         {% for field in form %}
-            {% if field.name != 'image' %}
-                {{ field | as_crispy_field}}
+            {% if field.name == 'image' %}
+                {{field}}
+            {% elif field.name == 'content' %}
+                <p class="mt-2"><strong>Keyboard Shortcuts: </strong> Insert headings with 'ctrl' + '5'. Numbers 1 - 6 available. 5 is recommended.</p>
+                {{field | as_crispy_field}}
             {% else %}
-                {{ field }}
+                {{ field | as_crispy_field}}
             {% endif %}
         {% endfor %}
-        <button type="submit">{% if post %}Save Changes{% else %}Add Blog Post{% endif %}</button>
+        <button type="submit" class="btn btn-primary mt-2">{% if post %}Save Changes{% else %}Add Blog Post{% endif %}</button>
     </form>
 </main>
 

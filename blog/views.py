@@ -11,7 +11,7 @@ from products.utils import paginateProducts
 User = get_user_model()
 
 def blog(request):
-    posts = BlogPost.objects.all()
+    posts = BlogPost.objects.all().order_by('-created_on')
     custom_range, posts = paginateProducts(request, posts, 4)
     context = {
         'posts': posts,
@@ -36,7 +36,7 @@ def addBlogPost(request):
         form = BlogPostForm(request.POST, request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
-            new_post.author = request.user.id
+            new_post.author = request.user
             new_post.save()
             messages.success(request, 'Blog Post successfully added!')
             return redirect('blog')
@@ -54,8 +54,9 @@ def editBlogPost(request, slug):
     if request.method == 'POST':
         form = BlogPostForm(request.POST, request.FILES or None, instance=post)
         if form.is_valid():
-            form.author = request.user.id
-            form.save()
+            edited_form = form.save(commit=False)
+            edited_form.author = request.user
+            edited_form.save()
             messages.success(request, 'Blog Post successfully updated!')
             return redirect('blog')
         else:

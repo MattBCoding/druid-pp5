@@ -11,18 +11,18 @@
 {% endif %}
 
 {% block body %}
-<section class="blog-hero-container d-flex justify-content-center align-items-center">
-    <h2>Musings of the Druids</h2>
-</section>
-<main>
+<main class="bg-base">
+    <section class="blog-hero-container d-flex justify-content-center align-items-center">
+        <h2 class="text-center">Musings of the Druids</h2>
+    </section>
     {% if user.is_staff %}
     <nav class="blog-nav">
-        <ul class="d-flex justify-content-center">
+        <ul class="d-flex flex-column flex-sm-row justify-content-center align-items-center mt-3">
             <li>
-                <a href="{% url 'add_blog_post' %}" class="btn">Add Post</a>
+                <a href="{% url 'add_blog_post' %}" class="btn btn-primary">Add Post</a>
             </li>
             <li>
-                <button class="btn" hx-get="{% url 'get_categories' %}" hx-swap="innerHTML" hx-target="#categories-container" hx-trigger="click">Category Management</button>
+                <button class="btn btn-secondary" hx-get="{% url 'get_categories' %}" hx-swap="innerHTML" hx-target="#categories-container" hx-trigger="click">Category Management</button>
             </li>
         </ul>
     </nav>
@@ -30,22 +30,34 @@
 
     </div>
     {% endif %}
-    <h3 class="mb-4">Latest Blog Entries</h3>
-    {% for post in posts %}
-    <a href="{% url 'blog_post_detail' post.slug %}">
-        <div class="blog-card-post-container d-flex mt-4 flex-column flex-sm-row">
-            {% if post.image %}
-            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
-            {% endif %}
-            <div class="blog-card-content-container">
-                <h5>{{ post.title }}</h5>
-                <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
-                <p>{{ post.content|slice:150|safe }}</p>
+    <section class="container-fluid">
+        <h3 class="mb-4">Latest Blog Entries</h3>
+        <div class="row">
+            <div class="col-12 col-md-10 col-xl-8 mx-auto">
+                <div>
+                    {% for post in posts %}
+                    <a href="{% url 'blog_post_detail' post.slug %}">
+                        <div class="blog-card-post-container d-flex mt-4 flex-column flex-sm-row bg-one gap">
+                            {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
+                            {% else %}
+                            <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="blog-card-image">
+                            {% endif %}
+                            <div class="blog-card-content-container">
+                                <h5>{{ post.title }}</h5>
+                                <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
+                                <p>{{ post.content|slice:150|safe }}</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                <div>
+                    {% include 'snippets/pagination.html' with query_set=posts custom_range=custom_range %}
+                </div>
             </div>
         </div>
-    </a>
-    {% endfor %}
-    {% include 'snippets/pagination.html' with query_set=posts custom_range=custom_range %}
+    </section>
 
 </main>
 
