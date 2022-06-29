@@ -608,6 +608,10 @@ footer li {
     gap: 1rem;
 }
 
+.category-container > p {
+    max-width: 150px;
+}
+
 
 /* Product Card Styling */
 .product-card {
@@ -924,6 +928,10 @@ paste text in from other documents. Needs important tag.
 
     .product-form > .btn-file {
         align-items: flex-start;
+    }
+    
+    .categry-form-button-container {
+        margin-top: 1rem;
     }
 }
 

@@ -1,9 +1,9 @@
 <div class="category-container d-flex mt-2 gap flex-wrap" id="category-{{ category.id }}">
-    <p class="flex-grow-1">
+    <p class="flex-grow-1 text-truncate d-inline-block">
         {{ category.name }}
     </p>
     {% if category.id != 1 %}
-    <div class="flex-shrink-0">
+    <span class="ml-4">
         <button class="btn btn-sm btn-secondary" hx-get="{% url 'edit_blog_category' category.id %}" hx-swap="outerHTML" hx-target="#category-{{ category.id }}" hx-trigger="click">
             <i class="fa-solid fa-pen-to-square">
             </i>
@@ -14,7 +14,7 @@
             </i>
             <span>Delete</span>
         </button>
-    </div>
+    </span>
     {% endif %}
 
 </div>

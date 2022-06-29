@@ -1,4 +1,4 @@
-<form class="category-form d-flex"
+<form class="category-form d-flex flex-column flex-sm-row mt-2 w-100 gap align-items-start align-items-sm-center"
       id="add-category-form"
       action="." 
       method="POST" 
@@ -8,12 +8,14 @@
     {% csrf_token %}
     
     {{ category_form|crispy }}
-    
-    <button class="btn btn-primary" type="submit">Save</button>
-    <button type="button"
-            class="btn btn-secondary"
-            hx-get="{% url 'get_add_blog_category_container' %}"
-            hx-swap="outerHTML"
-            hx-target="#add-category-form"
-            hx-trigger="click">Cancel</button>
+    <div class="d-flex gap categry-form-button-container">
+      <button class="btn btn-primary flex-shrink-0" type="submit">Save</button>
+      <button type="button"
+              class="btn btn-secondary flex-shrink-0"
+              hx-get="{% url 'get_add_blog_category_container' %}"
+              hx-swap="outerHTML"
+              hx-target="#add-category-form"
+              hx-trigger="click">Cancel</button>
+    </div>
+
 </form>

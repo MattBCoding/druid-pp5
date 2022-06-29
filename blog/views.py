@@ -84,6 +84,7 @@ def getCategories(request):
     categories = BlogCategory.objects.all()
     context = {
         'categories': categories,
+        'disabled': False,
     }
 
     return render(request, 'blog/snippets/categories.html', context)
@@ -93,6 +94,7 @@ def addBlogCategory(request):
     form = BlogCategoryForm()
     context = {
         'category_form': form,
+        'disabled': True,
     }
     
     if request.htmx:
@@ -104,6 +106,7 @@ def addBlogCategory(request):
             category = BlogCategory.objects.get(name=name)
             context = {
                 'category': category,
+                'disabled': False,
             }
             return render(request, 'blog/snippets/add_blog_category_container.html', context)
     
