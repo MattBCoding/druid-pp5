@@ -385,7 +385,7 @@ header {
     width: 100%;
     z-index: 500;
     /* needs a filter variable set rather than rgba */
-    background: rgba(41, 41, 41, 0.35);
+    background: rgba(41, 41, 41, 0.55);
     display: none;
 }
 
@@ -396,6 +396,9 @@ header {
     padding: 20px;
     z-index: 1000;
     background: #fff;
+    max-width: 900px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* spacer styling for fixed nav bar */
@@ -443,6 +446,63 @@ footer li {
 /* Forms */
 .edit-details-form {
     max-width: 500px;
+}
+
+/* Home page */
+.hero-container {
+    background: url(https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/media/coolingtubes.jpg) no-repeat center center;
+    background-size: cover;
+    height: 600px;
+    position: relative;
+}
+
+.hero-text {
+    max-width: 650px;
+    text-align: center;
+    color: var(--primary-text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.explore {
+    /* height: clamp(200px, 100%, 300px); */
+    /* width: clamp(200px, 100%, 300px); */
+    aspect-ratio: 2.2/1;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+    min-height: 150px;
+    max-height: 350px;
+    position: relative;
+    background-size: contain;
+}
+
+.explore > div {
+    color: var(--primary-text);
+    width: 85%;
+    position: absolute;
+    left: 0;
+    bottom: 10%;
+    background:hsla(0, 0%, 0%, 0.5);
+    padding: 1rem;
+}
+
+.explore-cases {
+    background: url(https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/media/evolv_shift_xt_satin_black_1-home.jpg) no-repeat center center;
+}
+
+.explore-desks {
+    background: url(https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/media/lian-li-dk-05f-desktop-case-height-adjustable-black-2-home.jpg) no-repeat center center;
+}
+
+.explore-distroplates {
+    background: url(https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/media/p-0345_ek-quantum-reflection-dk-05f_long-home.webp) no-repeat center center;
+}
+
+.explore-fixtures {
+    background: url(https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/media/cablemod-pro-bridged-cable-comb-kit-black-home.jpg) no-repeat center center;
 }
 
 /* profile page */
