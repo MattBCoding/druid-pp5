@@ -68,9 +68,11 @@ class StripeWH_Handler:
         # Update profile information if save_info was checked
         profile = None
         username = intent.metadata.username
+        print('Username:  ', username)
         if username != 'AnonymousUser':
             print(' WH --- its not an anonymous user')
-            profile = get_object_or_404(User, pk=self.request.user.id)
+            profile = User.objects.get(username=username)
+            # profile = get_object_or_404(User, pk=self.request.user.id)
             print('Found the users profile')
             print(profile)
             # save the new user address
