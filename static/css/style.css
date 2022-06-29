@@ -944,6 +944,10 @@ paste text in from other documents. Needs important tag.
         color: var(--primary-text);
     }
 
+    #account-links .nav-link {
+        color: var(--primary-text);
+    }
+
     .nav-link:hover,
     .dropdown-item:hover,
     #search-container:hover,

@@ -79,7 +79,9 @@ class StripeWH_Handler:
             # save the new user address
             if save_info:
                 # check to see if the user has addresses saved already
-                current = Address.objects.filter(user=profile.id)
+                current = False
+                if Address.objects.filter(user=profile.id).exists():
+                    current = True
                 if current:
                     print('CURRENT ADDRESS EXISTS')
                 else:
