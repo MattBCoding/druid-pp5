@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                <hr class="my-0">
+                <hr class="my-2">
                 <div class="row text-black text-right">
                     <div class="col-7 offset-2">
                         <p class="my-0">Order Total:</p>
@@ -65,9 +65,11 @@
                 <p class="text-muted">Please fill out the form below to complete your order</p>
                 {% if addresses %}
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#address-selector-modal">
-                Saved Addresses
-                </button>
+                <div class="d-flex justify-content-center my-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#address-selector-modal">
+                    Saved Addresses
+                    </button>
+                </div>
                 {% endif %}
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                     {% csrf_token %}
@@ -106,21 +108,23 @@
                         <input type="hidden" value="{{ client_secret }}" name="client_secret">
                     </fieldset>
 
-                    <div class="submit-button text-right mt-5 mb-2">
-                        <a href="{% url 'view_bag' %}" class="btn btn-outline-black rounded-0">
-                            <span class="icon">
-                                <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="font-weight-bold">Adjust Bag</span>
-                        </a>
-                        <button class="btn btn-black rounded-0" id="submit-button">
-                            <span class="font-weight-bold">Complete Order</span>
-                            <span class="icon">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                        </button>
-                        <p class="small text-danger my-0">
-                            <span class="icon">
+                    <div class="submit-button text-right mt-5 mb-2 d-flex flex-column">
+                   
+                            <a href="{% url 'view_bag' %}" class="btn btn-secondary btn-sm order-3">
+                                <span class="icon">
+                                    <i class="fas fa-chevron-left"></i>
+                                </span>
+                                <span class="font-weight-bold">Adjust Bag</span>
+                            </a>
+                            <button class="btn btn-primary order-1 mb-1" id="submit-button">
+                                <span class="font-weight-bold">Complete Order</span>
+                                <span class="icon">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </button>
+              
+                        <p class="small mb-4 order-2">
+                            <span class="icon text-danger">
                                 <i class="fas fa-exclamation-circle"></i>
                             </span>
                             <span>Your card will be charged <strong>€{{ grand_total|floatformat:2 }}</strong></span>
@@ -147,7 +151,7 @@
                     <h5 class="modal-title" id="address-selector-modal-label">Select Saved Address</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body d-flex flex-wrap justify-content-evenly gap">
+                <div class="modal-body d-flex flex-wrap justify-content-evenly gap address-modal-body">
                 {% for address in addresses %}
                     <a href="{% url 'checkout' %}?address_id={{ address.id }}">
                         <div class="address-container">   

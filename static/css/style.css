@@ -696,6 +696,10 @@ paste text in from other documents. Needs important tag.
 }
 
 /* shopping bag styling */
+.update-form input[type='number'] {
+    max-width: 50px;
+}
+
 .update-link,
 .remove-item {
     cursor: pointer;
@@ -707,6 +711,12 @@ paste text in from other documents. Needs important tag.
 
 .table-qty-form {
     width: 125px;
+}
+
+/* Checkout styling */
+.address-modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
 /* Order Management Page */
