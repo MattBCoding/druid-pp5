@@ -3,7 +3,12 @@
 
 {% block body %}
 <main class="bg-base">
+    {% if search_query %}
+    <h2>Product Search</h2>
+    <p>{{ search_query }}</p>
+    {% else %}
     <h2>All Products</h2>
+    {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mt-4 d-flex flex-wrap justify-content-evenly gap">

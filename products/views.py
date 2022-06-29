@@ -45,7 +45,6 @@ def all_products(request):
             products = products.distinct().filter(queries).order_by('id')
 
     custom_range, products = paginateProducts(request, products, 5)
-    print(query)
     context = {
         'products': products,
         'search_query': query,
@@ -67,21 +66,14 @@ def product_detail(request, slug):
     can_review = False
     # check if user has previously purchased the product
     if request.user.is_authenticated:
-        print('user is authenticated')
         user = User.objects.get(email=request.user.email)
         user_orders = [order.id for order in Order.objects.filter(user_profile=user)]
         line_items = OrderLineItem.objects.filter(order__pk__in=user_orders, product__pk=product.id).exists()
         #check if the user has previously written a review
         if line_items:
-            print('user has purchased the product')
             can_review = True
             if reviews.filter(author=user).exists():
-                print('user has reviewed before')
                 can_review = False
-        else:
-            print('user has not purchased the product')
-    else:
-        print(request.user)
 
     review_form = ReviewForm()
     response_form = ResponseForm()
@@ -113,9 +105,7 @@ def product_review_receiver(request, pk):
         if form.is_valid():
             review = form.save(commit=False)
             review.author = author
-            print(review.author)
             review.product = product
-            print(review.product)
             review.save()
             messages.success(
                             request,
@@ -364,5 +354,3 @@ def deactivate_product(request, slug):
             return redirect('product_management')
     else:
         messages.error(request, 'Only employees can change a products activation status')
-
-
