@@ -1,5 +1,49 @@
 {% extends "base.html" %}
-
-{% block base %}
-
+{% load static %}
+{% block body %}
+<div class="bg-base">
+    <section class="hero-container">
+        <div class="hero-text">
+            <h1 class="hero-title">Welcome to Druid Computers</h1>
+            <h5 class="hero-subtitle mt-2">Here to serve you the latest and greatest in PC watercooling parts</h5>
+        </div>
+    </section>
+    <main class="bg-one container-fluid">
+        <div class="row d-flex flex-column flex-xxl-row gap mt-4 justify-content-between align-items-center">
+            
+            <a href="{% url 'products' %}?category=cases" class="col d-flex flex-xxl-grow-1 align-items-center justify-content-center justify-content-xxl-evenly mb-4 mb-lg-0">
+                <div class="explore-cases explore">
+                    <div>
+                        <h6>Explore</h6>
+                        <h4>Cases</h4>
+                    </div>
+                </div>
+            </a>
+            <a href="{% url 'products' %}?category=desks" class="col d-flex flex-xxl-grow-1 align-items-center justify-content-center justify-content-xxl-evenly mb-4 mb-lg-0">
+                <div class="explore-desks explore">
+                    <div>
+                        <h6>Explore</h6>
+                        <h4>Desks</h4>
+                    </div>
+                </div>
+            </a>
+            <a href="{% url 'products' %}?category=distroplates" class="col d-flex flex-xxl-grow-1 align-items-center justify-content-center justify-content-xxl-evenly mb-4 mb-lg-0">
+                <div class="explore-distroplates explore">
+                    <div>
+                        <h6>Explore</h6>
+                        <h4>Distroplates</h4>
+                    </div>
+                </div>
+            </a>
+            <a href="{% url 'products' %}?category=fixtures" class="col d-flex flex-xxl-grow-1 align-items-center justify-content-center justify-content-xxl-evenly mb-4 mb-lg-0">
+                <div class="explore-fixtures explore">
+                    <div>
+                        <h6>Explore</h6>
+                        <h4>Fixtures</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+</div>
 {% endblock %}
