@@ -9,8 +9,9 @@
     
     {{ category_form|crispy }}
     
-    <button class="btn" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit">Save</button>
     <button type="button"
+            class="btn btn-secondary"
             hx-get="{% url 'get_add_blog_category_container' %}"
             hx-swap="outerHTML"
             hx-target="#add-category-form"

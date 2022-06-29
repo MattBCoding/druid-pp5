@@ -35,22 +35,26 @@
         <div class="row">
             <div class="col-12 col-md-10 col-xl-8 mx-auto">
                 <div>
-                    {% for post in posts %}
-                    <a href="{% url 'blog_post_detail' post.slug %}">
-                        <div class="blog-card-post-container d-flex mt-4 flex-column flex-sm-row bg-one gap">
-                            {% if post.image %}
-                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
-                            {% else %}
-                            <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="blog-card-image">
-                            {% endif %}
-                            <div class="blog-card-content-container">
-                                <h5>{{ post.title }}</h5>
-                                <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
-                                <p>{{ post.content|slice:150|safe }}</p>
+                    {% if posts %}
+                        {% for post in posts %}
+                        <a href="{% url 'blog_post_detail' post.slug %}">
+                            <div class="blog-card-post-container d-flex mt-4 flex-column flex-sm-row bg-one gap">
+                                {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-card-image">
+                                {% else %}
+                                <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="blog-card-image">
+                                {% endif %}
+                                <div class="blog-card-content-container">
+                                    <h5>{{ post.title }}</h5>
+                                    <!-- Summernote content needs the safe tag to prevent code tags showing up in displayed content -->
+                                    <p>{{ post.content|slice:150|safe }}</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    {% endfor %}
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                    <p>Hmm something isn't quite right here. It seems that the Druids have no thoughts on their minds. Maybe they are reorganising their thoughts a little and will be publically displaying them again soon.</p>
+                    {% endif %}
                 </div>
                 <div>
                     {% include 'snippets/pagination.html' with query_set=posts custom_range=custom_range %}

@@ -5,7 +5,7 @@
 {% endfor %}
 <div id="add-blog-category-container"></div>
 
-<button class="btn"
+<button class="btn btn-primary"
         hx-get="{% url 'add_blog_category' %}"
         hx-swap="outerHTML"
         hx-target="#add-blog-category-container"

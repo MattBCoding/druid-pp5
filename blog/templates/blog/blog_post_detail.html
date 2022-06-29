@@ -9,10 +9,10 @@
     <nav class="blog-nav">
         <ul class="d-flex justify-content-center">
             <li>
-                <a href="{% url 'edit_blog_post' post.slug %}" class="btn">Edit Post</a>
+                <a href="{% url 'edit_blog_post' post.slug %}" class="btn btn-primary">Edit Post</a>
             </li>
             <li>
-                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete-post-modal">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#delete-post-modal">
                     Delete Post
                 </button>
             </li>

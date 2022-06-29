@@ -9,8 +9,9 @@
     {% csrf_token %}
     
     {{category_form|crispy }}
-    <button class="" type="submit">Save</button>
-    <button type="button"
+    <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-secondary"
+            type="button"
             hx-get="{% url 'get_blog_category_detail' category.id %}"
             hx-swap="outerHTML"
             hx-target="#category-form-{{ category.id }}"
