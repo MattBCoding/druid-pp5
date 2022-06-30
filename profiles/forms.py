@@ -9,7 +9,7 @@ class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         exclude = ('user',)
-    
+
     def __init__(self, *args, **kwargs):
         '''
         Add placeholders and classes to the form,

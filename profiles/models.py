@@ -10,6 +10,8 @@ custom user model and usermanager adapted from tutorial by Justin Mitchel
 available at
 www.codingforentrepreneurs.com/blog/how-to-create-a-custom-django-user-model/
 '''
+
+
 class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
         '''
@@ -23,7 +25,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have a first name')
         if not last_name:
             raise ValueError('Users must have a last name')
-        
+
         user = self.model(
             email=self.normalize_email(email),
             first_name=first_name,
@@ -32,7 +34,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def create_staffuser(self, email, password, first_name, last_name):
         '''
         Creates and saves a staff user with the given email and password
@@ -62,6 +64,8 @@ class UserManager(BaseUserManager):
 
 
 User = settings.AUTH_USER_MODEL
+
+
 class Address(models.Model):
     user = models.ForeignKey(
                              User,
@@ -87,7 +91,7 @@ class Address(models.Model):
 
     def __str__(self):
         return self.user.email
-    
+
     class Meta:
         verbose_name_plural = 'Addresses'
 
@@ -130,5 +134,3 @@ class User(AbstractBaseUser):
     @property
     def is_admin(self):
         return self.admin
-
-
