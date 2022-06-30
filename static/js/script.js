@@ -3,8 +3,8 @@ function moveNavContent() {
     let topContainer = document.getElementById('top-nav-container');
     let mobileContainer = document.getElementById('mobile-top-nav-container');
     let content = document.getElementById('account-links');
-    breakpoint = 992;
-    viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    let breakpoint = 992;
+    let viewportWidth = window.innerWidth || document.documentElement.clientWidth;
 
     if (viewportWidth < breakpoint) {
         if (mobileContainer.innerHTML != content) {
@@ -23,7 +23,7 @@ function moveNavContent() {
         } else if (viewportWidth >= breakpoint) {
             topContainer.appendChild(content);
         }
-    })
+    });
 }
 
 // function to display the search box on request
@@ -34,28 +34,28 @@ function displaySearch() {
     searchForm.style.display = 'flex';
     searchForm.addEventListener('click', (e) => {
         e.stopImmediatePropagation();
-    })
+    });
     searchFormContainer.addEventListener('click', () => {
         searchForm.style.display = 'none';
         searchFormContainer.style.display = 'none';
-    })
+    });
 }
 
 // function to close modal inserted by htmx
 function closeModal() {
-	var container = document.getElementById("modals-here")
-	var modal = document.getElementById("modal")
+	var container = document.getElementById("modals-here");
+	var modal = document.getElementById("modal");
 
-	modal.classList.remove("show")
+	modal.classList.remove("show");
 
 	setTimeout(function() {
-		container.removeChild(modal)
-	}, 200)
+		container.removeChild(modal);
+	}, 200);
 }
 
 // function to prevent click through modal inserted by htmx
 function stopPropagation(event) {
-    event.stopImmediatePropagation()
+    event.stopImmediatePropagation();
 }
 
 let searchIcon = document.getElementById('search-container').addEventListener('click', displaySearch);
