@@ -6,7 +6,7 @@
 <div id="add-blog-category-container"></div>
 
 <button class="btn btn-primary my-4"
-        hx-get="{% url 'add_blog_category' %}"
-        hx-swap="innerHTML"
-        hx-target="#add-blog-category-container"
-        hx-trigger="click">Add Category</button>
+        data-hx-get="{% url 'add_blog_category' %}"
+        data-hx-swap="innerHTML"
+        data-hx-target="#add-blog-category-container"
+        data-hx-trigger="click">Add Category</button>

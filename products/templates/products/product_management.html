@@ -38,9 +38,9 @@
                     <div class="d-flex gap justify-content-center mt-2 mt-md-0">
                         <a href="{% url 'edit_product' product.slug %}" class="btn btn-primary">Edit</a>
                         {% if product.is_active %}
-                        <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn btn-secondary">Deactivate</button>
+                        <button data-hx-get="{% url 'deactivate_product_modal' product.slug %}" data-hx-target="#modals-here" data-hx-trigger="click" type="button" class="btn btn-secondary">Deactivate</button>
                         {% else %}
-                        <button hx-get="{% url 'deactivate_product_modal' product.slug %}" hx-target="#modals-here" hx-trigger="click" type="button" class="btn btn-primary">Activate</button>
+                        <button data-hx-get="{% url 'deactivate_product_modal' product.slug %}" data-hx-target="#modals-here" data-hx-trigger="click" type="button" class="btn btn-primary">Activate</button>
                         {% endif %}
                     </div>
                 </div>

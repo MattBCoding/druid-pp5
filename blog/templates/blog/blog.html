@@ -22,7 +22,7 @@
                 <a href="{% url 'add_blog_post' %}" class="btn btn-primary">Add Post</a>
             </li>
             <li>
-                <button class="btn btn-secondary" hx-get="{% url 'get_categories' %}" hx-swap="innerHTML" hx-target="#categories-container" hx-trigger="click">Category Management</button>
+                <button class="btn btn-secondary" data-hx-get="{% url 'get_categories' %}" data-hx-swap="innerHTML" data-hx-target="#categories-container" data-hx-trigger="click">Category Management</button>
             </li>
         </ul>
     </nav>

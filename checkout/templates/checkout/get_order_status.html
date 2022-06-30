@@ -14,7 +14,7 @@
 <main>
     <h2 class="mb-4">Order Status</h2>
     <div class="my-4">
-        <form action="" method="GET" data-hx-get="{% url 'order_status_hx' %}" data-hx-swap="innerHTML" data-hx-target="#order-status-target" class="d-flex flex-column flex-md-row gap order-status-form">
+        <form action="." method="GET" data-hx-get="{% url 'order_status_hx' %}" data-hx-swap="innerHTML" data-hx-target="#order-status-target" class="d-flex flex-column flex-md-row gap order-status-form">
             {% csrf_token %}
             <label for="order_number" class="form-label mb-1">Order Number</label>
             <input type="text" name="order_number" id="order_number" class="form-control">

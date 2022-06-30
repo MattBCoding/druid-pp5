@@ -4,12 +4,12 @@
         {{ category.name }}
     </p>
     {% if category.id != 1 %}
-    <button type="button" class="btn btn-primary btn-sm" hx-get="{% url 'edit_blog_category' category.id %}" hx-swap="outerHTML" hx-target="#category-{{ category.id }}" hx-trigger="click">
+    <button type="button" class="btn btn-primary btn-sm" data-hx-get="{% url 'edit_blog_category' category.id %}" data-hx-swap="outerHTML" data-hx-target="#category-{{ category.id }}" data-hx-trigger="click">
         <i class="fa-solid fa-pen-to-square">
         </i>
         <span>Edit</span>
     </button>
-    <button type="button" class="btn btn-secondary btn-sm" hx-get="{% url 'get_delete_blog_category' category.id %}" hx-swap="outerHTML" hx-target="#category-{{ category.id }}" hx-trigger="click">
+    <button type="button" class="btn btn-secondary btn-sm" data-hx-get="{% url 'get_delete_blog_category' category.id %}" data-hx-swap="outerHTML" data-hx-target="#category-{{ category.id }}" data-hx-trigger="click">
         <i class="fa-solid fa-trash-can">
         </i>
         <span>Delete</span>

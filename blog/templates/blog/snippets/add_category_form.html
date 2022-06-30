@@ -12,9 +12,9 @@
       <button class="btn btn-primary flex-shrink-0" type="submit">Save</button>
       <button type="button"
               class="btn btn-secondary flex-shrink-0"
-              hx-get="{% url 'get_add_blog_category_container' %}"
-              hx-swap="outerHTML"
-              hx-target="#add-category-form"
-              hx-trigger="click">Cancel</button>
+              data-hx-get="{% url 'get_add_blog_category_container' %}"
+              data-hx-swap="outerHTML"
+              data-hx-target="#add-category-form"
+              data-hx-trigger="click">Cancel</button>
     </div>
 </form>

@@ -48,7 +48,7 @@
                 {% if address.default %}
                 <p class="default-address">Default Address</p>
                 {% else %}
-                <form action="" method="post" class="make-default-address">
+                <form action="." method="post" class="make-default-address">
                     {% csrf_token %}
                     <input type="hidden" name="address" value="{{ address.id }}">
                     <button type="submit">Make Default</button>

@@ -12,8 +12,8 @@
     <button class="btn btn-primary" type="submit">Save</button>
     <button class="btn btn-secondary"
             type="button"
-            hx-get="{% url 'get_blog_category_detail' category.id %}"
-            hx-swap="outerHTML"
-            hx-target="#category-form-{{ category.id }}"
-            hx-trigger="click">Cancel</button>
+            data-hx-get="{% url 'get_blog_category_detail' category.id %}"
+            data-hx-swap="outerHTML"
+            data-hx-target="#category-form-{{ category.id }}"
+            data-hx-trigger="click">Cancel</button>
 </form>

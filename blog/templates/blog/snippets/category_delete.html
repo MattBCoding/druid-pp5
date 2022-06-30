@@ -10,10 +10,10 @@
     <p>Are you sure you want to delete "{{category}}"?</p>
     <button type="button"
             class="btn btn-primary"
-            hx-get="{% url 'get_blog_category_detail' category.id %}"
-            hx-swap="outerHTML"
-            hx-target="#category-delete-form-{{ category.id }}"
-            hx-trigger="click">Cancel</button>
+            data-hx-get="{% url 'get_blog_category_detail' category.id %}"
+            data-hx-swap="outerHTML"
+            data-hx-target="#category-delete-form-{{ category.id }}"
+            data-hx-trigger="click">Cancel</button>
     <button class="btn btn-secondary" type="submit">Delete</button>
     
 </form>
