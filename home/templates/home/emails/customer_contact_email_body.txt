@@ -1,0 +1,12 @@
+Hello
+
+This is just a quick message to let you know we have received your message.
+Subject: {{ subject }}
+Message: {{ message }}
+
+Thank you for your message.
+A member of the team will be in touch shortly during normal business hours.
+
+Kind Regards
+
+Druid Computers.

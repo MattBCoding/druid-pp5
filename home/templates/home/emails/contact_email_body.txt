@@ -1,0 +1,10 @@
+Hello 
+
+There is a new message awaiting from: {{ customer }}
+Message subject: {{ subject }}
+Message: {{ message }}
+
+Kind Regards,
+
+Matt Bodden
+Druid.
