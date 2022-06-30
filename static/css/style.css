@@ -919,6 +919,13 @@ paste text in from other documents. Needs important tag.
     border-color: var(--secondary-text-hover);
 }
 
+.btn-secondary > i,
+.btn-secondary > span,
+.btn-primary > i,
+.btn-primary > span {
+    pointer-events: none;
+}
+
 /* MEDIA QUERIES */
 /* media query set at 576px for the bootstrap breakpoint to sm */
 @media (min-width: 576px) {

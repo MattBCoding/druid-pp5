@@ -9,8 +9,9 @@
     {% csrf_token %}
     
     {{category_form|crispy }}
-    <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit" id="save-btn-edit-category">Save</button>
     <button class="btn btn-secondary"
+            id="cancel-btn-edit-category"
             type="button"
             data-hx-get="{% url 'get_blog_category_detail' category.id %}"
             data-hx-swap="outerHTML"

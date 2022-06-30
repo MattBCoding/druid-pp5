@@ -9,9 +9,10 @@
     
     {{ category_form|crispy }}
     <div class="d-flex gap categry-form-button-container">
-      <button class="btn btn-primary flex-shrink-0" type="submit">Save</button>
+      <button class="btn btn-primary flex-shrink-0" type="submit" id="save-btn-add-category">Save</button>
       <button type="button"
               class="btn btn-secondary flex-shrink-0"
+              id="cancel-btn-add-category"
               data-hx-get="{% url 'get_add_blog_category_container' %}"
               data-hx-swap="outerHTML"
               data-hx-target="#add-category-form"
