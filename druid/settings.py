@@ -86,7 +86,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # had to change this to bs4 due to summernote bug
-SUMMERNOTE_THEME = 'bs4' # Show summernote with Bootstrap5
+SUMMERNOTE_THEME = 'bs4'
 
 TEMPLATES = [
     {
@@ -143,7 +143,6 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_FORMS = {
     'signup': 'home.forms.CustomSignupForm',
 }
-# ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 

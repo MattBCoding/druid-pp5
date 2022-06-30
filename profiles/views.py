@@ -159,17 +159,13 @@ def favourite(request, pk):
     '''
     product = get_object_or_404(Product, pk=pk)
     slug = product.slug
-    # favourite = False
     if product.favourites.filter(id=request.user.id).exists():
         product.favourites.remove(request.user)
-        # favourite = False
     else:
         product.favourites.add(request.user)
-        # favourite = True
     if request.htmx:
         context = {
             'product': product,
-            # 'favourite': favourite
         }
         return render(request, 'products/snippets/favourite.html', context)
     # handle update from my wishlist page
@@ -177,7 +173,6 @@ def favourite(request, pk):
         products = Product.objects.filter(favourites=request.user)
         context = {
             'products': products,
-            # 'favourite': favourite
         }
         return render(request, 'profiles/my_favourites.html', context)
 
