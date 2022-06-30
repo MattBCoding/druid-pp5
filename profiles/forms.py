@@ -17,22 +17,6 @@ class AddressForm(forms.ModelForm):
         set auto focus on first field
         '''
         super().__init__(*args, **kwargs)
-        # self.helper = FormHelper()
-        # self.helper.layout = Layout(
-        #     FloatingField(
-        #         'street_address_1',
-        #         'street_address_2',
-        #         'town_or_city',
-        #         'county',
-        #         'postcode',
-        #         'phone_number',
-        #         'default'),
-        #         ButtonHolder(
-        #             Submit('submit', 'Submit',)
-        #         )
-
-
-        # )
         placeholders = {
             'street_address_1': 'Street Address Line 1',
             'street_address_2': 'Street Address Line 2',
