@@ -72,3 +72,11 @@ def contact(request):
         'form': form,
     }
     return render(request, 'home/contact.html', context)
+
+
+def about(request):
+    '''
+    View to provide the about us page
+    '''
+    context = {}
+    return render(request, 'home/about.html', context)

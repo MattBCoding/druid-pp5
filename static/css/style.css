@@ -366,8 +366,6 @@ header {
     z-index: 100;
 }
 
-
-
 /* Search Section styling  */
 header {
     position: relative;
@@ -385,7 +383,6 @@ header {
     height: 100vh;
     width: 100%;
     z-index: 500;
-    /* needs a filter variable set rather than rgba */
     background: rgba(41, 41, 41, 0.55);
     display: none;
 }
@@ -414,7 +411,6 @@ footer {
 }
 
 /* Mailchimp styling */
-
 #mc_embed_signup {
     clear: left;
     font-size: 16px;
@@ -468,8 +464,6 @@ footer li {
 }
 
 .explore {
-    /* height: clamp(200px, 100%, 300px); */
-    /* width: clamp(200px, 100%, 300px); */
     aspect-ratio: 2.2/1;
     width: 100%;
     max-width: 900px;
@@ -504,6 +498,11 @@ footer li {
 
 .explore-fixtures {
     background: url(https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/media/cablemod-pro-bridged-cable-comb-kit-black-home.jpg) no-repeat center center;
+}
+
+/* About us page */
+.about-container > img {
+    max-width: max(678px, 50%);
 }
 
 /* profile page */
@@ -936,6 +935,13 @@ paste text in from other documents. Needs important tag.
     }
 }
 
+/* media query set at 768px for the bootstrap breakpoint to md */
+@media (min-width: 768px) {
+    .about-container > img {
+        max-width: 46vw;
+        object-fit: cover;
+    }
+}
 /* media query set at 992px as that is the bootstrap breakpoint to lg */
 @media (min-width: 992px) {
 
