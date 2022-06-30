@@ -410,6 +410,32 @@ footer {
     color: var(--primary-text);
 }
 
+.social-channels {
+    padding-left: 0;
+    max-width: 600px;
+}
+
+.social-icons {
+    font-size: 2.5rem;
+    text-align: center;
+    list-style-type: none;
+    width: 20%;
+}
+
+.social-icons > a{
+    color: var(--primary-text);
+}
+
+.social-icons > a:hover{
+    border-bottom: .1rem solid var(--primary-hover-text);
+    color: var(--primary-hover-text);
+}
+
+.copyright {
+    text-align: center;
+    color: var(--primary-text);
+}
+
 /* Mailchimp styling */
 #mc_embed_signup {
     clear: left;
