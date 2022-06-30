@@ -35,7 +35,9 @@ else:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['druid-computers.herokuapp.com', '127.0.0.1:8000', '127.0.0.1']
+ALLOWED_HOSTS = ['druid-computers.herokuapp.com',
+                 '127.0.0.1:8000',
+                 '127.0.0.1']
 
 # Application definition
 
@@ -189,7 +191,7 @@ SUMMERNOTE_CONFIG = {
 
         'fontNames': ['Montserrat'],
         'fontNamesIgnoreCheck': ['Montserrat'],
-        'fontSizes': ['16',],
+        'fontSizes': ['16'],
         'fontSizeUnits': ['px'],
         # Toolbar customization
         # https://summernote.org/deep-dive/#custom-toolbar-popover
@@ -277,7 +279,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if 'USE_AWS' in os.environ:
-    # Cache Control 
+    # Cache Control
     AWS_S3_OBJECT_PARAMETERS = {
         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
         'CacheControl': 'max-age=94608000',
