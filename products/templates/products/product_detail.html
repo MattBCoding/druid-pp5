@@ -9,6 +9,9 @@
         {% django_htmx_script %}
     {% endblock %}
 {% endif %}
+{% block keywords %}
+    {{ product.name }}
+{% endblock %}
 {% block body %}
 <main class="bg-base">
     <h2 class="sr-only">{{product.name}} product page</h2>
