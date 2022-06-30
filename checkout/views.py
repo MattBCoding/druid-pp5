@@ -25,10 +25,6 @@ def checkout(request):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     if request.method == 'POST':
-        print('If the CSRF Token is in the post data')
-        print('-------------------------------------')
-        print(request.POST.get('csrfmiddlewaretoken'))
-        print('-------------------------------------')
         bag = request.session.get('bag', {})
         form_data = {
             'full_name': request.POST['full_name'],
@@ -43,22 +39,11 @@ def checkout(request):
         }
         order_form = OrderForm(form_data)
         if order_form.is_valid():
-            print('checkout function order_form is valid')
-            print('CHECK OF REQUEST.POST SAVE INFO VALUE')
-            print(request.POST.get('save_info'))
-            print('trying to save commit = false order_form')
             order = order_form.save(commit=False)
-            print('after trying to save')
-            print('getting pid')
             pid = request.POST.get('client_secret').split('_secret')[0]
-            print('after pid')
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
-            print('about to save order')
             order.save()
-            print('saved order?')
-            print(order)
-            print('about to start for loop')
             for item_id, item_data in bag.items():
                 try:
                     product = Product.objects.get(id=item_id)
@@ -76,10 +61,7 @@ def checkout(request):
                     ))
                     order.delete()
                     return redirect(reverse('view_bag'))
-
             request.session['save_info'] = 'save-info' in request.POST
-            print('Testing the save info line')
-            print(request.session['save_info'])
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, 'There was an error with your form. \
@@ -100,13 +82,9 @@ def checkout(request):
         )
 
         if request.user.is_authenticated:
-            print('user is logged in')
             try:
-                print('start of try block')
                 profile = get_object_or_404(User, pk=request.user.id)
-                print('found user profile')
                 if 'address_id' in request.GET:
-                    print('ADDRESS ID PASSED INTO VIEW')
                     address = Address.objects.get(pk=request.GET['address_id'])
                     order_form = OrderForm(initial={
                         'full_name': profile.get_full_name(),
@@ -120,17 +98,7 @@ def checkout(request):
                         'country': address.country,
                     })
                 elif profile.address.filter(default__exact=True).exists():
-                    print('Found default Address')
                     default = get_object_or_404(Address, user=profile, default=True)
-                    print(profile.get_full_name())
-                    print(profile.email)
-                    print(default.phone_number)
-                    print(default.street_address_1)
-                    print(default.street_address_2)
-                    print(default.town_or_city)
-                    print(default.county)
-                    print(default.postcode)
-                    print(default.country)
                     order_form = OrderForm(initial={
                         'full_name': profile.get_full_name(),
                         'email': profile.email,
@@ -148,13 +116,10 @@ def checkout(request):
                         'email': profile.email,                        
                     })
             except Exception:
-                print(' profile.address does not exist ------------------')
                 order_form = OrderForm()
             if getAddresses(request):
-                print('getAddresses found addresses')
                 addresses = getAddresses(request)
             else:
-                print('getAddresses did not find addresses')
                 addresses = False
         else:
             order_form = OrderForm()
@@ -174,13 +139,10 @@ def checkout_success(request, order_number):
     '''
     Handles successful checkouts
     '''
-    print('START OF CHECKOUT SUCCESS')
     save_info = request.session.get('save_info')
-    print(save_info)
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
-        # profile = get_object_or_404(User, pk=request.user.id)
         profile = User.objects.get(pk=request.user.id)
         order.user_profile = profile
         order.save()
@@ -197,13 +159,9 @@ def checkout_success(request, order_number):
                 'phone_number': order.phone_number,
             }
             address_form = AddressForm(address_data)
-            print('checking address form is valid')
             if address_form.is_valid():
-                print('it is valid')
                 new_address = address_form.save(commit=False)
-                print('saved but false')
                 new_address.user = profile
-                print('added user profile to address form')
                 new_address.save()
 
     messages.success(request, f'Order successfully processed! \
@@ -221,8 +179,6 @@ def checkout_success(request, order_number):
 
 @require_POST
 def cache_checkout_data(request):
-    print('Start of cache checkout data')
-    print(request.POST.get('save_info'))
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -242,10 +198,6 @@ def order_management(request):
     '''
     Employee view to access order details
     '''
-    # filter form uses range filter for date as per filters.py
-    # at 00:40 filter for orders placed yesterday does not work
-    # suspect its due to being first hour of the day - so won't work
-    # need to test after 1am and first digit of time has changed.
     orders = Order.objects.all()
     my_filter = OrderFilter(request.GET, queryset=orders)
     orders = my_filter.qs
@@ -272,7 +224,6 @@ def update_order_status(request, order_number):
         if form.is_valid():
             form.save()
             messages.success(request, 'Order updated successfully.')
-            # change this in future to correct place
             return redirect('order_management')
         else:
             messages.error(request, 'Failed to update order, double check the form')
