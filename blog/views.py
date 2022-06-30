@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from .forms import BlogPostForm, BlogCategoryForm
@@ -10,7 +9,11 @@ from products.utils import paginateProducts
 # Create your views here.
 User = get_user_model()
 
+
 def blog(request):
+    '''
+    View to display blog post page
+    '''
     posts = BlogPost.objects.all().order_by('-created_on')
     custom_range, posts = paginateProducts(request, posts, 4)
     context = {
@@ -19,15 +22,24 @@ def blog(request):
     }
     return render(request, 'blog/blog.html', context)
 
+
 def blogPostDetail(request, slug):
+    '''
+    View to return individual blog post
+    '''
     post = get_object_or_404(BlogPost, slug=slug)
     context = {
         'post': post,
     }
     return render(request, 'blog/blog_post_detail.html', context)
 
+
 @staff_member_required
 def addBlogPost(request):
+    '''
+    View to handle displaying add blog form
+    and to handle form processing
+    '''
     form = BlogPostForm()
     context = {
         'form': form,
@@ -43,12 +55,18 @@ def addBlogPost(request):
         else:
             messages.error(
                 request,
-                'Failed to add the blog post, please ensure the form is correctly filled in'
+                'Failed to add the blog post, \
+                    please ensure the form is correctly filled in'
                 )
     return render(request, 'blog/blog_post_form.html', context)
 
+
 @staff_member_required
 def editBlogPost(request, slug):
+    '''
+    View to display prefilled form to edit a blog post
+    and to handle form processing
+    '''
     post = get_object_or_404(BlogPost, slug=slug)
     form = BlogPostForm(instance=post)
     if request.method == 'POST':
@@ -60,7 +78,8 @@ def editBlogPost(request, slug):
             messages.success(request, 'Blog Post successfully updated!')
             return redirect('blog')
         else:
-            messages.error(request, 'Failed to update blog post, please double check the form.')
+            messages.error(request, 'Failed to update blog post, \
+                please double check the form.')
 
     context = {
         'form': form,
@@ -69,8 +88,12 @@ def editBlogPost(request, slug):
 
     return render(request, 'blog/blog_post_form.html', context)
 
+
 @staff_member_required
 def deleteBlogPost(request, pk):
+    '''
+    View to handle the deletion of a blog post
+    '''
     post = get_object_or_404(BlogPost, pk=pk)
     if request.user.is_staff:
         post.delete()
@@ -79,8 +102,12 @@ def deleteBlogPost(request, pk):
     else:
         messages.error(request, 'Only employees can delete blog posts.')
 
+
 @staff_member_required
 def getCategories(request):
+    '''
+    View to return categorie
+    '''
     categories = BlogCategory.objects.all()
     context = {
         'categories': categories,
@@ -89,14 +116,19 @@ def getCategories(request):
 
     return render(request, 'blog/snippets/categories.html', context)
 
+
 @staff_member_required
 def addBlogCategory(request):
+    '''
+    View to display form to add a blog post category
+    and to handle form processing
+    '''
     form = BlogCategoryForm()
     context = {
         'category_form': form,
         'disabled': True,
     }
-    
+
     if request.htmx:
         form = BlogCategoryForm(request.POST)
         if form.is_valid():
@@ -108,17 +140,28 @@ def addBlogCategory(request):
                 'category': category,
                 'disabled': False,
             }
-            return render(request, 'blog/snippets/add_blog_category_container.html', context)
-    
+            return render(
+                          request,
+                          'blog/snippets/add_blog_category_container.html',
+                          context)
+
     return render(request, 'blog/snippets/add_category_form.html', context)
+
 
 @staff_member_required
 def getAddBlogCategoryContainer(request):
+    '''
+    View to handle inserting container for future requests
+    '''
     return render(request, 'blog/snippets/add_blog_category_container.html')
 
 
 @staff_member_required
 def editBlogCategory(request, pk):
+    '''
+    View to display prefilled blog category form
+    and to handle form processing
+    '''
     category = BlogCategory.objects.get(pk=pk)
     form = BlogCategoryForm(instance=category)
     context = {
@@ -133,28 +176,44 @@ def editBlogCategory(request, pk):
             context = {
                 'category': category,
             }
-            return render(request, 'blog/snippets/category_detail.html', context)
+            return render(
+                          request,
+                          'blog/snippets/category_detail.html',
+                          context)
 
     return render(request, 'blog/snippets/category_form.html', context)
 
+
 @staff_member_required
 def getBlogCategoryDetail(request, pk):
+    '''
+    View to return category details
+    '''
     category = BlogCategory.objects.get(pk=pk)
     context = {
         'category': category,
     }
     return render(request, 'blog/snippets/category_detail.html', context)
 
+
 @staff_member_required
 def getDeleteBlogCategory(request, pk):
+    '''
+    View to provide option for deleting a blog category
+    '''
     category = BlogCategory.objects.get(pk=pk)
     context = {
         'category': category,
     }
     return render(request, 'blog/snippets/category_delete.html', context)
 
+
 @staff_member_required
 def deleteBlogCategory(request, pk):
+    '''
+    View to handle deleting blog categories
+    prevents deletion of the general category
+    '''
     if pk != '1':
         category = BlogCategory.objects.get(pk=pk)
         name = category.name
@@ -162,10 +221,14 @@ def deleteBlogCategory(request, pk):
         context = {
             'name': name,
         }
-        return render(request, 'blog/snippets/category_delete_response.html', context)
+        return render(
+                      request,
+                      'blog/snippets/category_delete_response.html',
+                      context)
 
     else:
-        messages.error(request, "Error - Administrator needed to delete the default category.")
+        messages.error(request, "Error - Administrator needed to \
+            delete the default category.")
         posts = BlogPost.objects.all()
         context = {
             'posts': posts,
