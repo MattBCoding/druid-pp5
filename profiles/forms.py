@@ -24,7 +24,6 @@ class AddressForm(forms.ModelForm):
             'county': 'County, State or Province',
             'postcode': 'Postal Code or Zip Code',
             'phone_number': 'Phone Number',
-            'default': 'Set as default address',
         }
 
         self.fields['street_address_1'].widget.attrs['autofocus'] = True

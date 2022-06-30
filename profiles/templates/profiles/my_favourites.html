@@ -72,10 +72,10 @@
                                 <input type="hidden" name="redirect_url" value="{{ request.path }}">
                             </div>
                         </form>
-                        <div id="favourite-container">
+                        <div id="favourite-container-{{ product.id }}">
                             <form action="{% url 'favourite' product.id %}" method="post" class="d-flex justify-content-center">
                                 {% csrf_token %}
-                                <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite mx-auto" title="Remove this product from your wishlist" id="wishlist-btn">
+                                <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite mx-auto" title="Remove this product from your wishlist" id="wishlist-btn-{{ product.id }}">
                                     <i class="fa-solid fa-heart"></i>
                                 </button>
                             </form>

@@ -2,11 +2,11 @@
     {% csrf_token %}
     
     {% if product in request.user.product_favourites.all %}
-    <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" title="Remove this product from your wishlist" id="wishlist-btn">
+    <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" title="Remove this product from your wishlist" id="wishlist-btn-{{ product.id }}">
         <i class="fa-solid fa-heart"></i>
     </button>
     {% else %}
-    <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" title="Add to your wishlist"  id="wishlist-btn">
+    <button type="submit" name="product_id" value="{{ product.id }}" class="btn favourite" title="Add to your wishlist"  id="wishlist-btn-{{ product.id }}">
         <i class="fa-regular fa-heart"></i>
     </button>
     {% endif %}
