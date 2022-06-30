@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 def paginateProducts(request, products, results):
     '''
     returns a paginated range and the query
@@ -14,7 +15,7 @@ def paginateProducts(request, products, results):
     except EmptyPage:
         page = paginator.num_pages
         products = paginator.page(page)
-    
+
     leftIndex = (int(page) - 1)
     if leftIndex < 1:
         leftIndex = 1

@@ -1,8 +1,9 @@
 from dataclasses import fields
 from django import forms
-from .models import Category, Product, Review, Response 
+from .models import Category, Product, Review, Response
 from django_summernote.widgets import SummernoteWidget
 from blog.widgets import CustomClearableFileInput
+
 
 class ProductForm(forms.ModelForm):
     '''
@@ -16,8 +17,9 @@ class ProductForm(forms.ModelForm):
             'highlights': SummernoteWidget(),
             'technical_details': SummernoteWidget(),
         }
-    
-    primary_image = forms.ImageField(label='Primary Image', required=False, widget=CustomClearableFileInput)
+
+    primary_image = forms.ImageField(
+        label='Primary Image', required=False, widget=CustomClearableFileInput)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

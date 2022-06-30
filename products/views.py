@@ -16,6 +16,7 @@ from .models import Product, Category, Review, Response
 # Create your views here.
 User = get_user_model()
 
+
 def all_products(request):
     '''
     products home page
@@ -30,13 +31,15 @@ def all_products(request):
         if 'category' in request.GET:
             cat = 'category'
             query = request.GET['category']
-            products = products.filter(category__name__icontains=query).order_by('id')
+            products = products.filter(
+                category__name__icontains=query).order_by('id')
 
         if 'q' in request.GET:
             cat = 'q'
             query = request.GET['q']
             if not query:
-                messages.error(request, "You didn't enter any search criteria!")
+                messages.error(request,
+                               "You didn't enter any search criteria!")
                 return redirect(reverse('products'))
             queries = (Q(name__icontains=query) |
                        Q(description__icontains=query) |
@@ -54,6 +57,7 @@ def all_products(request):
 
     return render(request, 'products/products.html', context)
 
+
 def product_detail(request, slug):
     '''
     product detail view for individual products
@@ -67,9 +71,12 @@ def product_detail(request, slug):
     # check if user has previously purchased the product
     if request.user.is_authenticated:
         user = User.objects.get(email=request.user.email)
-        user_orders = [order.id for order in Order.objects.filter(user_profile=user)]
-        line_items = OrderLineItem.objects.filter(order__pk__in=user_orders, product__pk=product.id).exists()
-        #check if the user has previously written a review
+        user_orders = [order.id for order in Order.objects.filter(
+            user_profile=user)]
+        line_items = OrderLineItem.objects.filter(order__pk__in=user_orders,
+                                                  product__pk=product.id
+                                                  ).exists()
+        # check if the user has previously written a review
         if line_items:
             can_review = True
             if reviews.filter(author=user).exists():
@@ -87,13 +94,14 @@ def product_detail(request, slug):
     }
     return render(request, 'products/product_detail.html', context)
 
+
 @login_required
 def product_review_receiver(request, pk):
     '''
     View to handle a form submission to add or edit a product review
     from a user. User must be logged in and must have purchased the product to
-    submit a review. Product detail view should prevent users accessing the form
-    without having purchased the product in most instances.
+    submit a review. Product detail view should prevent users accessing the
+    form without having purchased the product in most instances.
     '''
     form = ReviewForm(request.POST)
     author = request.user
@@ -121,7 +129,9 @@ def product_review_receiver(request, pk):
     else:
         messages.error(
                        request,
-                       'You need to have purchased the product to provide a review')
+                       'You can only provide a review if you have \
+                        purchased the product from us.')
+
 
 @login_required
 def hx_get_edit_review_form(request, pk):
@@ -131,7 +141,10 @@ def hx_get_edit_review_form(request, pk):
     review = get_object_or_404(Review, pk=pk)
     form = ReviewForm(request.POST or None, instance=review)
     context = {'form': form, 'review': review}
-    return render(request, 'products/snippets/edit_product_review.html', context)
+    return render(request,
+                  'products/snippets/edit_product_review.html',
+                  context)
+
 
 @staff_member_required
 def hx_get_edit_response_form(request, pk):
@@ -146,7 +159,10 @@ def hx_get_edit_response_form(request, pk):
         'response': response,
         'review_response': review
         }
-    return render(request, 'products/snippets/review_response_form.html', context)
+    return render(request,
+                  'products/snippets/review_response_form.html',
+                  context)
+
 
 @login_required
 def update_review_receiver(request, pk):
@@ -164,13 +180,18 @@ def update_review_receiver(request, pk):
                 messages.success(request, 'Review successfully updated')
                 return redirect(reverse('product_detail', args=[product.slug]))
             else:
-                messages.error(request, 'There is a problem with your review submission. Please check the form and try again.')
+                messages.error(request,
+                               'There is a problem with your review \
+                                submission. Please check the form and try \
+                                again.')
         else:
-            messages.error(request, 'Only the original author of the review can edit it')
+            messages.error(request,
+                           'Only the author of the review can edit it')
             return redirect(reverse('product_detail', args=[product.slug]))
     else:
         messages.error(request, 'Something went wrong, please try again')
         return redirect(reverse('product_detail', args=[product.slug]))
+
 
 @staff_member_required
 def review_response_receiver(request, pk):
@@ -196,6 +217,7 @@ def review_response_receiver(request, pk):
         messages.error(request, 'Something went wrong, please try again')
         return redirect(reverse('product_detail', args=[product.slug]))
 
+
 @staff_member_required
 def edit_response_receiver(request, pk):
     '''
@@ -219,6 +241,7 @@ def edit_response_receiver(request, pk):
         messages.error(request, 'Something went wrong, please try again')
         return redirect(reverse('product_detail', args=[product.slug]))
 
+
 @login_required
 def hx_get_delete_modal(request, pk):
     '''
@@ -232,11 +255,14 @@ def hx_get_delete_modal(request, pk):
             context = {
                 'delete_review': review,
             }
-            return render(request, 'products/snippets/delete_review_modal.html', context)
+            return render(request,
+                          'products/snippets/delete_review_modal.html',
+                          context)
         else:
             raise Http404
     else:
         raise Http404
+
 
 @login_required
 def delete_review(request, pk):
@@ -253,7 +279,8 @@ def delete_review(request, pk):
         return redirect(reverse('product_detail', args=[product.slug]))
 
     else:
-        messages.error(request, 'Only the review author or employees can delete this review.')
+        messages.error(request,
+                       'Only the author or employees can delete this review.')
         return redirect(reverse('product_detail', args=[product.slug]))
 
 
@@ -268,7 +295,10 @@ def hx_get_response_form(request, pk):
         'form': form,
         'review_response': review
         }
-    return render(request, 'products/snippets/review_response_form.html', context)
+    return render(request,
+                  'products/snippets/review_response_form.html',
+                  context)
+
 
 @staff_member_required
 def product_management(request):
@@ -281,6 +311,7 @@ def product_management(request):
         'product_list': product_list,
     }
     return render(request, 'products/product_management.html', context)
+
 
 @staff_member_required
 def add_product(request):
@@ -303,29 +334,33 @@ def add_product(request):
 
     return render(request, 'products/product_form.html', context)
 
+
 @staff_member_required
 def edit_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     form = ProductForm(instance=product)
     if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES or None, instance=product)
+        form = ProductForm(request.POST,
+                           request.FILES or None,
+                           instance=product)
         if form.is_valid():
             form.save()
             messages.success(request, 'Product updated successfully')
             return redirect('product_management')
         else:
             messages.error(request, 'There is an error in the form.')
-    
+
     context = {
         'form': form,
         'product': product,
     }
     return render(request, 'products/product_form.html', context)
 
+
 @staff_member_required
 def deactivate_product_modal(request, slug):
     '''
-    view to return the product information for the 
+    view to return the product information for the
     deactivate/activate product modal
     '''
     product = get_object_or_404(Product, slug=slug)
@@ -333,7 +368,10 @@ def deactivate_product_modal(request, slug):
         context = {
             'product': product,
         }
-        return render(request, 'products/snippets/product_deactivate_modal.html', context)
+        return render(request,
+                      'products/snippets/product_deactivate_modal.html',
+                      context)
+
 
 @staff_member_required
 def deactivate_product(request, slug):
@@ -353,4 +391,5 @@ def deactivate_product(request, slug):
             messages.success(request, 'The product has been activated')
             return redirect('product_management')
     else:
-        messages.error(request, 'Only employees can change a products activation status')
+        messages.error(request,
+                       'Only employees can change a products status')
