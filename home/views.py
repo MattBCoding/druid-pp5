@@ -5,10 +5,12 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 
+
 # Create your views here.
 def home(request):
     context = {}
     return render(request, 'home/home.html', context)
+
 
 def contact(request):
     '''
@@ -60,12 +62,12 @@ def contact(request):
                 settings.DEFAULT_FROM_EMAIL,
                 [contact_email]
             )
-            messages.success(request, 'Your message has been sent successfully.')
+            messages.success(request, 'Your message has been sent!')
             return redirect('contact')
         else:
             messages.error(request, 'All fields are required in the form.\
                                     please double check and try again.')
-    
+
     context = {
         'form': form,
     }
