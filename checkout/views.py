@@ -19,6 +19,7 @@ import json
 
 User = get_user_model()
 
+
 # Create your views here.
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
@@ -33,7 +34,7 @@ def checkout(request):
             'street_address_1': request.POST['street_address_1'],
             'street_address_2': request.POST['street_address_2'],
             'town_or_city': request.POST['town_or_city'],
-            'county': request.POST['county'],             
+            'county': request.POST['county'],
             'postcode': request.POST['postcode'],
             'country': request.POST['country'],
         }
@@ -62,14 +63,16 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
             request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success', args=[order.order_number]))
+            return redirect(reverse('checkout_success',
+                                    args=[order.order_number]))
         else:
             messages.error(request, 'There was an error with your form. \
                 Please double check your information.')
     else:
         bag = request.session.get('bag', {})
         if not bag:
-            messages.error(request, 'There are no items in your bag at the moment.')
+            messages.error(request,
+                           'There are no items in your bag at the moment.')
             return redirect(reverse('products'))
 
         current_bag = bag_contents(request)
@@ -98,7 +101,9 @@ def checkout(request):
                         'country': address.country,
                     })
                 elif profile.address.filter(default__exact=True).exists():
-                    default = get_object_or_404(Address, user=profile, default=True)
+                    default = get_object_or_404(Address,
+                                                user=profile,
+                                                default=True)
                     order_form = OrderForm(initial={
                         'full_name': profile.get_full_name(),
                         'email': profile.email,
@@ -113,7 +118,7 @@ def checkout(request):
                 else:
                     order_form = OrderForm(initial={
                         'full_name': profile.get_full_name(),
-                        'email': profile.email,                        
+                        'email': profile.email,
                     })
             except Exception:
                 order_form = OrderForm()
@@ -124,7 +129,7 @@ def checkout(request):
         else:
             order_form = OrderForm()
             addresses = False
-        
+
         template = 'checkout/checkout.html'
         context = {
             'order_form': order_form,
@@ -134,6 +139,7 @@ def checkout(request):
         }
 
         return render(request, template, context)
+
 
 def checkout_success(request, order_number):
     '''
@@ -170,12 +176,13 @@ def checkout_success(request, order_number):
 
     if 'bag' in request.session:
         del request.session['bag']
-    
+
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
     }
     return render(request, template, context)
+
 
 @require_POST
 def cache_checkout_data(request):
@@ -192,6 +199,7 @@ def cache_checkout_data(request):
         messages.error(request, 'Sorry your payment cannot be \
             processed right now. Please try again later.')
         return HttpResponse(content=e, status=400)
+
 
 @staff_member_required
 def order_management(request):
@@ -211,6 +219,7 @@ def order_management(request):
     }
     return render(request, template, context)
 
+
 @staff_member_required
 def update_order_status(request, order_number):
     '''
@@ -226,14 +235,16 @@ def update_order_status(request, order_number):
             messages.success(request, 'Order updated successfully.')
             return redirect('order_management')
         else:
-            messages.error(request, 'Failed to update order, double check the form')
-    
+            messages.error(request,
+                           'Failed to update order, double check the form')
+
     context = {
         'form': form,
         'order': order,
     }
     template = 'checkout/update_order_status.html'
     return render(request, template, context)
+
 
 def order_status(request):
     '''
@@ -242,6 +253,7 @@ def order_status(request):
     context = {}
     template = 'checkout/get_order_status.html'
     return render(request, template, context)
+
 
 def order_status_hx(request):
     '''
@@ -265,6 +277,7 @@ def order_status_hx(request):
     }
     template = 'checkout/snippets/order_status.html'
     return render(request, template, context)
+
 
 @login_required
 def my_orders(request):
