@@ -12,6 +12,14 @@ def home(request):
     return render(request, 'home/home.html', context)
 
 
+def privacy(request):
+    '''
+    View to return the privacy policy page
+    '''
+    context = {}
+    return render(request, 'home/privacy_policy.html', context)
+
+
 def contact(request):
     '''
     View to provide contact page
