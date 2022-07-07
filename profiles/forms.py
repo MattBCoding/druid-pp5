@@ -28,7 +28,7 @@ class AddressForm(forms.ModelForm):
 
         self.fields['street_address_1'].widget.attrs['autofocus'] = True
         for field in self.fields:
-            if field != 'country':
+            if field != 'country' and field != 'default':
                 if self.fields[field].required:
                     placeholder = f'{placeholders[field]} *'
                 else:
