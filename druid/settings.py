@@ -210,10 +210,10 @@ SUMMERNOTE_CONFIG = {
     # pointing summernote at css file for custom rule implementation
     # kept seperate as other rules already loading into page
     'css': (
-        '/static/css/summernote.css',
+        'https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/static/css/summernote.css',
     ),
     'js': (
-        '/static/js/summernote.js',
+        'https://ci-project-five-druid-computers.s3.eu-west-1.amazonaws.com/static/js/summernote.js',
     ),
     # Lazy initialization
     # If you want to initialize summernote at the bottom of page,
