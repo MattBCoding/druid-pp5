@@ -162,9 +162,9 @@
         <div class="my-4">
             <div class="row">
                 <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                    {% if reviews %}
                     <h6>Reviews</h6>
                     <div class="review-container flex-column d-flex">
-                        {% if reviews %}
                             {% for review in reviews %}
                                 <div id="review-container-{{review.id}}">
                                     {% if review.title %}
@@ -218,9 +218,9 @@
                                     {% endif %}
                                 </div>
                             {% endfor %}
+                            <div id="response-form"></div>
+                        </div>
                         {% endif %}
-                        <div id="response-form"></div>
-                    </div>
                 </div>
             </div>
             {% if can_review %}
