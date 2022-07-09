@@ -15,7 +15,6 @@ class TestViews(TestCase):
         set up a user and log them in to test
         views that require the user to be logged in
         '''
-        # username = 'testuser'
         email = 'test@test.com'
         password = 'testpassword1234!'
         first_name = 'test'
@@ -98,10 +97,6 @@ class TestViews(TestCase):
             'phone_number': '012345678910',
             'default': 'false'
         }
-        # form = AddressForm(request.POST)
-        # form.save(commit=False)
-        # form.user = self.user
-        # form.save()
         response = self.client.post('/profiles/add_address/', request.POST)
         # confirm address object was added
         self.assertEqual(Address.objects.count(), 1)
