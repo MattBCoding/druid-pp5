@@ -21,7 +21,7 @@
                 <div class="col-12 col-lg-10 mx-auto d-flex flex-row flex-wrap gap justify-content-evenly bg-one py-4">
                     {% if products|length_is:"0" %}
                     <p class="mt-2">You have no products in your wishlist.</p>
-                    <p>How about taking a look at some of the products we have available by visiting our <a href="{% url 'products' %}">products page</a>.</p>
+                    <p class="mt-2">How about taking a look at some of the products we have available by visiting our <a href="{% url 'products' %}">products page</a>.</p>
                     {% endif %}    
                     {% for product in products %}
                     <div class="product-favourites-row d-flex flex-column flex-xl-row align-items-center justify-content-lg-between mx-auto bg-one p-2 w-100">
