@@ -65,4 +65,12 @@
 {% endif %}
 {% endblock %}
 {% block postloadjs %}
+{{ block.super }}
+<script>
+    document.addEventListener('click', (event) => {
+        if (event.target.id == 'deactivate-product-modal' || event.target.id == 'close-btn-deactivate-modal' || event.target.id == 'close-icon-deactivate-modal') {
+            document.getElementById('deactivate-product-modal').style.display = 'none';
+        }
+    })
+</script>
 {% endblock %}

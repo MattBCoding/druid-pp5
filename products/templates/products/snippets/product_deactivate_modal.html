@@ -7,7 +7,7 @@
                 {% else %}
                 <h5 class="modal-title" id="deactivate-product-modal-heading">Activate Product</h5>
                 {% endif %}
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-icon-deactivate-modal"></button>
             </div>
             <div class="modal-body">
                 {% if product.is_active %}
@@ -17,7 +17,7 @@
                 {% endif %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="close-btn-deactivate-modal">Close</button>
                 {% if product.is_active %}
                 <a class="btn btn-secondary" href="{% url 'deactivate_product' product.slug %}">Deactivate Product</a>
                 {% else %}
