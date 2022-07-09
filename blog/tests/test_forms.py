@@ -31,7 +31,9 @@ class TestBlogPostForm(TestCase):
 
     def test_image_url_field_accepts_url(self):
         # complete image url field in form
-        form = BlogPostForm(({'image_url': 'https://en.wikipedia.org/wiki/File:Test_image.jpg'}))
+        form = BlogPostForm((
+            {'image_url': 'https://en.wikipedia.org/wiki/File:Test_image.jpg'}
+            ))
         # form will still be invalid as other fields not complete
         self.assertFalse(form.is_valid())
         # image url field not in error list - confirms its correctly filled in.
@@ -48,5 +50,3 @@ class TestBlogPostForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('content', form.errors.keys())
         self.assertEqual(form.errors['content'][0], 'This field is required.')
-
-

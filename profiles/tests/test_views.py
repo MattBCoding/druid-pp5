@@ -23,7 +23,7 @@ class TestViews(TestCase):
         self.user = user_model.objects.create_user(
                                                     first_name=first_name,
                                                     last_name=last_name,
-                                                    email=email, 
+                                                    email=email,
                                                     password=password)
         log_in = self.client.login(
                                     email=email,
@@ -34,17 +34,18 @@ class TestViews(TestCase):
 
     def test_profile_page(self):
         '''
-        test the profile page url 
+        test the profile page url
         '''
         response = self.client.get('/profiles/')
         self.assertEqual(response.status_code, 200)
-    
+
     def test_profile_page_template(self):
         '''
         test the correct template is used
         '''
         response = self.client.get('/profiles/')
-        self.assertTemplateUsed(response, template_name='profiles/profile.html')
+        self.assertTemplateUsed(response,
+                                template_name='profiles/profile.html')
 
     def test_logged_out_profile_page(self):
         '''
@@ -55,7 +56,7 @@ class TestViews(TestCase):
         self.client.logout()
         response = self.client.get('/profiles/')
         self.assertEqual(response.status_code, 302)
-    
+
     def test_add_address_page(self):
         '''
         Test to see if the user is logged in
@@ -64,13 +65,14 @@ class TestViews(TestCase):
         response = self.client.get('/profiles/add_address/')
         # confirm url returns page
         self.assertEqual(response.status_code, 200)
-    
+
     def test_add_address_page_template(self):
         '''
         Test to confirm template used to add address
         '''
         response = self.client.get('/profiles/add_address/')
-        self.assertTemplateUsed(response, template_name='profiles/address_form.html')
+        self.assertTemplateUsed(response,
+                                template_name='profiles/address_form.html')
 
     def test_logged_out_add_address_page(self):
         '''
@@ -101,7 +103,7 @@ class TestViews(TestCase):
         # confirm address object was added
         self.assertEqual(Address.objects.count(), 1)
         self.assertEqual(response.status_code, 302)
-    
+
     def test_address_default_override(self):
         '''
         This tests that when a user adds a new address
@@ -134,13 +136,15 @@ class TestViews(TestCase):
         # confirm one address object exists
         self.assertEqual(Address.objects.count(), 1)
         # confirm one address object exists with default == True
-        self.assertEqual(Address.objects.filter(default__exact=True).count(), 1)
+        self.assertEqual(Address.objects.filter(
+            default__exact=True).count(), 1)
         # post address data two to url
         self.client.post('/profiles/add_address/', address_data_two)
         # confirm two addresses now exist
         self.assertEqual(Address.objects.count(), 2)
         # confirm only one address object has default tag
-        self.assertEqual(Address.objects.filter(default__exact=True).count(), 1)
+        self.assertEqual(Address.objects.filter(
+            default__exact=True).count(), 1)
 
     def test_edit_address_page(self):
         '''
@@ -219,9 +223,10 @@ class TestViews(TestCase):
         id = str(self.user.id)
         form = DeleteUserForm(data={'email': self.user.email})
         self.assertTrue(form.is_valid())
-        response = self.client.post(f'/profiles/delete_account/{id}/', data={'email': self.user.email})
+        response = self.client.post(f'/profiles/delete_account/{id}/',
+                                    data={'email': self.user.email})
         self.assertTrue(response.status_code, 302)
-        
+
     def test_edit_user_account_page(self):
         '''
         test access to edit user account page
@@ -230,14 +235,15 @@ class TestViews(TestCase):
         id = str(self.user.id)
         response = self.client.get(f'/profiles/edit_account/{id}/')
         self.assertEqual(response.status_code, 200)
-    
+
     def test_edit_user_account_page_template(self):
         '''
         test the correct template is used
         '''
         id = str(self.user.id)
         response = self.client.get(f'/profiles/edit_account/{id}/')
-        self.assertTemplateUsed(response, template_name='profiles/edit_user_form.html') 
+        self.assertTemplateUsed(response,
+                                template_name='profiles/edit_user_form.html')
 
     def test_edit_user_account_form_submission(self):
         '''
@@ -250,7 +256,10 @@ class TestViews(TestCase):
         data = {'first_name': 'obi-wan', 'last_name': 'kenobi'}
         form = EditUserForm(data, instance=self.user)
         self.assertTrue(form.is_valid())
-        response = self.client.post(f'/profiles/edit_account/{id}/', data, content_type='application/x-www-form-urlencoded')
+        content = 'application/x-www-form-urlencoded'
+        response = self.client.post(f'/profiles/edit_account/{id}/',
+                                    data,
+                                    content_type=content)
         self.assertTrue(response.status_code, 302)
         self.assertTrue(self.user.first_name == 'obi-wan')
         self.assertTrue(self.user.last_name == 'kenobi')
