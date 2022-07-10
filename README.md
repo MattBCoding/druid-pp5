@@ -15,24 +15,30 @@ The site provides role based permissions for users to interact with a central da
 Please note: To open any links in this document in a new browser tab, please press CTRL + Click.
 
 ## Table of Contents
-* [User Experience Design (UX)](#UX)
-    * [The Strategy Plane](#The-Strategy-Plane)
-        * [Site Goals](#Site-Goals)
-        * [Epics](#Epics)
-        * [User Stories](#User-Stories)
-    * [The Scope Plane](#The-Scope-Plane)
-    * [The Structure Plane](#The-Structure-Plane)
-        * [Opportunities](#Opportunities)
-    * [The Skeleton Plane](#The-Skeleton-Plane)
-        * [Wireframes](#Wireframe-mockups)
-        * [Database Schema](#Database-Schema)
-    * [The Surface Plane](#The-Surface-Plane)
-* [Features](#features)
-* [Future Enhancements](#future-enhancements)
-* [Technologies Used](#technologies-used)
-* [Testing](#testing)
-* [Deployment](#deployment)
-* [Credits](#credits)
+- [Druid Computers](#druid-computers)
+  * [Introduction](#introduction)
+  * [Table of Contents](#table-of-contents)
+  * [UX](#ux)
+    + [Overall Goals](#overall-goals)
+    + [The Strategy Plane](#the-strategy-plane)
+    + [The Sites Ideal User](#the-sites-ideal-user)
+    + [Site Goals](#site-goals)
+    + [Epics](#epics)
+    + [User Stories](#user-stories)
+    + [The Scope Plane](#the-scope-plane)
+    + [The Structure Plane](#the-structure-plane)
+    + [The Skeleton Plane](#the-skeleton-plane)
+      + [Wireframe mock-ups](#wireframe-mock-ups)
+      + [Database Schema](#database-schema)
+      + [SEO Considerations](#seo-considerations)
+  * [The Surface Plane](#the-surface-plane)
+  * [Features](#features)
+  * [Future Enhancements](#future-enhancements)
+  * [Social Media](#social-media)
+  * [Testing](#testing)
+  * [Deployment](#deployment)
+  * [Credits](#credits)
+  * [Acknowledgements](#acknowledgements)
 
 ## UX
 
@@ -161,7 +167,6 @@ Please note: To open any links in this document in a new browser tab, please pre
         2.	Ability to unsubscribe from newsletter
 
 
-
 ### User Stories
 
 |User Stories| | |49|
@@ -275,7 +280,6 @@ These are the user stories that were completed for the projects first release, b
 <br>
 
 #### Opportunities
-#### insert updated OIVF table 
 Arising from user stories
 | Opportunities | Importance | Viability / Feasibility
 | ------ | :------: | :------: |
@@ -345,7 +349,9 @@ Arising from user stories
 * Responsive Design - the site needs to be fully responsive to cover the wide variety of devices users may use to access it
 <br>
 <br>
+
 ### The Structure Plane
+
 <br>
 <details>
 <summary>
@@ -1415,6 +1421,28 @@ The final model created records user messages to the company through the contact
 
 <br>
 
+### SEO Considerations
+
+<br>
+
+#### Keyword Research
+Research was conducted to discover the appropriate keywords to utilise given the target customer markets and product range to be carried. This research was based on Google's SEO tools which provides details of common search terms users are search for and allows you to search these terms by target market. The UK, Ireland and the USA markets were used for example purposes.
+
+<br>
+
+[PC Case Keyword Research - Ireland](/static/docs/img/seo/custom-pc-case-ireland.png)
+[PC Case Keyword Research - UK](/static/docs/img/seo/custom-pc-case-uk.png)
+[PC Case Keyword Research - USA](/static/docs/img/seo/custom-pc-case-usa.png)
+[Watercooling Keyword Research - Ireland](/static/docs/img/seo/watercooling-ireland.png)
+[Watercooling Keyword Research - UK](/static/docs/img/seo/watercooling-uk.png)
+[Watercooling Keyword Research - USA](/static/docs/img/seo/watercooling-usa.png)
+
+From this research a refined keyword list was cultivated for use with the short-tail keywords within the head meta tags and for content through out the site. However this only formed a small part of the overall strategy for the sites SEO strategy.
+
+#### Content Strategy
+The main foundation for the sites SEO strategy was to provide a platform for the company from which they can provide users with informative and relevant information. Product pages were designed to include more details that the average product page - which enables the company to configure the descriptions in a manner that maximises the SEO value. The blog section of the site enables the company to write informative articles that can answer commonly searched for questions. This will enable the company to increase their authoritativeness on relevant topics that their users are searching for. Three articles were provided with content acquired from other relevant websites. There articles were edited to incorporate the keywords discovered from the earlier research.
+
+
 ## The Surface Plane
 
 ### Design
@@ -1434,18 +1462,227 @@ Background images were acquired from free image sites [Pexels](https://www.pexel
 
 
 ## Features
-#### Include screen shots for each main feature page and a description
 
+### Navigation
+The main navigation is split into two sections. The first section contains the main navigation for the sites main sections of interest. The second section contains the links for user account management or employee site management. JavaScript was utilised to move the second navigation section into place depending on the size of the screen. On the desktop view the secondary navigation bar appears on the top right of the screen, whilst in the mobile/tablet menu it appears below the main navigation options.
+<br>
+
+![Navigation desktop view](/static/docs/img/features/nav-desktop.png)
+
+<br>
+
+![Navigation mobile menu](/static/docs/img/features/mobile-menu.png)
+
+<br>
+
+### Footer
+There are also navigation links within the footer from which users can access areas of the site, this includes areas that are not listed in the main navigation such as the privacy policy or social media links. Also included in the footer is a newsletter sign up to a mailchimp controlled email database. The mailchimp supplied sign up form was styled to match the remainder of the site.
+
+<br>
+
+![Footer Desktop View](/static/docs/img/features/footer-desktop.png)
+
+<br>
+
+### Homepage
+The home page greets users with a welcome message overlaid on a close up image of cooling pipes inside a computer system. This provides a welcome to all users whilst indiciating the sites purpose. The clear links within the navigation bar indicate that the site is a shop whilst the call to action cards below the welcome/hero section direct users to specific product categories quickly and easily.
+
+<br>
+
+![Homepage View](/static/docs/img/features/home-desktop.png)
+
+<br>
+
+![Home page mobile view](/static/docs/img/features/home-mobile.png)
+
+<br>
+
+### All Products
+The all products page displays summary cards for each product, with a maximum of five products per page pagination was utilised to create multiple pages making up the full list of products.
+
+<br>
+
+![All Products Page](/static/docs/img/features/all-products-desktop.png)
+
+<br>
+
+### Product Search
+Users can search the site for different products through the search bar which is activated by clicking on the search icon located within the main header.
+
+<br>
+
+![Search Bar Activated](/static/docs/img/features/search-bar-desktop.png)
+
+<br>
+
+When a search is completed by the user, the results will display in summary card format. Pagination is utilised for scenarios where the search results are too large for display on one page. The search criteria is displayed at the top left of the screen for users as a indication that they have filtered the results.
+
+<br>
+
+![Search Results](/static/docs/img/features/search-results-desktop.png)
+
+<br>
+
+The individual summary card for each product links the user to the full product details. For ease of use, users have the ability to add the product to their shopping cart without accessing the full product details. A quantity selector is also included for those users who wish to purchase in multiples. The summary cards contain the basic information users may require for each product, the product name, the sale price, if it is available, a category indicator and the shopping controls.
+
+<br>
+
+![Product Card](/static/docs/img/features/product-card.png)
+
+<br>
+
+### Add to Bag
+When a user adds a product to their shopping cart they receive a confirmation message that it has successfully been added. The icon for the shopping cart, also gains an indicator that shows the quantity of products they have within the cart as an additional level of confirmation.
+
+<br>
+
+![Add to cart confirmation](/static/docs/img/features/add-product-message-desktop.png)
+
+<br>
+
+### Shopping Cart
+When the user is happy with their selections they can proceed to the shopping cart to confirm the quantity and selections. The user has the ability within this page to adjust the quantity of the products selected, or to remove products entirely before proceeding to the checkout process.
+
+<br>
+
+![Shopping Cart Page](/static/docs/img/features/shopping-bag-desktop.png)
+
+<br>
+
+### Checkout
+When the user is ready to purchase the products that they have selected, they proceed to the checkout page, here they can enter their billing and delivery information. Registered users can save the information they have entered and create a new address record. If they already have address records saved, they have the option to select one of them to use for this purchase. If they have a default address set the form will be prefilled with the default address information. The final part of the form is the payment details, this is taken directly from Stripe - or inserted by Stripe for the purposes of capturing the payment card information. As the Stripe payment system is not fully activated only the test card information can currently be utilised.
+
+The page also includes summary information about the items being purchased so that it is clear to users what they are purchasing. A message also appears next to the complete order button informing the user of the total amount they are agreeing to be charged.
+
+<br>
+
+![Checkout page Desktop](/static/docs/img/features/checkout-desktop.png)
+
+<br>
+
+### Order Confirmation
+When users have successfully processed their payment, they are taken to the order confirmation page which provides the user with a summary of the information their order contains. This page also provides the user with their order number.
+
+<br>
+
+![Order Confirmation](/static/docs/img/features/order-confirmation-desktop.png)
+
+<br>
+
+At the same time as the user is redirected to the order confirmation page, an email is sent to the email address they provided during the checkout process. This email provides the user with the same details as the order confirmation page, with the full address details summarised as the town and country only.
+
+<br>
+
+![Order Confirmation Email](/static/docs/img/features/order-confirmation-email.png)
+
+<br>
+
+### Order Status
+Registered users can access the status of all previous orders through the order status page. Here they are able to filter and search through their prior orders. Results are presented in the form of summary cards showing the order number, the items ordered, total order value, date of order and its current status.
+
+<br>
+
+![My Order History](/static/docs/img/features/order-history.png)
+
+<br>
+
+Employees are able to access an update order status page which allows them to update the status of an order. Several predefined options are available covering all common order status stages. When an employee updates an orders status it is then reflected back on the users record with the new status. To access the update order status screen employees have an order management option within their employee actions navigation menu. This page is similar to the My Order History page above, and provides the employee the ability to filter and search through the current orders on the system to find the correct order to update.
+
+<br>
+
+![Update Order Status](/static/docs/img/features/update-order-status.png)
+
+<br>
+
+### User Account Management
+Registered users can access controls for their account through the My profile option in the account menu. In the profile page they have access to options to change their email address, name, password or delete their account entirely. They can also make adjustments to the addresses that are stored with their account, accessing add, edit, delete and make default functionality.
+
+<br>
+
+![User Profile Page](/static/docs/img/features/profile.png)
+
+<br>
+
+### User Wishlist
+Registered users can also save products to their wishlist by clicking on the heart icon within the product details. Once they have added a product to their wishlist they are informed by the heart icon becoming filled in colour. They will also see the product listed on the My Wishlist page. Here users can add the products to their cart without having to search for them, select the quantity to be added. Remove the product from their wishlist, or follow the link to the full product details.
+
+<br>
+
+![My Wishlist Page](/static/docs/img/features/wishlist.png)
+
+<br>
+
+### Blog
+Users have access to view blog post articles written by the company. These articles will form part of the company SEO and web marketing strategies and allows them to include information on topics that will be interesting to their users. Clever use of the blog post section of the site will allow the company to incorporate both short tail keywords and long tail keywords, providing answers to target users questions. This will improve their overall search engine ranking performance whilst providing users with beneficial information and improving their overall experience and trust within the company.
+Users are able to select which blog post to read through the summary list provided on the main blog page.
+
+<br>
+
+![Blog Post Page](/static/docs/img/features/blog-posts-desktop.png)
+
+<br>
+
+The blog detail page provides the user with the full blog post content
+
+<br>
+
+![Blog post detail page](/static/docs/img/features/blog-detail-desktop.png)
+
+<br>
+
+Whilst employees will have access to additional options in order to access areas of the site that allow them to add, edit, delete blog posts. They also have access to blog post category management options that allow them to add, edit and delete categories for blog posts.
+
+<br>
+
+![Employee view of blog posts](/static/docs/img/features/blog-category-management.png)
+
+<br>
+
+### Product Reviews
+Users who have purchased a product from the site are provided access to add a review for that product and a rating. The option exists on the main product detail page for each product. Users are only able to add one review per product, and the employees have the ability to respond to the review directly.
+Other users will be able to read other users reviews of a product to aid in their purchase decision making.
+
+<br>
+
+![Add a product review](/static/docs/img/features/add-review.png)
+
+<br>
+
+Once a user has added a review to a product, they will have the option to edit or delete their review. Employee's get the option to respond to the post or to delete the review. The screenshot below shows all options as the review was added by the logged in employee.
+
+<br>
+
+![View a product review](/static/docs/img/features/product-review.png)
+
+<br>
+
+### Contact Us
+Users have the ability to send a message to the company directly through a contact form provided on the site. When a user sends a message through the website they will also receive a copy of the message to the email address that they provided. The message that the user sends is also delivered via email to the company designated account so that it can be followed up on and answered.
+
+<br>
+
+![Contact Page](/static/docs/img/features/contact-page-desktop.png)
+
+<br>
 
 ## Future Enhancements
 There are several items of functionality that I would like to add in the future. I have left the original user stories that were developed in the project kanban board as future enhancement opportunities.
 The key areas I would like to add to the site in the future are:
 * A stock management system to enable the product sales to record and update stock level information
-* A wider product range - the world of PC parts is varied even without looking at the hardware.
+* A wider product range - the world of PC parts is varied even without looking at the hardware. This would require more advanced product filters being added which allows the user to refine their selection in more detail. PC components are varied, one case to the next can be vastly different in size and users should have the ability to filter by exact requirements to ensure they are looking at products that are suitable for their intended use case.
 * The ability for users to login via social networks such as google or facebook
 * Product ratings - users are able to leave a review of a product along with a rating. Currently, the rating is only recorded, it does not update an average statistic, however this can easily be incorporated in the future.
 
 Some of the functionality above is provided by allauth which is already installed into the site, and therefore only has to be setup in order for it to function. Others would need to be developed completely. The stock system was an nice to have option in the development, there are references to its potential inclusion within the code however they do not currently update for example each product shows an instock pill on the product details.
+
+## Social Media
+For the purposes of the assessment a Facebook page was created for the company. As a key foundation for any ecommerce website's marketing strategy social media would form a key part of the businesses marketing strategy. The page included links to the main website to drive traffic from the social network to the site. Content for the page was based on the blog posts created for the site, whilst at the same time incorporating information that might be useful for users in smaller formats such as a back in stock notice.
+
+<br>
+
+![Druid Facebook Page](/static/docs/img/seo/facebook-page-2.png)
+
+<br>
 
 ## Testing
 
@@ -1453,11 +1690,10 @@ Some of the functionality above is provided by allauth which is already installe
 I utilised an automated and manual testing strategy for the development of the site. A full detailed breakdown of the testing procedures and methodology can be found in the testing.md file [here](TESTING.md).
 Seperate to the functionality testing of the site, and the testing of the code, User Story tests were implemented to ensure that the acceptance criteria of the user stories listed above were met. The commit at which the functionality requirements for each user story were met is listed in the issues section of the repo. It was applied to each issue before it was closed and marked as completed.
 
-
 #### Testing Overview
 
 Testing was divided into different sections to ensure everything was tested individually with test cases developed for each area.
-#### insert testing schedule and correct path
+
 [Testing Schedule Overview](/assets/testing/test-schedule.pdf)
 
 A full detailed breakdown of the testing procedures and methodology can be found in the testing.md file [here](TESTING.md)
@@ -1470,9 +1706,31 @@ All code passed the validation, with only code generated by other parties produc
 * Fontawesome cdn produced 6 HTML validation errors relating to css variables within the cdn css code. 
 * The HTMX library that is inserted into the HTML template by django produces a warning stating that the link does not need to have the javascript file type declared.
 
+#### Automated Testing
+Automated tests were written for the blog and profile apps, along with the product forms. A total of 45 different tests were written to test the urls, views and forms and demonstrate my understanding of the testing procedures. In order to run the tests, you will need to clone the repo. In the settings for the project the database is set to point at the specified database when a database url is present within the config variables. Provided that you do not include a database url in the config variables django will run the tests on a test database utilising sqlite3. Django will not run the tests on the postgresql database from a heroku application, therefore you will need to ensure not to include the database url in the config variables.
+
+<br>
+
+![Automated testing results](/static/docs/img/features/tests.png)
+
+<br>
+
+#### Lighthouse Testing
+Google's lighthouse testing was utilised to gain an overall assessment of the performance of the site. Whilst all the areas of the test return a green score above 90, the overall performance figure fluctuates depending on the speed of the internet connection when the test is performed, having returned scores as low as 92 and as high as 100 whilst running the test multiple times. The accessibility score suffered a couple of points due to utilising headings in a non sequential order through out the site. The best practice score is impacted by the mailchimp and stripe included javascript files along with the use of the bootstrap and jquery libraries. The SEO score returned a perfect 100.
+
+<br>
+
+![Google Lighthouse Results](/static/docs/img/features/lighthouse.png)
+
+<br>
+
 #### Notable Bugs
 
-Last minute bug found in the address form. Whilst validating the HTML it reported an error that I had included a placeholder for a checkbox field which is not allowed. To fix this error I removed the placeholder from the list within the forms.py file for the relevant address form. Thinking that will sort the error out and its only a placeholder so doesn't affect anything else. It did fix the HTML validation error straight away, however, it created a bug within another part of the code where the fields were checked whether they were required or not. If a field was required it adds '*' to signify it to users, if it is not, it inserts the placeholder. However, now I had removed the placeholder, anytime the form was requested it would return a 500 error. Whilst I appreciated the ability to test the custom 500 error page worked correctly on the production site it was a bug that took me a little while to track down the route cause and fix. The fix was simple enough and achieved by including the default field of the model within the if statement and excluding it from the placeholder assignment.
+* Whilst validating the HTML it reported an error that I had included a placeholder for a checkbox field which is not allowed. To fix this error I removed the placeholder from the list within the forms.py file for the relevant address form. Thinking that will sort the error out and its only a placeholder so doesn't affect anything else. It did fix the HTML validation error straight away, however, it created a bug within another part of the code where the fields were checked whether they were required or not. If a field was required it adds '*' to signify it to users, if it is not, it inserts the placeholder. However, now I had removed the placeholder, anytime the form was requested it would return a 500 error. Whilst I appreciated the ability to test the custom 500 error page worked correctly on the production site it was a bug that took me a little while to track down the route cause and fix. The fix was simple enough and achieved by including the default field of the model within the if statement and excluding it from the placeholder assignment.
+
+* Within the blog post page employee view, there is a category management section that can be activated. This section allows an employee to edit, delete and create categories for blog posts. Forms are inserted via htmx into the html on demand to allow the employee to carry out the task required. As the forms are inserted via htmx, it was possible to insert multiple forms at the same time into the page and edit multiple categories at once, and have the add category form open as well. If the user did this, a HTML validation error would occur as the form is duplicated it contains duplicate ID's. To overcome the HTML validation error possibility, JavaScript was utilised to prevent the user from opening multiple forms at the same time, this was achieved by disabling the other buttons when a user clicks on one of the edit buttons or add buttons, until either the user cancels their action or has completed their task.
+
+* Order Status updates. Within the order management section of the site, employees have the ability to update the status of an order. To help with finding the correct order, multiple filters are available for them to search the orders within the database. One of these filters allows for searching the previous days orders. This works as designed during normal working hours, however when testing the functionality it was discovered that during the first hour of the day, so the time period between midnight and 1am the filter would bring back the previous day plus one's orders, not the previous days. This resolves itself as soon as the time clicks past 1am. As the only time that this will be triggered is in the middle of the night, it was deemed acceptable to leave as it currently is and not attempt to edit the library utilised to include the filters. Should the business operate 24 hours a day and require the functionality to pull the previous days orders during that one hour window it would obviously need to be resolved.
 
 #### Technologies Used
 
@@ -1554,12 +1812,9 @@ Last minute bug found in the address form. Whilst validating the HTML it reporte
 * The Django documentation was used extensively during development of this project
 * The HTMX documentation was used as a reference source for the development of the HTMX features
 * The Django AllAuth documentation was used as a reference and a guide for implementing the package and its features.
-* The Cloudinary documentation was used extensively during development to setup the configuration between django and the cloudinary apis
 * The Code Institute reference material was used as a general reference for things that I had previously done during the course.
 * All other resources used are referenced where appropriate.
 
-
-##### Other Libraries Used
 
 ## Deployment
 
@@ -1570,7 +1825,7 @@ The site was deployed via Heroku, and the live link can be found here - [Druid](
 To deploy the project through Heroku I followed these steps:
 * Sign up / Log in to [Heroku](https://www.heroku.com/)
 * From the main Heroku Dashboard page select 'New' and then 'Create New App'
-* Give the project a name - I entered The-Pantry and select a suitable region, then select create app. The name for the app must be unique.
+* Give the project a name - I entered Druid-Computers and select a suitable region, then select create app. The name for the app must be unique.
 * This will create the app within Heroku and bring you to the deploy tab. From the submenu at the top, navigate to the resources tab.
 * Add the database to the app, in the add-ons section search for 'Heroku Postgres', select the package that appears and add 'Heroku Postgres' as the database
 * Navigate to the setting tab, within the config vars section copy the DATABASE_URL to the clipboard for use in the Django configuration.
@@ -1582,13 +1837,22 @@ To deploy the project through Heroku I followed these steps:
 * remove the insecure secret key that django has in the settings file by default and replace it with SECRET_KEY = os.environ.get('SECRET_KEY')
 * replace the databases section with DATABASES = { 'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))} ensure the correct indentation for python is used.
 * In the terminal migrate the models over to the new database connection
-* Navigate in a browser to cloudinary, log in, or create an account and log in. 
-* From the dashboard - copy the CLOUDINARY_URL to the clipboard
-* in the env.py file created earlier - add os.environ["CLOUDINARY_URL"] = "paste in the Url copied to the clipboard here"
-* In Heroku, add the CLOUDINARY_URL and value copied to the clipboard to the config vars
+* Navigate in a browser to Amazon AWS, log in, or create an account and log in. 
+* Create a new S3 bucket for the site and create a static directory and media directory within the bucket.
+* From the dashboard - copy the bucket details into the settings file.
+    * you will require the following:
+        - Storage Bucket Name
+        - Storage Bucket Region Name
+        - Access Key ID
+        - Secret Access Key
+    * configure these settings in the settings file
+* in the env.py file created earlier 
+    - add os.environ["AWS_ACCESS_KEY_ID"] = "paste in your access key"
+    - add os.environ["AWS_SECRET_ACCESS_KEY"] = "paste in your secret access key"
+* In Heroku, add the keys and values copied to the clipboard to the config vars
 * Also add the KEY - DISABLE_COLLECTSTATIC with the Value - 1 to the config vars
 * this key value pair must be removed prior to final deployment
-* Add the cloudinary libraries to the list of installed apps, the order they are inserted is important, 'cloudinary_storage' goes above 'django.contrib.staitcfiles' and 'cloudinary' goes below it.
+* Using the requirements.txt file install all of the required packages
 * in the Settings.py file - add the STATIC files settings - the url, storage path, directory path, root path, media url and default file storage path.
 * Link the file to the templates directory in Heroku TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 * Change the templates directory to TEMPLATES_DIR - 'DIRS': [TEMPLATES_DIR]
@@ -1599,6 +1863,8 @@ To deploy the project through Heroku I followed these steps:
 * In the terminal, add the changed files, commit and push to GitHub
 * In Heroku, navigate to the deployment tab and deploy the branch manually - watch the build logs for any errors.
 * Heroku will now build the app for you. Once it has completed the build process you will see a 'Your App Was Successfully Deployed' message and a link to the app to visit the live site.
+* This project utilises Stripe as a payment platform provider - You can create a stripe account at www.stripe.com you will need a developer account to gain access to the api keys required to run the payment processes.
+* Once you have successfully created your stripe account, insert the stripe public key, stripe secret key and stripe webhook key into the env.py file and the heroku config vars. Configure the settings file to point at the variables required. Stripe provide documentation on how to setup stripe within django which is easy to follow. It is available within the stripe developer site.
 
 #### Forking the repository
 By forking the GitHub Repository you can make a copy of the original repository to view or change without it effecting the original repository
@@ -1617,6 +1883,11 @@ This can be done by:
 * navigate to your code editor of choice and within the terminal change the directory to the location you want to clone the repository to.
 * type 'git clone' and paste the https link you copied from github
 * press enter and git will clone the repository to your local machine
+
+### Credits
+* Product images, descriptions and technical data was acquired from the corresponding manufacturers website where available or from [Watercooling UK](https://www.watercoolinguk.co.uk/)
+* Other images were acquired under license from [Pexels](https://www.pexels.com/) or from [Unsplash](https://unsplash.com/)
+
 
 ### Acknowledgements
 
