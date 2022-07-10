@@ -34,7 +34,7 @@ Please note: To open any links in this document in a new browser tab, please pre
   * [The Surface Plane](#the-surface-plane)
   * [Features](#features)
   * [Future Enhancements](#future-enhancements)
-  * [Social Media](#social-media)
+  * [Social Media](#social-media-marketing)
   * [Testing](#testing)
   * [Deployment](#deployment)
   * [Credits](#credits)
@@ -1431,11 +1431,28 @@ Research was conducted to discover the appropriate keywords to utilise given the
 <br>
 
 [PC Case Keyword Research - Ireland](/static/docs/img/seo/custom-pc-case-ireland.png)
+
+<br>
+
 [PC Case Keyword Research - UK](/static/docs/img/seo/custom-pc-case-uk.png)
+
+<br>
+
 [PC Case Keyword Research - USA](/static/docs/img/seo/custom-pc-case-usa.png)
+
+<br>
+
 [Watercooling Keyword Research - Ireland](/static/docs/img/seo/watercooling-ireland.png)
+
+<br>
+
 [Watercooling Keyword Research - UK](/static/docs/img/seo/watercooling-uk.png)
+
+<br>
+
 [Watercooling Keyword Research - USA](/static/docs/img/seo/watercooling-usa.png)
+
+<br>
 
 From this research a refined keyword list was cultivated for use with the short-tail keywords within the head meta tags and for content through out the site. However this only formed a small part of the overall strategy for the sites SEO strategy.
 
@@ -1675,7 +1692,7 @@ The key areas I would like to add to the site in the future are:
 
 Some of the functionality above is provided by allauth which is already installed into the site, and therefore only has to be setup in order for it to function. Others would need to be developed completely. The stock system was an nice to have option in the development, there are references to its potential inclusion within the code however they do not currently update for example each product shows an instock pill on the product details.
 
-## Social Media
+## Social Media Marketing
 For the purposes of the assessment a Facebook page was created for the company. As a key foundation for any ecommerce website's marketing strategy social media would form a key part of the businesses marketing strategy. The page included links to the main website to drive traffic from the social network to the site. Content for the page was based on the blog posts created for the site, whilst at the same time incorporating information that might be useful for users in smaller formats such as a back in stock notice.
 
 <br>
@@ -1694,7 +1711,7 @@ Seperate to the functionality testing of the site, and the testing of the code, 
 
 Testing was divided into different sections to ensure everything was tested individually with test cases developed for each area.
 
-[Testing Schedule Overview](/assets/testing/test-schedule.pdf)
+[Testing Schedule Overview](/static/docs/testing-schedule.pdf)
 
 A full detailed breakdown of the testing procedures and methodology can be found in the testing.md file [here](TESTING.md)
 
@@ -1887,6 +1904,7 @@ This can be done by:
 ### Credits
 * Product images, descriptions and technical data was acquired from the corresponding manufacturers website where available or from [Watercooling UK](https://www.watercoolinguk.co.uk/)
 * Other images were acquired under license from [Pexels](https://www.pexels.com/) or from [Unsplash](https://unsplash.com/)
+* Blog articles based on blog posts on [EKWB](https://www.ekwb.com/)
 
 
 ### Acknowledgements
